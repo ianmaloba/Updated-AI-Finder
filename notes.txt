@@ -17,6 +17,7 @@ Authentication:
 - Google Auth
 - Github Auth
 - Facebook Auth
+- To be added..
 
 Add more features, courtesy of the tool https://aitoolguru.com/
 
