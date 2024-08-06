@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load custom_filters %}
+
+{% block title %}Custom Search Engine{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4" style="color: red;">Custom Search Engine:</h2>
+  <script async src="https://cse.google.com/cse.js?cx=f491da95cf71948e9">
+    </script>
+    <div class="gcse-searchbox"></div>
+</div>
+<div class="container py-4">
+    <div class="gcse-searchresults"></div>
+</div>
+
+<br>
+<div class="container py-4">
+  <a href="/" class="btn btn-primary btn-sm">HOME</a>
+</div>
+{% endblock %}

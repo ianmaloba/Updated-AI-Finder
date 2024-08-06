@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% load custom_filters %}
+
+{% block title %}All Tags{% endblock %}
+
+{% block content %}
+
+<div class="all-tags-entire-page">
+    <div class="container">
+    <div class="row">
+        <div>
+            <h1 class="heading">ALL TAGS</h1>
+
+            <div>
+                    {% for tag in tags %}
+                        {% with tag_slug=tag|slugify %}
+                            <a href="{% url 'tag_list' tag_slug=tag_slug %}" class="all-tags">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 1024 1024"><path fill="red" d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3M664.8 561.6l36.1 210.3L512 672.7L323.1 772l36.1-210.3l-152.8-149L417.6 382L512 190.7L606.4 382l211.2 30.7z"/></svg>
+                                {{ tag }}
+                            </a>
+                        {% endwith %}
+                    {% endfor %}
+            </div>
+            <br>
+            <hr>
+            <br>
+            <div class="tags-and-cat-table">
+                <table  class="table-rounded" style="width:100%">
+                    <tr>
+                        <th>TAG</th>
+                        <th>ASSOCIATED TOOLS</th> 
+                    </tr>
+                    {% for tag, tools in tags_with_tools.items %}
+                    <tr>
+                        {% with tag_slug=tag|slugify %}
+                        <td><a href="{% url 'tag_list' tag_slug=tag_slug %}">{{ tag }}</a>({{ tools|length }})</td>
+                        {% endwith %}
+                        <td>
+                            <ul>
+                                {% for tool in tools %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 512 512"><path fill="grey" d="M58.79 439.13A16 16 0 0 1 48 424c0-73.1 14.68-131.56 43.65-173.77c35-51 90.21-78.46 164.35-81.87V88a16 16 0 0 1 27.05-11.57l176 168a16 16 0 0 1 0 23.14l-176 168A16 16 0 0 1 256 424v-79.77c-45 1.36-79 8.65-106.07 22.64c-29.25 15.12-50.46 37.71-73.32 67a16 16 0 0 1-17.82 5.28Z"/></svg>
+                                <a href="{% url 'ai_body' slug=tool.slug %}">{{ tool.ai_name }}</a>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<br>
+<br>
+<div class="container">
+    <a href="/"><button type="submit" class="btn btn-primary btn-sm">HOME</button></a>
+</div>       
+{% endblock %}

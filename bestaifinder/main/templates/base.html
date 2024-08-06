@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+
+    <title>AI Finder Guru | {% block title %} {% endblock %}</title>
+
+    {% load static %}
+
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/app-logo/logo1.png' %}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>
+    {% load custom_filters %}
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'images/app-logo/logo2.png' %}" style="width: 50px; height: auto;" alt="Logo">
+                <span>AI FINDER GURU</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                      <a class="nav-link" data-toggle="modal" data-target="#askAiModal">
+                        <button type="button" class="btn btn-outline-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="white"><path d="M17.5 17.5L22 22m-2-11a9 9 0 1 0-18 0a9 9 0 0 0 18 0"/><path d="m6.5 14l1.842-5.526a.694.694 0 0 1 1.316 0L11.5 14m3-6v6m-7-2h3"/></g></svg>
+                          ASK AI
+                        </button>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><button type="button" class="btn btn-outline-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 32 32"><path fill="white" d="M16.612 2.214a1.01 1.01 0 0 0-1.242 0L1 13.419l1.243 1.572L4 13.621V26a2.004 2.004 0 0 0 2 2h20a2.004 2.004 0 0 0 2-2V13.63L29.757 15L31 13.428ZM18 26h-4v-8h4Zm2 0v-8a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v8H6V12.062l10-7.79l10 7.8V26Z"/></svg>
+                          Home
+                        </button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'all_categories_page' %}">
+                          <button type="button" class="btn btn-outline-success">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><circle cx="17.5" cy="17.5" r="2.5" fill="white" opacity="0.3"/><path fill="white" d="M5 15.5h4v4H5zm7-9.66L10.07 9h3.86z" opacity="0.3"/><path fill="white" d="m12 2l-5.5 9h11zm0 3.84L13.93 9h-3.87zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5s4.5-2.01 4.5-4.5s-2.01-4.5-4.5-4.5m0 7a2.5 2.5 0 0 1 0-5a2.5 2.5 0 0 1 0 5M11 13.5H3v8h8zm-2 6H5v-4h4z"/></svg>
+                          Categories
+                        </button>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'all_tags_page' %}">
+                          <button type="button" class="btn btn-outline-success">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><path fill="white" d="m9 16l-.825 3.275q-.075.325-.325.525t-.6.2q-.475 0-.775-.375T6.3 18.8L7 16H4.275q-.5 0-.8-.387T3.3 14.75q.075-.35.35-.55t.625-.2H7.5l1-4H5.775q-.5 0-.8-.387T4.8 8.75q.075-.35.35-.55t.625-.2H9l.825-3.275Q9.9 4.4 10.15 4.2t.6-.2q.475 0 .775.375t.175.825L11 8h4l.825-3.275q.075-.325.325-.525t.6-.2q.475 0 .775.375t.175.825L17 8h2.725q.5 0 .8.387t.175.863q-.075.35-.35.55t-.625.2H16.5l-1 4h2.725q.5 0 .8.388t.175.862q-.075.35-.35.55t-.625.2H15l-.825 3.275q-.075.325-.325.525t-.6.2q-.475 0-.775-.375T12.3 18.8L13 16zm.5-2h4l1-4h-4z"/></svg>
+                           Tags
+                          </button>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">
+                          <button type="button" class="btn btn-outline-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><path fill="white" d="M11 9h2V7h-2m1 13c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2m-1 15h2v-6h-2z"/></svg>
+                            About
+                          </button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'charts' %}">
+                        <button type="button" class="btn btn-outline-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><path fill="white" d="M7 16a1.5 1.5 0 0 0 1.5-1.5a.77.77 0 0 0 0-.15l2.79-2.79h.46l1.61 1.61v.08a1.5 1.5 0 1 0 3 0v-.08L20 9.5A1.5 1.5 0 1 0 18.5 8a.77.77 0 0 0 0 .15l-3.61 3.61h-.16L13 10a1.49 1.49 0 0 0-3 0l-3 3a1.5 1.5 0 0 0 0 3m13.5 4h-17V3a1 1 0 0 0-2 0v18a1 1 0 0 0 1 1h18a1 1 0 0 0 0-2"/></svg>
+                          Charts
+                        </button>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mailto: aifinderguru@gmail.com" target="_blank">
+                          <button type="button" class="btn btn-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 48 48"><path fill="white" fill-rule="evenodd" d="M6 20.5C6 12.492 12.492 6 20.5 6h7C35.508 6 42 12.492 42 20.5S35.508 35 27.5 35h-.7v7S6 38.5 6 20.5m21.691-8.018c1.03.684 1.807 1.793 1.807 3.28c0 1.578-.637 2.738-1.668 3.448a4.5 4.5 0 0 1-1.33.614v1.532a1.5 1.5 0 1 1-3 0v-2.797a1.5 1.5 0 0 1 1.4-1.497c.554-.037.974-.147 1.228-.322a.7.7 0 0 0 .24-.272c.06-.12.13-.334.13-.707c0-.312-.123-.552-.468-.782c-.392-.26-1.022-.452-1.779-.476c-.748-.024-1.475.122-2.01.381c-.536.26-.732.552-.788.767a1.5 1.5 0 1 1-2.905-.746c.344-1.341 1.348-2.217 2.385-2.72c1.04-.505 2.263-.718 3.414-.681c1.142.036 2.362.324 3.344.978M25 29a2 2 0 1 0 0-4a2 2 0 0 0 0 4" clip-rule="evenodd"/></svg>
+                            Contact
+                          </button>
+                        </a>
+                    </li>
+                    <!-- sign in to be added soon 
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><button type="button" class="btn btn-info">Sign In</button></a>
+                    </li>
+                    -->
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container" style="text-align: center;">
+      <a class="nav-link" data-toggle="modal" data-target="#askAiModal">
+        <button type="button" class="btn btn-outline-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><g fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="white"><path d="M17.5 17.5L22 22m-2-11a9 9 0 1 0-18 0a9 9 0 0 0 18 0"/><path d="m6.5 14l1.842-5.526a.694.694 0 0 1 1.316 0L11.5 14m3-6v6m-7-2h3"/></g></svg>
+          ASK AI
+        </button>
+      </a>
+    </div>
+    <br>
+    <footer class="bg-dark text-light py-6">
+        <div class="container">
+            <div class="row d-flex flex-wrap">
+                <div class="col-12 col-md-8 d-flex flex-column">
+                    <br>
+                    <br>
+                    <h5 class="mb-5 font-weight-bold">ABOUT</h5>
+                    <p class="text-light">Welcome to AI Finder Guru! This tool provides you access to a vast array of AI tools. 
+                        With {{ all_ai_tools_count }} tools and counting, we ensure you have access to the latest 
+                        and most relevant tools at your fingertips. Our database is 
+                        updated automatically...<a href="{% url 'about' %}"><u><i>Read More</i></u></a>
+                    </p>
+
+                </div>
+                <div class="col-12 col-md-4 d-flex flex-column">
+                    <br>
+                    <br>
+                    <h5 class="mb-5 font-weight-bold">MENU</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'google_custom_search' %}" class="text-light">Custom Search Engine</a></li>
+                        <hr style="background-color: white; height: 1px; border: 0;">
+                        <li><a href="mailto: aifinderguru@gmail.com" class="text-light">Contact Us</a></li>
+                        <hr style="background-color: white; height: 1px; border: 0;">
+                        <li><a href="{% url 'all_categories_page' %}" class="text-light">All Categories</a></li>
+                        <hr style="background-color: white; height: 1px; border: 0;">
+                        <li><a href="{% url 'all_tags_page' %}" class="text-light">All Tags</a></li>
+                        <hr style="background-color: white; height: 1px; border: 0;">
+                    </ul>
+                </div>
+            </div>
+            <br>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p><i>© <span id="currentYear"></span> <a href="/" class="text-light"><u>aifinderguru.com</u></a></i> | <i>All rights reserved.</i></p>
+                </div>
+                
+                <script>                     
+                    // Current Year for copyright
+                    var currentYear = new Date().getFullYear();
+                    document.getElementById("currentYear").innerHTML = currentYear;
+                </script>
+            </div>            
+            <br>
+            <br>
+        </div>
+    </footer>
+          
+    <!-- Back to top button -->
+    <button onclick="topFunction()" id="myBtn" title="Go back to the top">Top</button>
+
+       <!-- IFrame Modal For AI Tool Preview-->
+       <div class="modal fade" id="toolModal" tabindex="-1" role="dialog" aria-labelledby="toolModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <img src="{% static 'images/app-logo/logo2.png' %}" style="width: 25px; height: auto;" alt="Logo">
+              <h5 class="modal-title" id="toolModalLabel"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div id="loader" class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden"></span>
+                </div>
+                <p>Loading Preview...</p>
+                <p>If it doesn't load or takes too long, try clicking "Visit"!</p>
+              </div>
+              <iframe id="toolIframe" style="width: 100%; height: 70vh; border: none; display: none;"></iframe>
+              <div id="error" class="text-center" style="display: none;">
+                <p id="errorMessage" style="color: red;"></p>
+                <button id="openInNewTabBtnError" class="btn btn-primary">Visit Tool</button>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <a id="learnMoreLink" class="btn btn-info" style="float: left; display: none;">
+                Detail
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"><path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 6.5h9.75c2.107 0 3.16 0 3.917.506a3 3 0 0 1 .827.827C22 8.59 22 9.893 22 12M12 6.5l-.633-1.267c-.525-1.05-1.005-2.106-2.168-2.542C8.69 2.5 8.108 2.5 6.944 2.5c-1.816 0-2.724 0-3.406.38A3 3 0 0 0 2.38 4.038C2 4.72 2 5.628 2 7.444V10.5c0 4.179 0 6.505 1.02 8m3.637-2.93l2.062-.056c1.098-.03 1.647-.044 1.98.288c.331.332.316.88.287 1.979l-.055 2.062m-.295-3.979L5 21.5m17-6h-7m7 3h-7m3.5 3H15" color="white"/></svg>
+              </a>
+              <button id="openInNewTabFooterBtn" class="btn btn-primary" style="float: center;">
+                Visit
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 512 512"><path fill="white" d="M48 399.26C48 335.19 62.44 284 90.91 247c34.38-44.67 88.68-68.77 161.56-71.75V72L464 252L252.47 432V329.35c-44.25 1.19-77.66 7.58-104.27 19.84c-28.75 13.25-49.6 33.05-72.08 58.7L48 440Z"/></svg>
+            </button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" style="float: right;">
+                Close
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20"><path fill="white" d="M2.93 17.07A10 10 0 1 1 17.07 2.93A10 10 0 0 1 2.93 17.07m1.41-1.41A8 8 0 1 0 15.66 4.34A8 8 0 0 0 4.34 15.66m9.9-8.49L11.41 10l2.83 2.83l-1.41 1.41L10 11.41l-2.83 2.83l-1.41-1.41L8.59 10L5.76 7.17l1.41-1.41L10 8.59l2.83-2.83z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>  
+
+</body>
+
+<!-- Modal for Ask AI -->
+<div class="modal fade" id="askAiModal" tabindex="-1" role="dialog" aria-labelledby="askAiModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img src="{% static 'images/app-logo/logo2.png' %}" style="width: 25px; height: auto;" alt="Logo">
+        <h5 class="modal-title" id="askAiModalLabel">ASK AI ABOUT AI TOOLS</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="position: relative;">
+        <iframe src="https://oneai.com/~ai-finder" width="100%" height="500" frameborder="0" style="border: none;"></iframe>
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 70px; background-color: white; z-index: 10;"></div>
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background-color: white; z-index: 10;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" style="float: right;">
+          Close AI
+          <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20"><path fill="white" d="M2.93 17.07A10 10 0 1 1 17.07 2.93A10 10 0 0 1 2.93 17.07m1.41-1.41A8 8 0 1 0 15.66 4.34A8 8 0 0 0 4.34 15.66m9.9-8.49L11.41 10l2.83 2.83l-1.41 1.41L10 11.41l-2.83 2.83l-1.41-1.41L8.59 10L5.76 7.17l1.41-1.41L10 8.59l2.83-2.83z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Add Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</html>

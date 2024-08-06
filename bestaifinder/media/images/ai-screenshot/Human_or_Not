@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="H7SlW78eWexW37eYGk69uHQsFu0kSdsxZKCodV95">
+
+            <title> 
+	                                        </title>
+    
+    <link rel="canonical" href="https://aitoolguru.com/resources/tools/thumbnail/Human_or_Not" />
+    
+    
+    <!-- Google Analitics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDCKELPQS3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-PDCKELPQS3');
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5G629ZG');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Scripts -->
+    <script src="/compiled/public/js/app.js?v=1.0.6.3" defer></script>
+
+    <!-- Favicon -->  
+    <link rel="apple-touch-icon" sizes="180x180" href="/resources/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/resources/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/resources/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/resources/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Styles -->
+    <link href="/compiled/public/css/app.css?v=1.0.6.3" rel="stylesheet">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-188668659-1"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-188668659-1');
+</script>
+
+            <script src="https://www.google.com/recaptcha/api.js?render=6LdExpokAAAAACG-j2XUI_kWUNPkw0-dn0qPZfdt"></script>
+    </head>
+<body class="">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5G629ZG"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    
+    <div id="app">
+
+        <div class="page-container">
+            <nav id="navbarMain" class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid position-relative">
+
+        <a class="navbar-brand" href="https://aitoolguru.com">
+                            <img src="/resources/images/logo-aiguru-v2.svg" alt="AI TOOL GURU icon" class="logo">
+            
+            <!-- <span class="icon icon-cpu mr-2"></span> -->
+        </a>
+
+        <div class="d-flex d-lg-none text-white">
+            <span id="mobOpenSearch" class="nav-link pr-0" type="button">
+                <span class="icon icon-network text-bigger"></span>
+            </span>
+
+            <theme-switch></theme-switch>
+        </div>
+
+        <div id="menuHolder" class="collapse navbar-collapse d-none d-lg-block">
+            <ul class="navbar-nav mnav list-unstyled">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        Ai Tools
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                                            <a class="nav-link" href="/deals">
+                            <span class="d-none d-sm-block">Price</span>
+                        </a>
+                                        
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/categories">
+                        Categories
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/submit-ai-tool">
+                        Submit
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown d-none d-lg-flex">
+                    <a id="moreDropdown" class="nav-link d-flex align-items-center" 
+                        href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        More
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="moreDropdown">
+                        <a class="dropdown-item" href="/newsletter">
+                            Newsletter
+                        </a>
+                        <a class="dropdown-item" href="/ai-blog">
+                            Blog
+                        </a>
+                        <a class="dropdown-item" href="/ai-events">
+                            AI Events
+                        </a>
+                        <a class="dropdown-item" href="/ai-influencers">
+                            AI Influencers
+                        </a>
+                        <a class="dropdown-item" href="/news-feed">
+                            News Feed
+                        </a>
+
+
+                        <!-- <a class="dropdown-item" href="/ai-news">
+                            AI News
+                        </a>
+                        <a class="dropdown-item" href="/ai-interviews">
+                            Interviews
+                        </a>
+                        <a class="dropdown-item" href="/ai-academy">
+                            AI Academy
+                        </a>
+                        <a class="dropdown-item" href="/ai-prompts">
+                            Prompts
+                        </a> -->
+
+                    </div>
+                </li>
+
+                           
+
+                <!-- Authentication Links -->
+                                <li class="nav-item nav-login">
+                    <a class="nav-link" href="/login">
+                        Login
+                    </a>
+                </li>
+
+                                            <li class="nav-item mx-lg-2 nav-button">
+                            <a class="btn btn-primary btn-white" href="/register">
+                                Sign up
+                            </a>
+                        </li>
+                                    
+                                <li class="nav-item dropdown d-none d-lg-flex">
+                    <a id="socialDropdown" class="nav-link d-flex align-items-center" 
+                        href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <span class="icon icon-network text-bigger"></span>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right social-networks" aria-labelledby="moreDropdown">
+
+                        <a class="dropdown-item" href="https://twitter.com/aitoolguru" target="_blank">
+                            <span class="icon icon-twitter"></span>
+                            Twitter
+                        </a>
+
+                        <a class="dropdown-item" href="https://www.facebook.com/aitoolguru" target="_blank">
+                            <span class="icon icon-facebook"></span>
+                            Facebook
+                        </a>
+
+                        <a class="dropdown-item" href="https://www.linkedin.com/company/ai-tool-guru/" target="_blank">
+                            <span class="icon icon-linkedin"></span>
+                            Linkedin
+                        </a>
+
+                        <a class="dropdown-item" href="https://discord.gg/BX9DncrMdD" target="_blank">
+                            <span class="icon icon-discord"></span>
+                            Discord
+                        </a>
+                 
+                        <a class="dropdown-item" href="https://www.instagram.com/aitool_guru/" target="_blank">
+                            <span class="icon icon-instagram"></span>
+                            Instagram
+                        </a>
+                 
+                        <a class="dropdown-item" href="https://www.tiktok.com/@aitoolguru" target="_blank">
+                            <span class="icon icon-tiktok-icon"></span>
+                            TikTok
+                        </a>
+
+                        <a class="dropdown-item" href="https://www.youtube.com/@aitoolguru" target="_blank">
+                            <span class="icon icon-youtube"></span>
+                            Youtube
+                        </a>
+
+                    </div>
+                </li> 
+                
+                <li class="nav-item">
+                    <theme-switch></theme-switch>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- Mobile Navigation Screens -->
+        <div id="respUser" class="mnav-wrap">
+           
+            <button class="mob-clouse btn btn-primary btn-white d-lg-none zi9 " type="button">
+                <span class="icon icon-cross"></span>
+            </button>
+
+            <div class="h-100 d-flex flex-column justify-content-end">
+
+                
+                <h3 class="mb-0">Login or Register</h3>
+
+                
+                <p>Set up your private profile to rate and comment the AI TOOL.</p>
+                <span class="separator"></span>
+
+                <ul class="mnav list-unstyled">
+
+                    
+                    <li class="mnav-item">
+                        <a class="mnav-link" href="/login">
+                            <span class="icon icon-earth"></span>
+                            Login
+                        </a>
+                    </li>
+
+                    <li class="mnav-item">
+                        <a class="mnav-link" href="/register">
+                            <span class="icon icon-earth"></span>
+                            Sign up
+                        </a>
+                    </li>
+
+                    
+                </ul>
+
+                <form id="logout-form" action="/logout" method="POST" style="display: none;">
+                    <input type="hidden" name="_token" value="H7SlW78eWexW37eYGk69uHQsFu0kSdsxZKCodV95">                </form>
+
+            </div>
+        </div>
+
+        <div id="respSearch" class="mnav-wrap">
+
+            <button class="mob-clouse btn btn-primary d-lg-none btn-white" type="button">
+                <span class="icon icon-cross"></span>
+            </button>
+            
+            <div class="h-100 d-flex flex-column justify-content-end">
+                <h3>Community </h3>
+                <p>Stay tuned with all new in AI world by joining our community!</p>
+                <span class="separator"></span>
+
+                <!-- <search-form></search-form> -->
+                <!-- <newsletter></newsletter> -->
+
+                <ul class="mnav list-unstyled mt-4">
+                    <li class="mnav-item">
+                        <a href="https://twitter.com/aitoolguru" target="_blank" class="mnav-link">
+                            <span class="icon icon-twitter"></span>
+                            Twitter
+                        </a>
+                    </li>
+                    <li class="mnav-item">
+                        <a href="https://www.facebook.com/aitoolguru" target="_blank" class="mnav-link">
+                            <span class="icon icon-facebook"></span>
+                            Facebook
+                        </a>
+                    </li>
+                    <li class="mnav-item">
+                        <a href="https://www.linkedin.com/company/ai-tool-guru/" target="_blank" class="mnav-link">
+                            <span class="icon icon-linkedin"></span>
+                            Linkedin
+                        </a>
+                    </li>
+                    <li class="mnav-item">
+                        <a href="https://discord.gg/BX9DncrMdD" target="_blank" class="mnav-link" >
+                            <span class="icon icon-discord"></span>
+                            Discord
+                        </a>
+                    </li>
+                    <li class="mnav-item">
+                        <a href="https://www.instagram.com/aitool_guru/" target="_blank" class="mnav-link">
+                            <span class="icon icon-instagram"></span>
+                            Instagram
+                        </a>
+                    </li>
+                    <li class="mnav-item">
+                        <a href="https://www.tiktok.com/@aitoolguru" target="_blank" class="mnav-link">
+                            <span class="icon icon-tiktok-icon"></span>
+                            TikTok
+                        </a>
+                    </li>
+                    <li class="mnav-item">
+                        <a href="https://www.youtube.com/@aitoolguru" target="_blank" class="mnav-link">
+                            <span class="icon icon-tiktok-icon"></span>
+                            Youtube
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="respMenu" class="mnav-wrap">
+            <button class="mob-clouse btn btn-primary d-lg-none btn-white zi9" type="button">
+                <span class="icon icon-cross"></span>
+            </button>
+
+            <div class="h-100 d-flex flex-column justify-content-end">
+                <div class="position-relative border-dark">
+                    <div class="mnav-header">
+                        <h3>Menu</h3>
+                        <p>Find AI tool fast and easy!</p>
+                        <span class="separator"></span>
+                    </div>
+
+                    <div class="mnav-holder">
+                        <ul class="mnav list-unstyled">
+                            
+
+                            <li class="mnav-item">
+                                <a class="mnav-link" href="/tool-search">
+                                    <span class="icon icon-cpu"></span>
+                                    AI find AI
+                                </a>
+                            </li>
+
+                            <li class="mnav-item">
+                                <a class="mnav-link" href="/newsletter">
+                                    <span class="icon icon-at-sign"></span>
+                                    Newsletter
+                                </a>
+                            </li>
+
+                            <li class="mnav-item">
+                                <a class="mnav-link" href="/ai-blog">
+                                    <span class="icon icon-list1"></span>
+                                    Blog
+                                </a>
+                            </li>
+
+                            <li class="mnav-item">
+                                <a class="mnav-link" href="/ai-events">
+                                    <span class="icon icon-calendar1"></span>
+                                    AI Events
+                                </a>
+                            </li>
+
+                            <li class="mnav-item">
+                                <a class="mnav-link" href="/ai-influencers">
+                                    <span class="icon icon-instagram"></span>
+                                    AI Influencers
+                                </a>
+                            </li> 
+
+                            <li class="mnav-item">
+                                <a class="mnav-link" href="/news-feed">
+                                    <span class="icon icon-notes-vertical"></span>
+                                    News Feed
+                                </a>
+                            </li> 
+
+                            <li class="mnav-item">
+                                <a class="mnav-link" href="/submit-ai-tool">
+                                    <span class="icon icon-bulb"></span>
+                                    Submit
+                                </a>
+                            </li>
+
+                            <!-- 
+                            <li class="mnav-item">
+                                <a class="mnav-link" href="/ai-news">
+                                    <span class="icon icon-speech-bubble"></span>
+                                    AI News
+                                </a>
+                            </li>
+                            
+                            <li class="mnav-item">
+                                <a class="mnav-link" href="/ai-interviews">
+                                    <span class="icon icon-microphone"></span>
+                                    Interviews
+                                </a>
+                            </li>
+
+                            <li class="mnav-item">
+                                <a class="mnav-link" href="/ai-academy">
+                                    <span class="icon icon-star1"></span>
+                                    AI Academy
+                                </a>
+                            </li>
+
+                            <li class="mnav-item">
+                                <a class="mnav-link" href="/ai-prompts">
+                                    <span class="icon icon-writing"></span>
+                                    Prompts
+                                </a>
+                            </li>
+                             -->
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Mobile Menu -->
+        <div class="responsive-nav d-lg-none">
+            <ul class="navbar-nav">
+
+                <li class="res-nav">
+                    <a href="/" class="res-nav-link">
+                        <span class="icon icon-tools"></span>
+                        <span class="res-nav-text d-block">AI Tools</span>
+                    </a>
+                </li>
+
+                <li class="res-nav" id="res-nav-link" >
+                    <a href="/categories" class="res-nav-link">
+                        <span class="icon icon-earth"></span>
+                        <span class="res-nav-text d-block">Categories</span>
+                    </a>
+                </li>
+
+                <li class="res-nav">
+                    <span id="mobOpenUser" class="res-nav-link pointer" v-pre>
+                        <span class="icon icon-user-round"></span>
+                        <span class="res-nav-text d-block">Profile</span>
+                    </span>
+                </li>
+
+
+            <!-- 
+                
+                <li class="res-nav">
+                    <a href="/register" class="res-nav-link">
+                        <span class="icon icon-user-round"></span>
+                        <span class="res-nav-text d-block">Sign up</span>
+                    </a>
+                </li>
+
+                
+             -->
+
+                <li class="res-nav">
+                    <a id="mobOpenMenu" class="res-nav-link hamburger">
+                        <!-- <div class="hamburger-box">
+                            <div class="hamburger-inner"></div>
+                        </div> -->
+                        <span class="icon icon-hamburger-menu"></span>
+                        <span class="res-nav-text d-block">Menu</span>
+                    </a>
+                </li>   
+            </ul>
+        </div>
+
+    </div>
+</nav>
+            
+            <div class="container-fluid p-0 page-content">
+                
+<div class="page-content">
+    <loader></loader>
+    <router-view :key="$route.fullPath"></router-view>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer pt-5">
+	<div class="container-fluid">
+		<div class="row d-flex justify-content-center">
+
+			<div class="col-12 col-md-6 col-lg-5 mb-4 mb-md-0 d-flex justify-content-center justify-content-md-start">
+				<ul class="list-unstyled list-inline d-flex align-items-center mb-0">
+					<li>
+						<a href="/">AI Tools</a>
+					</li>
+					<li>
+						<a href="/categories">Categories</a>
+					</li>
+					<li>
+						<a href="/ai-filters">Filters</a>
+					</li>
+					<li class="d-none d-lg-block">
+						<a href="/submit-ai-tool">Submit</a>
+					</li>
+					<li>
+						<a href="/about">About</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-12 col-md-6 col-lg-7 mb-4 mb-md-0 d-flex justify-content-center justify-content-md-end">
+				<ul class="list-unstyled list-inline d-flex align-items-center mb-0">
+					<li>
+						<a href="https://twitter.com/aitoolguru" target="_blank">
+							<span class="icon icon-twitter"></span>
+							<span class="d-none d-xl-inline-block">Twitter</span>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.facebook.com/aitoolguru" target="_blank">
+							<span class="icon icon-facebook"></span>
+							<span class="d-none d-xl-inline-block">Facebook</span>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.linkedin.com/company/ai-tool-guru/" target="_blank">
+                            <span class="icon icon-linkedin"></span>
+                            <span class="d-none d-xl-inline-block">Linkedin</span>
+                        </a>
+
+					</li>
+					<li>
+						<a href="https://discord.gg/BX9DncrMdD" target="_blank">
+							<span class="icon icon-discord"></span>
+							<span class="d-none d-xl-inline-block">Discord</span>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.instagram.com/aitool_guru/" target="_blank">
+							<span class="icon icon-instagram"></span>
+							<span class="d-none d-xl-inline-block">Instagram</span>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.tiktok.com/@aitoolguru" target="_blank">
+							<span class="icon icon-tiktok-icon"></span>
+							<span class="d-none d-xl-inline-block">TikTok</span>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.youtube.com/@aitoolguru" target="_blank">
+                            <span class="icon icon-youtube"></span>
+                            <span class="d-none d-xl-inline-block">Youtube</span>
+                        </a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
+		<div class="row d-flex justify-content-center terms-nav mt-3">
+			
+			<div class="col-12 col-sm-6 order-sm-2 d-flex justify-content-center justify-content-sm-end">
+				<ul class="list-unstyled list-inline d-flex  text-small">
+					<li>
+						<a href="/terms" class="text-muted">Terms</a>
+					</li>
+					<li>
+						<a href="/privacy-policy" class="text-muted">Privacy</a>
+					</li>
+					<li>
+						<a href="/faq" class="text-muted">FAQ</a>
+					</li>
+					<li>
+						<a href="/glossary" class="text-muted">AI Glossary</a>
+					</li>
+				</ul>
+			</div>
+		
+			<div class="col-12 col-sm-6 order-sm-1 d-flex justify-content-center justify-content-sm-start">
+				<span class="copy">
+					&copy; <span id="year"></span> Copyright AI TOOL  GURU 				</span>
+			</div>
+				
+		</div>
+
+	</div>
+</footer>
+        <feedback-button></feedback-button>
+    </div>
+
+    
+    
+    <script type="text/javascript">
+
+        window._rcv3sk = '6LdExpokAAAAACG-j2XUI_kWUNPkw0-dn0qPZfdt';
+
+    </script>
+
+    <!-- FB Share -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_EN/sdk.js#xfbml=1&version=v16.0&appId=1408498036636197&autoLogAppEvents=1" nonce="FrvLHE0B"></script>
+
+    <!-- Glogin -->
+    <!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
+</body>
+</html>

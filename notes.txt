@@ -1,0 +1,28 @@
+Finish up replacing images in live server.
+
+Migrate this database and images to remote
+
+Scrap more data:
+From https://aitoolguru.com/ and add to the database. 
+Add them from 372 ... going forward;;
+Since there are no logos, just add a default logo image.
+Scrap also the other details and we shall add them slowly by slowly...
+
+Add Bookmark Feature: This should not depend on authentication( will decide on this or not in future)
+
+Add Postgre Database to replace with dbsqlite3
+Add the Full Text Search Using Postgre
+
+Authentication:
+- Google Auth
+- Github Auth
+- Facebook Auth
+
+Add more features, courtesy of the tool https://aitoolguru.com/
+
+Add the Rating Feature for each tool. And comment feature.
+
+Add ASK AI Feature.
+
+
+

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load custom_filters %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">About AI Finder Guru</h2>
+  <p>Welcome to AI Finder Guru! This platform serves as a 
+     web scraper, providing access to a vast array of AI tools. 
+    With {{ all_ai_tools_count }} tools and counting, we ensure you have the latest 
+    and most relevant tools at your fingertips. Our database is 
+    updated automatically every fortnight, guaranteeing you access to the 
+    freshest AI innovations
+  </p>
+</div>
+
+<div class="container py-4">
+  <h3 class="mb-3">Tech Stack Used</h3>
+  <ul>
+    <li>Python</li>
+    <li> BeautifulSoup4 Library</li>
+    <li>Selenium</li>
+    <li>Django</li>
+    <li>PostgreSQL</li>
+    <li>Bootstrap CSS</li>
+  </ul>
+  <h6 class="mb-3"> ➤ This ABOUT page is incomplete and is subject to updates.</h6>
+</div>
+<br>
+<hr>
+<div class="container py-4">
+  <h3 class="mb-3"><u>NB:</u> The entire project is still under development 
+    and testing!</h3>
+</div>
+
+<div class="container py-4">
+  <a href="/" class="btn btn-primary btn-sm">HOME</a>
+</div>
+{% endblock %}

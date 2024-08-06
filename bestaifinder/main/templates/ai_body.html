@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% load custom_filters %}
+
+{% load static %}
+
+{% block title %}{{ ai_tool.ai_name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-center align-items-center text-uppercase font-weight-bold position-relative">
+      <div style="display: flex; align-items: center; border-bottom: 2px solid red; padding-bottom: 5px;">
+        <img style="border-radius: 50%; width: 60px; height: 60px; margin-right: 20px;" src="{{ ai_tool.ai_tool_logo.url }}" alt="{{ ai_tool.ai_name }} Logo">
+        <h1 style="color: red; font-size: 2rem; font-weight: bold; margin-bottom: 0;" id="tool-name">{{ ai_tool.ai_name }}</h1>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-md-6">
+      <img style="width: 100%; height: auto; object-fit: cover; border: 1px solid black; border-radius: 5%;" src="{{ ai_tool.ai_image.url }}" alt="{{ ai_tool.ai_name }}">
+    </div>
+    <div class="col-md-6">
+      <br>
+      <p><u class="lead font-weight-bold" style="color:#59255F;">Pricing Tag:</u>
+        <i class="font-italic font-weight-bold"  style="color:red;">{{ ai_tool.ai_pricing_tag }}</i>
+      </p>
+      <p>
+        <a href="{{ ai_tool.ai_tool_link }}" target="_blank">
+          <button type="button" class="btn btn-success">
+            VISIT
+            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 512 512"><path fill="white" d="M48 399.26C48 335.19 62.44 284 90.91 247c34.38-44.67 88.68-68.77 161.56-71.75V72L464 252L252.47 432V329.35c-44.25 1.19-77.66 7.58-104.27 19.84c-28.75 13.25-49.6 33.05-72.08 58.7L48 440Z"/></svg>
+          </button>
+        </a>
+      </p>
+      <p>
+        <button type="button" class="btn btn-secondary" onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', null, '{{ ai_tool.ai_tool_link }}')">
+          PREVIEW TOOL
+          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"><path fill="white" d="M21.773 14.768c-.029.414-.186.81-.45 1.13a1.892 1.892 0 0 1-.998.63l-3.157.521l-.09.09a.381.381 0 0 0-.09.15l-.5 2.902a1.922 1.922 0 0 1-1.778 1.471h-.09c-.374 0-.74-.111-1.05-.32a1.911 1.911 0 0 1-.739-.92l-2.787-7.906a1.904 1.904 0 0 1 .45-2.001c.253-.263.58-.44.939-.51a1.866 1.866 0 0 1 1.069.07l7.992 2.781c.404.135.754.394 1 .74c.215.351.313.761.28 1.172"/><path fill="white" d="M9.305 22.243a.834.834 0 0 1-.22 0a10.469 10.469 0 0 1-4.5-2.83a10.491 10.491 0 0 1-2.448-10A10.49 10.49 0 0 1 4.82 4.819a10.467 10.467 0 0 1 9.902-2.765a10.466 10.466 0 0 1 4.669 2.54a10.49 10.49 0 0 1 2.822 4.51a.743.743 0 0 1-1.059.886a.76.76 0 0 1-.37-.436a9.008 9.008 0 0 0-2.41-3.894a8.988 8.988 0 0 0-8.585-2.143a8.989 8.989 0 0 0-3.953 2.306a9.01 9.01 0 0 0-2.377 8.536a8.99 8.99 0 0 0 6.075 6.443a.77.77 0 0 1 .49 1a.75.75 0 0 1-.72.44"/></svg>
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="showQRCodeModal('{{ ai_tool.ai_tool_link }}')">
+          QR CODE
+          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+            <g fill="none" fill-rule="evenodd">
+              <path fill="white" d="M13 14h1v1h-1zm1 1h1v1h-1zm0 1h1v1h-1zm2 0h1v1h-1zm0 1h1v1h-1zm-3-1h1v1h-1zm2 0h1v1h-1zm0 1h1v1h-1zm3-1h1v1h-1zm0-1h1v1h-1zm1-1h1v1h-1zm-2 2h1v1h-1zm-6 1h1v1h-1zm-1 0h1v1h-1zm0 1h1v1h-1zm2 0h1v1h-1zm-3 0h1v1h-1zm2 0h1v1h-1zm-2 1h1v1h-1zm-2 0h1v1h-1zm1 0h1v1h-1zM1 11h1v1H1zm1 1h1v1H2zm2-1h1v1H4zm0 1h1v1H4zm1-1h1v1H5zm1 1h1v1H6zm1-1h1v1H7zm1 1h1v1H8zm0-1h1v1H8zm1 0h1v1H9zm1 0h1v1h-1zm1 1h1v1h-1zm2 0h1v1h-1zm1-1h1v1h-1zm1 0h1v1h-1zm1 0h1v1h-1zm-1 2h1v1h-1zm-2 9h1v1h-1zm-1 0h1v1h-1zm0-9h1v1h-1zm-1 0h1v1h-1zm0 1h1v1h-1zm0 1h1v1h-1zm11-1h1v1h-1zm-1 1h1v1h-1zm1 2h1v1h-1zm-5-4h1v1h-1zm1-1h1v1h-1zm4 0h1v1h-1zm0 1h1v1h-1zm-1 0h1v1h-1zm1 0h1v1h-1zm1 0h1v1h-1zm-1 2h1v1h-1zm-2 0h1v1h-1zm3 0h1v1h-1z"/>
+              <path stroke="white" stroke-width="2" d="M15 2h7v7h-7zM2 2h7v7H2zm0 13h7v7H2zM18 5h1v1h-1zM5 5h1v1H5zm0 13h1v1H5z"/>
+            </g>
+          </svg>
+        </button> 
+      </p>
+      <p><u class="lead font-weight-bold" style="color:#59255F;">Tags:</u>
+        {% for tag in ai_tool.ai_tags|split_tags %}
+            <a href="/tags/{{ tag|slugify }}">{{ tag }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </p>
+
+    </div>
+  </div>
+  
+  <!-- QR Code Popup Modal -->
+    <div class="modal fade" id="qrCodeModal" tabindex="-1" role="dialog" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <img src="{% static 'images/app-logo/logo2.png' %}" style="width: 25px; height: auto;" alt="Logo">
+            <h5 class="modal-title" id="qrCodeModalLabel">{{ ai_tool.ai_name }} {QR Code}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-center">
+            <div class="spinner-border text-primary" role="status" style="display: none;">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <div id="qrCodeContent">
+              <!-- QR code content will be inserted here -->
+            </div>
+            <hr>
+            <p class="text-muted" style="font-size: 12px;">Scan this code to access {{ ai_tool.ai_name }}</p>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" style="float: right;">
+              Close QR Code
+              <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20"><path fill="white" d="M2.93 17.07A10 10 0 1 1 17.07 2.93A10 10 0 0 1 2.93 17.07m1.41-1.41A8 8 0 1 0 15.66 4.34A8 8 0 0 0 4.34 15.66m9.9-8.49L11.41 10l2.83 2.83l-1.41 1.41L10 11.41l-2.83 2.83l-1.41-1.41L8.59 10L5.76 7.17l1.41-1.41L10 8.59l2.83-2.83z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="content py-4">
+      <p class="lead font-weight-bold text-success"><u>Description:</u></p>
+      <p class="lead font-weight-normal">{{ ai_tool.ai_short_description }}</p>
+      <div class="d-flex align-items-center">
+          <button onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', null, '{{ ai_tool.ai_tool_link }}')" style="font-size: 13px;" class="btn btn-primary me-3">
+            Preview
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="white" d="M21.773 14.768c-.029.414-.186.81-.45 1.13a1.892 1.892 0 0 1-.998.63l-3.157.521l-.09.09a.381.381 0 0 0-.09.15l-.5 2.902a1.922 1.922 0 0 1-1.778 1.471h-.09c-.374 0-.74-.111-1.05-.32a1.911 1.911 0 0 1-.739-.92l-2.787-7.906a1.904 1.904 0 0 1 .45-2.001c.253-.263.58-.44.939-.51a1.866 1.866 0 0 1 1.069.07l7.992 2.781c.404.135.754.394 1 .74c.215.351.313.761.28 1.172"/><path fill="white" d="M9.305 22.243a.834.834 0 0 1-.22 0a10.469 10.469 0 0 1-4.5-2.83a10.491 10.491 0 0 1-2.448-10A10.49 10.49 0 0 1 4.82 4.819a10.467 10.467 0 0 1 9.902-2.765a10.466 10.466 0 0 1 4.669 2.54a10.49 10.49 0 0 1 2.822 4.51a.743.743 0 0 1-1.059.886a.76.76 0 0 1-.37-.436a9.008 9.008 0 0 0-2.41-3.894a8.988 8.988 0 0 0-8.585-2.143a8.989 8.989 0 0 0-3.953 2.306a9.01 9.01 0 0 0-2.377 8.536a8.99 8.99 0 0 0 6.075 6.443a.77.77 0 0 1 .49 1a.75.75 0 0 1-.72.44"/></svg>
+          </button>
+          <button onclick="copyPageLink()" class="btn btn-outline-secondary me-3" style="font-size: 13px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256"><path fill="blue" d="M216 32H88a8 8 0 0 0-8 8v40H40a8 8 0 0 0-8 8v128a8 8 0 0 0 8 8h128a8 8 0 0 0 8-8v-40h40a8 8 0 0 0 8-8V40a8 8 0 0 0-8-8m-8 128h-32V88a8 8 0 0 0-8-8H96V48h112Z"/></svg>
+            Copy Link
+          </button>
+         <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" style="font-size: 13px;" type="button" id="dropdownMenuButton" onclick="toggleDropdown()">
+              Share
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="white" d="m13.576 17.271l-5.11-2.787a3.5 3.5 0 1 1 0-4.968l5.11-2.787a3.5 3.5 0 1 1 .958 1.755l-5.11 2.787a3.5 3.5 0 0 1 0 1.457l5.11 2.788a3.5 3.5 0 1 1-.958 1.755"/></svg>
+          </button>
+          <div class="dropdown-menu" id="dropdownMenu">
+              <a class="dropdown-item" href="#" onclick="shareTo('whatsapp')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18.86" height="19" viewBox="0 0 256 258"><defs><linearGradient id="logosWhatsappIcon0" x1="50%" x2="50%" y1="100%" y2="0%"><stop offset="0%" stop-color="#1faf38"/><stop offset="100%" stop-color="#60d669"/></linearGradient><linearGradient id="logosWhatsappIcon1" x1="50%" x2="50%" y1="100%" y2="0%"><stop offset="0%" stop-color="#f9f9f9"/><stop offset="100%" stop-color="#fff"/></linearGradient></defs><path fill="url(#logosWhatsappIcon0)" d="M5.463 127.456c-.006 21.677 5.658 42.843 16.428 61.499L4.433 252.697l65.232-17.104a123 123 0 0 0 58.8 14.97h.054c67.815 0 123.018-55.183 123.047-123.01c.013-32.867-12.775-63.773-36.009-87.025c-23.23-23.25-54.125-36.061-87.043-36.076c-67.823 0-123.022 55.18-123.05 123.004"/><path fill="url(#logosWhatsappIcon1)" d="M1.07 127.416c-.007 22.457 5.86 44.38 17.014 63.704L0 257.147l67.571-17.717c18.618 10.151 39.58 15.503 60.91 15.511h.055c70.248 0 127.434-57.168 127.464-127.423c.012-34.048-13.236-66.065-37.3-90.15C194.633 13.286 162.633.014 128.536 0C58.276 0 1.099 57.16 1.071 127.416m40.24 60.376l-2.523-4.005c-10.606-16.864-16.204-36.352-16.196-56.363C22.614 69.029 70.138 21.52 128.576 21.52c28.3.012 54.896 11.044 74.9 31.06c20.003 20.018 31.01 46.628 31.003 74.93c-.026 58.395-47.551 105.91-105.943 105.91h-.042c-19.013-.01-37.66-5.116-53.922-14.765l-3.87-2.295l-40.098 10.513z"/><path fill="#fff" d="M96.678 74.148c-2.386-5.303-4.897-5.41-7.166-5.503c-1.858-.08-3.982-.074-6.104-.074c-2.124 0-5.575.799-8.492 3.984c-2.92 3.188-11.148 10.892-11.148 26.561s11.413 30.813 13.004 32.94c1.593 2.123 22.033 35.307 54.405 48.073c26.904 10.609 32.379 8.499 38.218 7.967c5.84-.53 18.844-7.702 21.497-15.139c2.655-7.436 2.655-13.81 1.859-15.142c-.796-1.327-2.92-2.124-6.105-3.716s-18.844-9.298-21.763-10.361c-2.92-1.062-5.043-1.592-7.167 1.597c-2.124 3.184-8.223 10.356-10.082 12.48c-1.857 2.129-3.716 2.394-6.9.801c-3.187-1.598-13.444-4.957-25.613-15.806c-9.468-8.442-15.86-18.867-17.718-22.056c-1.858-3.184-.199-4.91 1.398-6.497c1.431-1.427 3.186-3.719 4.78-5.578c1.588-1.86 2.118-3.187 3.18-5.311c1.063-2.126.531-3.986-.264-5.579c-.798-1.593-6.987-17.343-9.819-23.64"/></svg>
+                WhatsApp
+              </a>
+              <a class="dropdown-item" href="#" onclick="shareTo('facebook')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 256 256"><path fill="#1877f2" d="M256 128C256 57.308 198.692 0 128 0S0 57.308 0 128c0 63.888 46.808 116.843 108 126.445V165H75.5v-37H108V99.8c0-32.08 19.11-49.8 48.348-49.8C170.352 50 185 52.5 185 52.5V84h-16.14C152.959 84 148 93.867 148 103.99V128h35.5l-5.675 37H148v89.445c61.192-9.602 108-62.556 108-126.445"/><path fill="#fff" d="m177.825 165l5.675-37H148v-24.01C148 93.866 152.959 84 168.86 84H185V52.5S170.352 50 156.347 50C127.11 50 108 67.72 108 99.8V128H75.5v37H108v89.445A129 129 0 0 0 128 256a129 129 0 0 0 20-1.555V165z"/></svg>
+                Facebook
+              </a>
+              <a class="dropdown-item" href="#" onclick="shareTo('x')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 512 512"><path fill="black" d="M389.2 48h70.6L305.6 224.2L487 464H345L233.7 318.6L106.5 464H35.8l164.9-188.5L26.8 48h145.6l100.5 132.9zm-24.8 373.8h39.1L151.1 88h-42z"/></svg>
+                X.com
+              </a>
+              <a class="dropdown-item" href="#" onclick="shareTo('linkedin')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 256 256"><g fill="none"><rect width="256" height="256" fill="#fff" rx="60"/><rect width="256" height="256" fill="#0a66c2" rx="60"/><path fill="#fff" d="M184.715 217.685h29.27a4 4 0 0 0 4-3.999l.015-61.842c0-32.323-6.965-57.168-44.738-57.168c-14.359-.534-27.9 6.868-35.207 19.228a.32.32 0 0 1-.595-.161V101.66a4 4 0 0 0-4-4h-27.777a4 4 0 0 0-4 4v112.02a4 4 0 0 0 4 4h29.268a4 4 0 0 0 4-4v-55.373c0-15.657 2.97-30.82 22.381-30.82c19.135 0 19.383 17.916 19.383 31.834v54.364a4 4 0 0 0 4 4M38 59.628c0 11.864 9.767 21.626 21.632 21.626c11.862-.001 21.623-9.769 21.623-21.631C81.253 47.761 71.491 38 59.628 38C47.762 38 38 47.763 38 59.627m6.959 158.058h29.307a4 4 0 0 0 4-4V101.66a4 4 0 0 0-4-4H44.959a4 4 0 0 0-4 4v112.025a4 4 0 0 0 4 4"/></g></svg>
+                LinkedIn
+              </a>
+            </div>
+          </div>
+      </div>
+   </div>
+    
+   <script>
+       // Function to copy and share link
+        function copyPageLink() {
+            const pageUrl = window.location.href;
+            navigator.clipboard.writeText(pageUrl).then(() => {
+                alert('Link copied to clipboard!');
+            });
+        }
+        
+        function shareTo(platform) {
+            const pageUrl = encodeURIComponent(window.location.href);
+            let shareUrl = '';
+            switch (platform) {
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${pageUrl}`;
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+                    break;
+                case 'x':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${pageUrl}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${pageUrl}`;
+                    break;
+            }
+            window.open(shareUrl, '_blank');
+        }
+        
+        function toggleDropdown() {
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            const buttonRect = document.getElementById('dropdownMenuButton').getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+        
+            if (buttonRect.bottom + dropdownMenu.offsetHeight > viewportHeight) {
+                dropdownMenu.style.top = `${-dropdownMenu.offsetHeight}px`;
+            } else {
+                dropdownMenu.style.top = `${buttonRect.height}px`;
+            }
+        
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-toggle')) {
+                const dropdowns = document.getElementsByClassName('dropdown-menu');
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+   </script>
+   
+   <style>
+       /* CSS for dropdowns for tool sharing */
+        .dropdown-menu {
+          display: none;
+          position: absolute;
+          background-color: lightgrey;
+          color: white;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          border: 1px solid #ddd;
+          z-index: 1000;
+          padding: 10px 5px;
+        
+        }
+        
+        .dropdown-menu .dropdown-item {
+          padding: 10px 5px;
+          cursor: pointer;
+          text-decoration: none;
+          display: block;
+          color: #333;
+        }
+        
+        .dropdown-menu .dropdown-item:hover {
+          background-color: #f8f9fa;
+        }
+        
+        .me-3 {
+          margin-right: 1rem;
+        }
+        
+        /* Ensure dropdown position */
+        .dropdown-menu {
+          top: 100%;
+          bottom: auto;
+        }
+   </style>
+  <hr>
+  <br>
+  <br>
+  <br>
+  <h3 style="color: red; font-size: 2.5rem; font-weight: bold;">RELATED TOOLS</h3>
+  <div class="row">
+    {% for related_tool in related_tools %}
+    <br>
+    <br>
+    <div class="col-xs-12 col-sm-4">
+      <div class="card">
+        <a class="img-card" href="{% url 'ai_body' slug=related_tool.slug %}">
+          <img src="{{ related_tool.ai_image.url }}" alt="{{ related_tool.ai_name }}" style="width: 100%; height: auto; object-fit: cover;">
+        </a>
+        <div class="card-content">
+          <h4 class="card-title">
+            <a href="{% url 'ai_body' slug=related_tool.slug %}">
+              <img src="{{ related_tool.ai_tool_logo.url }}" alt="{{ related_tool.ai_name }} Logo" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;"> {{ related_tool.ai_name }}
+            </a>
+          </h4>
+          <p class="">{{ related_tool.ai_short_description|truncatechars:80 }} <a href="{% url 'ai_body' slug=related_tool.slug %}">Learn more</a></p>
+          <p style="font-style: italic;">
+            Pricing Tag: <i style="color:red;">{{ related_tool.ai_pricing_tag }}</i>
+          </p>
+          <p class="tags">
+            Tags:
+            {% for tag in related_tool.ai_tags|split_tags|slice:":3" %}
+            <a href="/tags/{{ tag|slugify }}">{{ tag|truncatechars:15 }}</a>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </p>
+          <div class="card-read-more">
+            <a href="{% url 'ai_body' slug=related_tool.slug %}" class="btn btn-link">
+              DETAIL
+              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"><path fill="none" stroke="purple" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 6.5h9.75c2.107 0 3.16 0 3.917.506a3 3 0 0 1 .827.827C22 8.59 22 9.893 22 12M12 6.5l-.633-1.267c-.525-1.05-1.005-2.106-2.168-2.542C8.69 2.5 8.108 2.5 6.944 2.5c-1.816 0-2.724 0-3.406.38A3 3 0 0 0 2.38 4.038C2 4.72 2 5.628 2 7.444V10.5c0 4.179 0 6.505 1.02 8m3.637-2.93l2.062-.056c1.098-.03 1.647-.044 1.98.288c.331.332.316.88.287 1.979l-.055 2.062m-.295-3.979L5 21.5m17-6h-7m7 3h-7m3.5 3H15" color="purple"/></svg>
+            </a>
+            <button onclick="openTool('{{ related_tool.ai_tool_link }}', '{{ related_tool.ai_name }}', '{{ related_tool.slug }}', '{{ related_tool.ai_tool_link }}')" class="btn btn-link">
+              PREVIEW
+              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"><path fill="purple" d="M21.773 14.768c-.029.414-.186.81-.45 1.13a1.892 1.892 0 0 1-.998.63l-3.157.521l-.09.09a.381.381 0 0 0-.09.15l-.5 2.902a1.922 1.922 0 0 1-1.778 1.471h-.09c-.374 0-.74-.111-1.05-.32a1.911 1.911 0 0 1-.739-.92l-2.787-7.906a1.904 1.904 0 0 1 .45-2.001c.253-.263.58-.44.939-.51a1.866 1.866 0 0 1 1.069.07l7.992 2.781c.404.135.754.394 1 .74c.215.351.313.761.28 1.172"/><path fill="purple" d="M9.305 22.243a.834.834 0 0 1-.22 0a10.469 10.469 0 0 1-4.5-2.83a10.491 10.491 0 0 1-2.448-10A10.49 10.49 0 0 1 4.82 4.819a10.467 10.467 0 0 1 9.902-2.765a10.466 10.466 0 0 1 4.669 2.54a10.49 10.49 0 0 1 2.822 4.51a.743.743 0 0 1-1.059.886a.76.76 0 0 1-.37-.436a9.008 9.008 0 0 0-2.41-3.894a8.988 8.988 0 0 0-8.585-2.143a8.989 8.989 0 0 0-3.953 2.306a9.01 9.01 0 0 0-2.377 8.536a8.99 8.99 0 0 0 6.075 6.443a.77.77 0 0 1 .49 1a.75.75 0 0 1-.72.44"/></svg>
+            </button>
+            <a href="{{ related_tool.ai_tool_link }}" class="btn btn-link" target="_blank">
+              VISIT
+              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"><path fill="purple" d="M12 22q-2.075 0-3.537-1.463T7 17V7q0-2.075 1.463-3.537T12 2t3.538 1.463T17 7v5h-5v2q-.825 0-1.412.588T10 16q0 .8.588 1.375T12 18zm2 0v-.575q0-1.3 1.25-1.875t2.75-.575t2.75.575T22 21.425V22zm4-4q-.825 0-1.412-.587T16 16t.588-1.412T18 14t1.413.588T20 16t-.587 1.413T18 18m-6-1q-.425 0-.712-.288T11 16t.288-.712T12 15t.713.288T13 16t-.288.713T12 17m0-7q.825 0 1.413-.587T14 8t-.587-1.412T12 6t-1.412.588T10 8t.588 1.413T12 10"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="container">
+  <a href="/"><button type="submit" class="btn btn-primary btn-sm">HOME</button></a>
+</div>
+
+{% endblock %}
