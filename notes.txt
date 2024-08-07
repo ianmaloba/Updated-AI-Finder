@@ -25,5 +25,7 @@ Add the Rating Feature for each tool. And comment feature.
 
 Add ASK AI Feature.
 
+https://docs.allauth.org/en/latest/installation/quickstart.html
 
+https://youtu.be/GQySb3W2feo?si=xQ3ZfR8-HbXptq78
 
