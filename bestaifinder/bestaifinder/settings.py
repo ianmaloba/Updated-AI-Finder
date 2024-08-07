@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-o9*i%mj(&)_^urj0g8@zu@9i!m31^m1q@!#7ngybfzucxmcu1u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -38,7 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.twitter',
+    # 'allauth.socialaccount.providers.github',
+    
     'main',
+    'userauth'
 ]
 
 MIDDLEWARE = [
@@ -49,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'bestaifinder.urls'
@@ -64,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -146,3 +157,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 if not DEBUG:
     MEDIA_ROOT = os.path.join(BASE_DIR, 'bestaifinder', 'media')
     STATIC_ROOT = os.path.join(BASE_DIR, 'bestaifinder', 'static')
+   
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
+
+LOGIN_REDIRECT_URL = 'index'
