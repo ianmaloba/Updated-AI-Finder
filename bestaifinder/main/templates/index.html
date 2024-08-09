@@ -32,25 +32,26 @@
             <h3>Filter And Search</h3>
             <p><i>Fill in part or whole of the form and click search.. or try <a href="{% url 'google_custom_search' %}" class="text-bold">Custom Search Engine</a></i></p>
             <div class="filter-part">
-                <form method="GET" action="{% url 'search_results' %}">
+                <form id="search-form" method="GET" action="{% url 'search_results' %}">
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <!-- Full width input fields -->
-                            <input class="form-control" type="search" name="ai_name_contains" placeholder="AI Name contains..." />
+                            <!-- Enlarged text input field -->
+                            <label for="ai_name_contains">What kind of AI tool are you looking for?</label>
+                            <textarea class="form-control" id="ai_name_contains" name="ai_name_contains" placeholder="Explain briefly..." rows="3" style="border: 1px solid blue;"></textarea>
                         </div>
                         <div class="form-group col-md-12">
                             <!-- Full width input fields -->
-                            <input class="form-control" type="search" name="ai_short_description__icontains" placeholder="AI Description Contains..." />
+                            <input class="form-control" type="search" name="ai_short_description__icontains" placeholder="AI Name Contains..." style="border: 1px solid blue;" />
                         </div>
                         <div class="form-group col-md-6">
                             <!-- Half width input fields -->
                             <label for="publishDateMin">Launched Before</label>
-                            <input type="date" class="form-control" id="publishDateMin" name="date_min">
+                            <input type="date" class="form-control" id="publishDateMin" name="date_min" style="border: 1px solid blue;">
                         </div>
                         <div class="form-group col-md-6">
                             <!-- Half width input fields -->
                             <label for="category">AI Type</label>
-                            <select id="category" class="form-control" name="ai_type">
+                            <select id="category" class="form-control" name="ai_type" style="border: 1px solid blue;">
                                 <option value="">Choose...</option>
                                 <option value="Video">Video</option>
                                 <option value="Text">Text</option>
@@ -64,13 +65,13 @@
                         <div class="form-group col-md-12">
                             <!-- Full width input fields -->
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="free" value="true" {% if query_params.free == 'true' %}checked{% endif %}>
+                                <input class="form-check-input" type="checkbox" name="free" value="true" {% if query_params.free == 'true' %}checked{% endif %} style="border: 1px solid lightblue;">
                                 <label class="form-check-label" for="free">Free</label>
                             </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Search</button>
-                </form>
+                </form>  
             </div>
             <hr>
             <p><i>OR Search by ai tool id..</i></p>
@@ -87,7 +88,44 @@
             </div>
             <hr>
         </div>
-        
+
+<!-- Loading Indicator -->
+<div id="loading" style="display: none; text-align: center; margin-top: 20px;">
+    <div class="spinner" style="display: inline-block; width: 50px; height: 50px; border: 5px solid lightblue; border-top: 5px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+    <p>Loading...</p>
+</div>
+
+<script>
+    document.getElementById('search-form').addEventListener('submit', function() {
+        document.getElementById('loading').style.display = 'block';
+    });
+</script>
+<!-- spinning when one searches -->
+
+<style>
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    #loading {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        text-align: center;
+    }
+    .spinner {
+        width: 300px; /* Increase size */
+        height: 300px;
+        border: 25px solid lightblue; /* Thicker border */
+        border-top: 15px solid #3498db; /* Spinner color */
+        border-radius: 50%;
+        animation: spin 0.25s linear infinite; /* Faster spin */
+    }
+</style>
+
+
         <div class="col-md-6">
             <!-- Right Side: Categories and Tags -->
             <div>

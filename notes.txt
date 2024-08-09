@@ -29,3 +29,9 @@ https://docs.allauth.org/en/latest/installation/quickstart.html
 
 https://youtu.be/GQySb3W2feo?si=xQ3ZfR8-HbXptq78
 
+One can create an account...even companies can create an account and then add their AI tools there.
+Also when people add tags...we can list all tags and let the mark tne tags available...etc
+In the form..let them add even logo ..etc, and then we can tell them that if they do not, we will have a default One
+At the pricing tag, we can let then add tag..a decription..etc, theis way we can click learn more and a pop up for more info about pricing.
+
+The blogs can be written by companies ...etc, or just any user. So in their profile...there are their tools and their blogs as well.

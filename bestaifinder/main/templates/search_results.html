@@ -19,13 +19,13 @@
   <p>You searched for:</p>
   <ul>
       {% if query_params.ai_name_contains %}
-      <li><span class="text-primary">AI Name contains:</span> {{ query_params.ai_name_contains }}</li>
+      <li><span class="text-primary">AI Description contains:</span> {{ query_params.ai_name_contains }}</li>
       {% endif %}
       {% if query_params.ai_exact_id %}
       <li><span class="text-primary">AI Exact ID:</span> {{ query_params.ai_exact_id }}</li>
       {% endif %}
       {% if query_params.ai_short_description__icontains %}
-      <li><span class="text-primary">AI Description contains:</span> {{ query_params.ai_short_description__icontains }}</li>
+      <li><span class="text-primary">AI Name contains:</span> {{ query_params.ai_short_description__icontains }}</li>
       {% endif %}
       {% if query_params.date_min %}
       <li><span class="text-primary">Founded Before:</span> {{ query_params.date_min }}</li>
@@ -43,6 +43,7 @@
 <br>
 
 <section class="wrapper">
+  <div class="container-fostrap">
     <div class="content">
       <div class="container">
         <div class="row">
@@ -208,6 +209,7 @@
             {% endif %}
           </div>
         </div>
+      </div>
       </section>
       <div class="container">
         <a href="/"><button type="submit" class="btn btn-primary btn-sm">HOME</button></a>
