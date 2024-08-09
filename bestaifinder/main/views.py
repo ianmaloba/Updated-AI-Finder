@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from .models import AITool, Category
 from django.db.models import Count, Q, F
@@ -230,29 +231,40 @@ def about(request):
     
     return render(request, 'about.html', context)
 
+# views.py
+from django.shortcuts import render
+from .models import Category, AITool
+from django.db.models import Q
 
 def all_categories_page(request):
     # Fetch all categories
     categories = Category.objects.all()
     
-    # Create a dictionary to store tools associated with each category and their counts
-    categories_with_tools = {}
-    for category in categories:
-        filters = (Q(ai_name__icontains=category.name) | 
-                   Q(ai_short_description__icontains=category.name) | 
-                   Q(ai_tags__icontains=category.name))
-        tools = AITool.objects.filter(filters).order_by('id')
-        categories_with_tools[category] = tools
-    
     # Fetch the total count of AI tools
     all_ai_tools_count = AITool.objects.count()
-        
+    
     context = {
-        "categories_with_tools": categories_with_tools,
+        "categories": categories,
         'all_ai_tools_count': all_ai_tools_count,
     }
     return render(request, 'all_categories_page.html', context)
 
+def get_category_tools(request):
+    category_slug = request.GET.get('category_slug')
+    category = get_object_or_404(Category, slug=category_slug)
+    
+    filters = (Q(ai_name__icontains=category.name) | 
+               Q(ai_short_description__icontains=category.name) | 
+               Q(ai_tags__icontains=category.name))
+    tools = AITool.objects.filter(filters).order_by('id')
+    
+    tools_list = list(tools.values('id', 'ai_name', 'slug'))  # Customize the fields as needed
+    
+    return JsonResponse({'tools': tools_list})
+
+from django.http import JsonResponse
+from django.shortcuts import render
+from .models import AITool
 
 def all_tags_page(request):
     # Fetch all unique tags from all AITool objects
@@ -276,6 +288,24 @@ def all_tags_page(request):
         'all_ai_tools_count': all_ai_tools_count,
     }
     return render(request, 'all_tags_page.html', context)
+
+def tag_tools_ajax(request):
+    tag_slug = request.GET.get('tag_slug')
+    if not tag_slug:
+        return JsonResponse({'error': 'No tag provided'}, status=400)
+    
+    # Convert tag_slug to original tag (assuming tags are unique)
+    tag = tag_slug.replace('-', ' ')
+    
+    # Get tools for the provided tag
+    tools = AITool.objects.filter(ai_tags__icontains=tag)
+    
+    tools_list = [{
+        'ai_name': tool.ai_name,
+        'slug': tool.slug
+    } for tool in tools]
+    
+    return JsonResponse({'tools': tools_list})
 
     
 def charts(request):

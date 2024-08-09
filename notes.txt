@@ -35,3 +35,4 @@ In the form..let them add even logo ..etc, and then we can tell them that if the
 At the pricing tag, we can let then add tag..a decription..etc, theis way we can click learn more and a pop up for more info about pricing.
 
 The blogs can be written by companies ...etc, or just any user. So in their profile...there are their tools and their blogs as well.
+bug: if I search... and finish and use the back button on chrome...the spanner continues to rotate

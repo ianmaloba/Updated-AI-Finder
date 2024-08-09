@@ -1,24 +1,22 @@
 {% extends "base.html" %}
 
-{% load custom_filters %}
-
 {% block title %}All Categories{% endblock %}
 
 {% block content %}
-
-<div class="all-categories-entire-page">
-    <div class="container">
+<div class="container">
+    <h1 class="heading">ALL CATEGORIES</h1>
+    <p class="instruction-text">Select a category to view its related tools.</p>
     <div class="row">
-        <div>
-            <h1 class="heading">CATEGORIES</h1>
-            <div>
-                {% for category, tools in categories_with_tools.items %}
-                    <a href="{% url 'category_tools' category_slug=category.slug %}">
-                        <button class="category-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 16 16">
+        <!-- Categories Column -->
+        <div class="col-md-4">
+            <div id="categories-list">
+                <p id="categories-text">
+                    {% for category in categories %}
+                        <button class="category-button" data-slug="{{ category.slug }}">
+                            <svg class="category-icon" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 16 16">
                                 <g fill="none">
                                     <g clip-path="url(#gravityUiHandPointRight0)">
-                                        <path fill="red" fill-rule="evenodd" d="m2.5 6l2.906-3.737a1.978 1.978 0 0 1 3.48 1.694L8.626 5h5.432a1.942 1.942 0 0 1 .421 3.838L11.5 9.5l-.457 2.744a3 3 0 0 1-3.732 2.405L3 13.5zm5.197 7.2l-3.272-.872l-.39-5.858L6.59 3.184a.478.478 0 0 1 .84.41l-.26 1.042L6.704 6.5h7.354a.442.442 0 0 1 .096.874l-2.98.662l-.987.22l-.166.997l-.458 2.744A1.5 1.5 0 0 1 7.697 13.2m-7.195.103a.75.75 0 0 0 1.496-.106l-.5-7a.75.75 0 1 0-1.496.106z" clip-rule="evenodd"/>
+                                        <path class="icon-fill" fill="grey" fill-rule="evenodd" d="m2.5 6l2.906-3.737a1.978 1.978 0 0 1 3.48 1.694L8.626 5h5.432a1.942 1.942 0 0 1 .421 3.838L11.5 9.5l-.457 2.744a3 3 0 0 1-3.732 2.405L3 13.5zm5.197 7.2l-3.272-.872l-.39-5.858L6.59 3.184a.478.478 0 0 1 .84.41l-.26 1.042L6.704 6.5h7.354a.442.442 0 0 1 .096.874l-2.98.662l-.987.22l-.166.997l-.458 2.744A1.5 1.5 0 0 1 7.697 13.2m-7.195.103a.75.75 0 0 0 1.496-.106l-.5-7a.75.75 0 1 0-1.496.106z" clip-rule="evenodd"/>
                                     </g>
                                     <defs>
                                         <clipPath id="gravityUiHandPointRight0">
@@ -28,45 +26,83 @@
                                 </g>
                             </svg>
                             {{ category.name }}
-                        </button>
-                    </a>
-                {% endfor %}
+                        </button>{% if not forloop.last %} {% endif %}
+                    {% endfor %}
+                </p>
             </div>
-            <br>
-            <hr>
-            <br>
         </div>
-
-        <div class="tags-and-cat-table">
-            <table  class="table-rounded" style="width:100%">
-                <tr>
-                    <th>CATEGORY</th>
-                    <th>ASSOCIATED TOOLS</th>
-                </tr>
-                {% for category, tools in categories_with_tools.items %}
-                <tr>
-                    <td>
-                        <a href="{% url 'category_tools' category_slug=category.slug %}">{{ category.name }}</a> ({{ tools|length }})
-                    </td>
-                    <td>
-                        <ul>
-                            {% for tool in tools %}
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 512 512"><path fill="grey" d="M58.79 439.13A16 16 0 0 1 48 424c0-73.1 14.68-131.56 43.65-173.77c35-51 90.21-78.46 164.35-81.87V88a16 16 0 0 1 27.05-11.57l176 168a16 16 0 0 1 0 23.14l-176 168A16 16 0 0 1 256 424v-79.77c-45 1.36-79 8.65-106.07 22.64c-29.25 15.12-50.46 37.71-73.32 67a16 16 0 0 1-17.82 5.28Z"/></svg>
-                                <a href="{% url 'ai_body' slug=tool.slug %}">{{ tool.ai_name }}</a>
-                            {% endfor %}
-                        </ul>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
+        
+        <!-- Tools Column -->
+        <div class="col-md-8">
+            <div class="tools-section">
+                <h3 style="color: red;" id="category-title">Tools</h3>
+                <div id="tools-list">
+                    <p>Select a category to see its tools.</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-</div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const categories = document.querySelectorAll('.category-button');
+        const toolsList = document.getElementById('tools-list');
+        const categoryTitle = document.getElementById('category-title');
+        
+        // Handle category button click
+        categories.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove bold from all buttons
+                categories.forEach(btn => {
+                    btn.style.fontWeight = 'normal';
+                    btn.style.color = '';
+                    btn.querySelector('.icon-fill').setAttribute('fill', 'grey'); // Reset icon color
+                });
+                
+                // Add bold to clicked button
+                this.style.fontWeight = 'bold';
+                this.style.color = 'red';
+                this.querySelector('.icon-fill').setAttribute('fill', 'red'); // Change icon color on click
+                
+                // Fetch tools for the selected category
+                fetch(`/category-tools/?category_slug=${this.dataset.slug}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let toolsHtml = '';
+                        data.tools.forEach((tool, index) => {
+                            toolsHtml += `${index > 0 ? ' ' : ''}<svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 512 512"><path fill="grey" d="M58.79 439.13A16 16 0 0 1 48 424c0-73.1 14.68-131.56 43.65-173.77c35-51 90.21-78.46 164.35-81.87V88a16 16 0 0 1 27.05-11.57l176 168a16 16 0 0 1 0 23.14l-176 168A16 16 0 0 1 256 424v-79.77c-45 1.36-79 8.65-106.07 22.64c-29.25 15.12-50.46 37.71-73.32 67a16 16 0 0 1-17.82 5.28Z"/></svg> <a href="/ai-tool/${tool.slug}" style="font-size: smaller;">${tool.ai_name}</a>`;
+                        });
+                        toolsList.innerHTML = toolsHtml;
+                        
+                        // Update the category title
+                        categoryTitle.textContent = `${this.textContent} Related Tools`;
+                    });
+            });
+        });
+        
+        // Trigger click on the first category by default
+        if (categories.length > 0) {
+            categories[0].click();
+        }
+    });
+</script>
 
-<br><br>
-<div class="container">
-    <a href="/"><button type="submit" class="btn btn-primary btn-sm">HOME</button></a>
-</div>
+<style>
+    .tools-section {
+        border: 1px solid black;
+        border-radius: 8px; /* Curved corners */
+        padding: 15px;
+    }
+
+    .instruction-text {
+        color: blue;
+        margin-bottom: 15px; /* Space below the instruction text */
+    }
+
+    .category-button {
+        display: inline; /* Keep buttons inline */
+        margin-right: 5px; /* Small space between buttons */
+    }
+</style>
 {% endblock %}
