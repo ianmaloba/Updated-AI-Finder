@@ -26,10 +26,39 @@
         <!-- Tools Column -->
         <div class="col-md-8">
             <div class="tools-section">
-                <h3 style="color: red;" id="tag-title">Tools</h3>
+                <h3 id="tag-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                        <path fill="purple" d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4S7 4.67 7 5.5S6.33 7 5.5 7z"/>
+                    </svg>
+                    <a href="#" id="tag-link">Tools</a>
+                </h3>
                 <div id="tools-list">
                     <p>Select a tag to see its tools.</p>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="toolModal" tabindex="-1" role="dialog" aria-labelledby="toolModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="toolModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="toolLogo" src="" alt="Tool Logo" class="img-fluid mb-2" style="max-height: 100px;">
+                <p id="toolDescription"></p>
+                <p>Pricing: <span id="toolPricing"></span></p>
+                <p>Tags: <span id="toolTags"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a id="learnMoreLink" href="#" class="btn btn-primary" target="_blank">Learn More</a>
             </div>
         </div>
     </div>
@@ -40,39 +69,53 @@
         const tags = document.querySelectorAll('.tag');
         const toolsList = document.getElementById('tools-list');
         const tagTitle = document.getElementById('tag-title');
+        const tagLink = document.getElementById('tag-link');
         
+        function openToolModal(tool) {
+            document.getElementById('toolModalLabel').textContent = tool.ai_name;
+            document.getElementById('toolLogo').src = tool.ai_tool_logo_url;
+            document.getElementById('toolDescription').textContent = tool.ai_short_description;
+            document.getElementById('toolPricing').textContent = tool.ai_pricing_tag;
+            document.getElementById('toolTags').textContent = tool.ai_tags;
+            document.getElementById('learnMoreLink').href = `/ai-tool/${tool.slug}`;
+            $('#toolModal').modal('show');
+        }
+
         // Handle tag click
         tags.forEach(tag => {
             tag.addEventListener('click', function() {
-                // Remove bold from all tags
                 tags.forEach(t => {
                     t.style.fontWeight = 'normal';
                     t.style.color = '';
-                    t.querySelector('.icon-fill').setAttribute('fill', 'grey'); // Reset icon color
+                    t.querySelector('.icon-fill').setAttribute('fill', 'grey');
                 });
                 
-                // Add bold to clicked tag
                 this.style.fontWeight = 'bold';
                 this.style.color = 'red';
-                this.querySelector('.icon-fill').setAttribute('fill', 'red'); // Change icon color on click
+                this.querySelector('.icon-fill').setAttribute('fill', 'red');
                 
-                // Fetch tools for the selected tag
                 fetch(`/tag-tools/?tag_slug=${this.dataset.slug}`)
                     .then(response => response.json())
                     .then(data => {
                         let toolsHtml = '';
                         data.tools.forEach((tool, index) => {
-                            toolsHtml += `${index > 0 ? ' ' : ''}<svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 512 512"><path fill="grey" d="M58.79 439.13A16 16 0 0 1 48 424c0-73.1 14.68-131.56 43.65-173.77c35-51 90.21-78.46 164.35-81.87V88a16 16 0 0 1 27.05-11.57l176 168a16 16 0 0 1 0 23.14l-176 168A16 16 0 0 1 256 424v-79.77c-45 1.36-79 8.65-106.07 22.64c-29.25 15.12-50.46 37.71-73.32 67a16 16 0 0 1-17.82 5.28Z"/></svg> <a href="/ai-tool/${tool.slug}" style="font-size: smaller;">${tool.ai_name}</a>`;
+                            toolsHtml += `${index > 0 ? ' ' : ''}<svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 512 512"><path fill="grey" d="M58.79 439.13A16 16 0 0 1 48 424c0-73.1 14.68-131.56 43.65-173.77c35-51 90.21-78.46 164.35-81.87V88a16 16 0 0 1 27.05-11.57l176 168a16 16 0 0 1 0 23.14l-176 168A16 16 0 0 1 256 424v-79.77c-45 1.36-79 8.65-106.07 22.64c-29.25 15.12-50.46 37.71-73.32 67a16 16 0 0 1-17.82 5.28Z"/></svg> <a href="#" class="tool-link" data-tool='${JSON.stringify(tool)}' style="font-size: smaller;">${tool.ai_name}</a>`;
                         });
                         toolsList.innerHTML = toolsHtml;
                         
-                        // Update the tag title
-                        tagTitle.textContent = `${this.textContent}-Related Tools`;
+                        document.querySelectorAll('.tool-link').forEach(link => {
+                            link.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                openToolModal(JSON.parse(this.dataset.tool));
+                            });
+                        });
+                        
+                        tagLink.textContent = `#${this.textContent}-Related Tools`;
+                        tagLink.href = `/tags/${this.dataset.slug}`;
                     });
             });
         });
         
-        // Trigger click on the first tag by default
         if (tags.length > 0) {
             tags[0].click();
         }
@@ -82,25 +125,25 @@
 <style>
     .tools-section {
         border: 1px solid black;
-        border-radius: 8px; /* Curved corners */
+        border-radius: 8px;
         padding: 15px;
     }
 
     .instruction-text {
         color: blue;
-        margin-bottom: 15px; /* Space below the instruction text */
+        margin-bottom: 15px;
     }
 
     .tag {
-        font-size: smaller; /* Make tags smaller */
-        cursor: pointer; /* Indicate clickable items */
+        font-size: smaller;
+        cursor: pointer;
         display: inline-flex;
         align-items: center;
-        margin-right: 5px; /* Small space between tags */
+        margin-right: 5px;
     }
 
     .tag-icon {
-        margin-right: 5px; /* Space between icon and text */
+        margin-right: 5px;
     }
 </style>
 {% endblock %}

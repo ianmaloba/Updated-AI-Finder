@@ -5,6 +5,10 @@ from django.db.models import Count, Q, F
 from django.core.paginator import Paginator
 import random
 from django.core.cache import cache
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+from django.contrib.postgres.search import TrigramSimilarity
+from django.db.models import F, Q, Value
+from django.db.models.functions import Greatest
 
 def index(request):
     # Get all tools, ordered by ID for pagination
@@ -81,10 +85,6 @@ def ai_body(request, slug):
         'all_ai_tools_count': all_ai_tools_count,
     })
 
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
-from django.contrib.postgres.search import TrigramSimilarity
-from django.db.models import F, Q, Value
-from django.db.models.functions import Greatest
 
 def search_results(request):
     randomtools = cache.get_or_set('randomtools', random.sample(list(AITool.objects.all()), 9), 60 * 15)
@@ -231,12 +231,11 @@ def about(request):
     
     return render(request, 'about.html', context)
 
-# views.py
-from django.shortcuts import render
-from .models import Category, AITool
-from django.db.models import Q
 
 def all_categories_page(request):
+    # Get all tools, ordered by ID for pagination
+    tools = AITool.objects.all().order_by('-id')
+    
     # Fetch all categories
     categories = Category.objects.all()
     
@@ -246,6 +245,7 @@ def all_categories_page(request):
     context = {
         "categories": categories,
         'all_ai_tools_count': all_ai_tools_count,
+        'tools': tools,
     }
     return render(request, 'all_categories_page.html', context)
 
@@ -258,28 +258,26 @@ def get_category_tools(request):
                Q(ai_tags__icontains=category.name))
     tools = AITool.objects.filter(filters).order_by('id')
     
-    tools_list = list(tools.values('id', 'ai_name', 'slug'))  # Customize the fields as needed
+    tools_list = list(tools.values(
+        'id', 'ai_name', 'slug', 'ai_short_description', 'ai_pricing_tag', 'ai_tags'
+    ))
     
     return JsonResponse({'tools': tools_list})
+
 
 from django.http import JsonResponse
 from django.shortcuts import render
 from .models import AITool
 
 def all_tags_page(request):
-    # Fetch all unique tags from all AITool objects
     all_tags = AITool.objects.values_list('ai_tags', flat=True).distinct()
-    
-    # Split and flatten the tags list, ensuring tags are valid
     unique_tags = set(tag.strip() for tags in all_tags for tag in tags.split(',') if tag.strip() and tag.strip() != "#")
 
-    # Create a dictionary to store tools associated with each tag
     tags_with_tools = {}
     for tag in unique_tags:
         tools_with_tag = AITool.objects.filter(ai_tags__icontains=tag)
         tags_with_tools[tag] = tools_with_tag
 
-    # Fetch the total count of AI tools
     all_ai_tools_count = AITool.objects.count()
         
     context = {
@@ -294,15 +292,19 @@ def tag_tools_ajax(request):
     if not tag_slug:
         return JsonResponse({'error': 'No tag provided'}, status=400)
     
-    # Convert tag_slug to original tag (assuming tags are unique)
     tag = tag_slug.replace('-', ' ')
     
-    # Get tools for the provided tag
     tools = AITool.objects.filter(ai_tags__icontains=tag)
     
     tools_list = [{
         'ai_name': tool.ai_name,
-        'slug': tool.slug
+        'slug': tool.slug,
+        'ai_short_description': tool.ai_short_description,
+        'ai_pricing_tag': tool.ai_pricing_tag,
+        'ai_tags': tool.ai_tags,
+        'ai_tool_link': tool.ai_tool_link,
+        'ai_image_url': tool.ai_image.url if tool.ai_image else '',
+        'ai_tool_logo_url': tool.ai_tool_logo.url if tool.ai_tool_logo else '',
     } for tool in tools]
     
     return JsonResponse({'tools': tools_list})

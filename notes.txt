@@ -36,3 +36,8 @@ At the pricing tag, we can let then add tag..a decription..etc, theis way we can
 
 The blogs can be written by companies ...etc, or just any user. So in their profile...there are their tools and their blogs as well.
 bug: if I search... and finish and use the back button on chrome...the spanner continues to rotate
+Ensure one can visit each category or tool tag through the red heading of its table (when clicked) ...
+Instead of the tools links there at all tool tags and all categories...we can have a modal to come up with details about the tool..
+---details load including its logo, name, tags...etc, but no visit...we just have see more for detail page(basically like a cart)
+
+- Ensure to truncate everything in all cards on the website/...expecially pricing...it is not truncated

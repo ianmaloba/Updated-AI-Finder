@@ -17,7 +17,7 @@ class AITool(models.Model):
     ai_pricing_tag = models.CharField(max_length=255, db_index=True)
     ai_tags = models.CharField(max_length=255, blank=True, default="", db_index=True)
     ai_tool_link = models.URLField()
-    slug = models.SlugField(unique=True, blank=True, null=True, editable=True, db_index=True)
+    slug = models.SlugField(unique=True, blank=True, null=True, editable=False, db_index=True)
     
     # Add a SearchVectorField for full-text search
     search_vector = SearchVectorField(null=True, blank=True)
