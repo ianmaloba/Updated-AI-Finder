@@ -41,3 +41,11 @@ Instead of the tools links there at all tool tags and all categories...we can ha
 ---details load including its logo, name, tags...etc, but no visit...we just have see more for detail page(basically like a cart)
 
 - Ensure to truncate everything in all cards on the website/...expecially pricing...it is not truncated
+
+- After search, we can add a feature to filter the results with price for example...highest prices and lowest etc...basically without
+-----loading it again.
+
+For blogs, we can also find a way for users to add blogs purely by pasting links from medium, hashnode ...
+
+-- Add The search vectors..in their colums, also ensure to be able to create a search vector for every tool formed, upon its addition
+
