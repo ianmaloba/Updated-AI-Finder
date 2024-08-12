@@ -13,11 +13,17 @@
       <div style="display: flex; align-items: center; border-bottom: 2px solid red; padding-bottom: 5px;">
         <img style="border-radius: 50%; width: 60px; height: 60px; margin-right: 20px;" src="{{ ai_tool.ai_tool_logo.url }}" alt="{{ ai_tool.ai_name }} Logo">
         <h1 style="color: red; font-size: 2rem; font-weight: bold; margin-bottom: 0;" id="tool-name">{{ ai_tool.ai_name }}</h1>
+        <br>
+        <br>
+        <br>
       </div>
+      <br>
     </div>
-  </div>
-  <br>
-  <br>
+    <br>
+    <div  class="col-md-12 d-flex justify-content-center align-items-center text-uppercase font-weight-bold position-relative">
+      <p style="text-align: center;"><h5>(Tool ID: {{ ai_tool.id }})</h5></p>
+    </div>
+    </div>
   <br>
   <div class="row">
     <div class="col-md-6">
@@ -88,10 +94,10 @@
         </div>
       </div>
     </div>
-
   <div class="content py-4">
       <p class="lead font-weight-bold text-success"><u>Description:</u></p>
-      <p class="lead font-weight-normal">{{ ai_tool.ai_short_description }}</p>
+      {{ ai_tool.ai_short_description|safe }}
+      <br>
       <div class="d-flex align-items-center">
           <button onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', null, '{{ ai_tool.ai_tool_link }}')" style="font-size: 13px;" class="btn btn-primary me-3">
             Preview

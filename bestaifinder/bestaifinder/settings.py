@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.twitter',
     # 'allauth.socialaccount.providers.github',
     
+    'ckeditor',
+    'ckeditor_uploader',
     'main',
     'userauth'
 ]
@@ -127,6 +129,16 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 700,
+        'width': 700,
+    },
+}
+
+CKEDITOR_RESTRICT_BY_DATE = False
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -150,6 +162,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+CKEDITOR_UPLOAD_PATH = "/media/uploads/"
+
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

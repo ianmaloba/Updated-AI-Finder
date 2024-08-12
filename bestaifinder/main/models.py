@@ -4,12 +4,14 @@ from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField, SearchVector
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class AITool(models.Model):
     ai_image = models.ImageField(upload_to='images/ai-screenshot/', default='images/default.jpg')
     ai_name = models.CharField(max_length=255)
     ai_tool_logo = models.ImageField(upload_to='images/logos/', default='images/default_logo.jpg')
-    ai_short_description = models.TextField()
+    ai_short_description = RichTextField()
     ai_pricing_tag = models.CharField(max_length=255, db_index=True)
     ai_tags = models.CharField(max_length=255, blank=True, default="", db_index=True)
     ai_tool_link = models.URLField()

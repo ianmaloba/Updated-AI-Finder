@@ -49,3 +49,4 @@ For blogs, we can also find a way for users to add blogs purely by pasting links
 
 -- Add The search vectors..in their colums, also ensure to be able to create a search vector for every tool formed, upon its addition
 
+-- Add |safe to every short_description in tools in every html

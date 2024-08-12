@@ -80,7 +80,7 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             <!-- Full width input fields -->
-                            <input class="form-control" style="border: 1px solid blue;" type="number" name="ai_exact_id" placeholder="AI Exact ID (1 to {{ all_ai_tools_count }})" />
+                            <input class="form-control" style="border: 1px solid blue;" type="number" name="ai_exact_id" placeholder="Enter AI Tool ID" />
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Search</button>
@@ -218,7 +218,7 @@
                                         </a>
                                     </h4>
                                     <p class="">
-                                        {{ tool.ai_short_description|truncatechars:80 }} <a href="{% url 'ai_body' slug=tool.slug %}">Learn more</a>
+                                        {{ tool.ai_short_description|truncatechars:80|safe }} <a href="{% url 'ai_body' slug=tool.slug %}">Learn more</a>
                                     </p>
                                     <p style="font-style: italic;">
                                         Pricing: <i style="color:red;">{{ tool.ai_pricing_tag }}</i>

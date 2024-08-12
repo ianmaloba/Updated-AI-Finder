@@ -2,7 +2,6 @@ html {
     scroll-behavior: smooth;
   }
 
-  
 
 .filter-part {
     margin: 20px;
@@ -148,21 +147,19 @@ footer .col-12.col-md-8, footer .col-12.col-md-4 {
     }
   }
   
-   .card {
+  .card {
     display: block;
     margin-bottom: 20px;
     line-height: 1.42857143;
     background-color: #fff;
     border-radius: 2px;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
-    transition: box-shadow .25s, background-color .25s;
-    border: 1px solid #85929b;
-}
-
-.card:hover {
-    box-shadow: 0 12px 24px 0 rgba(0,0,128,0.4), 0 10px 30px 0 rgba(0,0,128,0.25);
-    background-color: #F6DEF5;
-}
+    transition: box-shadow .25s;
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
   
   .img-card {
     width: 100%;
@@ -402,4 +399,40 @@ th {
   .pagination .page-link {
       padding: 0.375rem 0.75rem;
   }
+}
+
+
+/* CSS for dropdowns for tool sharing */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: lightgrey;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border: 1px solid #ddd;
+  z-index: 1000;
+  padding: 10px 5px;
+
+}
+
+.dropdown-menu .dropdown-item {
+  padding: 10px 5px;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  color: #333;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+.me-3 {
+  margin-right: 1rem;
+}
+
+/* Ensure dropdown position */
+.dropdown-menu {
+  top: 100%;
+  bottom: auto;
 }
