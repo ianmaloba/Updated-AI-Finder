@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.twitter',
     # 'allauth.socialaccount.providers.github',
     
+    'crispy_bootstrap4',
+    'crispy_forms',
     'ckeditor',
     'ckeditor_uploader',
     'main',
@@ -69,7 +71,11 @@ ROOT_URLCONF = 'bestaifinder.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'main', 'templates'),
+            os.path.join(BASE_DIR, 'userauth', 'templates'),
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -108,6 +114,7 @@ DATABASES = {
     }
 }
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 # Password validation
@@ -132,7 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
-        'height': 700,
+        'height': 500,
         'width': 700,
     },
 }
