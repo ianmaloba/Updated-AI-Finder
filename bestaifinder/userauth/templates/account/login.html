@@ -39,16 +39,19 @@
   <div class="row">
     <div class="col-md-6 offset-md-3">
       <form class="login" method="POST" action="{% url 'account_login' %}">
-          {% csrf_token %}
-          {{ form|crispy }}
-          {% if redirect_field_value %}
-          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-          {% endif %}
-          <div class="d-grid">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <!-- Add this hidden field -->
+        <input type="hidden" name="next" value="{{ request.GET.next }}" />
+        <div class="d-grid">
             <button class="primaryAction mt-3 btn btn-dark" type="submit">{% trans "Sign In" %}</button><br>
-            <a class="button secondaryAction text-dark text-center" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-          </div>
-        </form>
+            <a class="button secondaryAction text-dark text-center" href="{% url 'password_reset' %}">{% trans "Forgot Password?" %}</a>
+        </div>
+      </form>
+        
     </div>
   </div>
 {% endblock %}
