@@ -6,22 +6,21 @@
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block userauthcontent %}
-<div class="text-center">
-    <h1>{% trans "Sign Up" %}</h1>
+<div class="card shadow-lg border-0 rounded-lg">
+    <div class="card-header">
+        <h3 class="font-weight-light my-4 text-center">{% trans "Sign Up" %}</h3>
+    </div>
+    <div class="card-body">
+        <p class="text-center">{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to {{site_name}}. As a final step, please complete the following form:{% endblocktrans %}</p>
 
-<p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
-{{site_name}}. As a final step, please complete the following form:{% endblocktrans %}</p>
-</div>
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-            <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+        <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
             {% csrf_token %}
             {{ form|crispy }}
             {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
-            <div class="d-grid">
-                <button class="btn btn-dark mt-2" type="submit">{% trans "Sign Up" %}</button>
+            <div class="d-grid mt-3">
+                <button class="btn btn-primary" type="submit">{% trans "Sign Up" %}</button>
             </div>
         </form>
     </div>

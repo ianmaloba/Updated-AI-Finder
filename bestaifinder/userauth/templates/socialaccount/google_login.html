@@ -1,0 +1,22 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Sign In Via Google" %}{% endblock %}
+
+{% block userauthcontent %}
+<div class="card shadow-lg border-0 rounded-lg">
+    <div class="card-header">
+        <h3 class="font-weight-light my-4 text-center">{% trans "Sign In Via Google" %}</h3>
+    </div>
+    <div class="card-body">
+        <p class="text-center">{% trans "You are about to sign in using a third-party account from Google." %}</p>
+        <form method="post" action="{{ action }}">
+            {% csrf_token %}
+            <div class="d-grid">
+                <button class="btn btn-primary" type="submit">{% trans "Continue" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

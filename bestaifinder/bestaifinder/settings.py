@@ -72,9 +72,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'main', 'templates'),
             os.path.join(BASE_DIR, 'userauth', 'templates'),
+            os.path.join(BASE_DIR, 'main', 'templates'),
+            os.path.join(BASE_DIR, 'templates'),
             ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -216,8 +216,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get('malobaian69@gmail.com')
-EMAIL_HOST_PASSWORD = os.environ.get('rmgg mkbm vchv blxs')
-DEFAULT_FROM_EMAIL = os.environ.get('malobaian69@gmail.com')
-SERVER_EMAIL = os.environ.get('malobaian69@gmail.com')
-APP_NAME='AI FINDER GURU'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'aifinderguru@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'kfcf yiro ndmm duik')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'aifinderguru@gmail.com')
+SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'aifinderguru@gmail.com')
+APP_NAME = 'AI FINDER GURU'

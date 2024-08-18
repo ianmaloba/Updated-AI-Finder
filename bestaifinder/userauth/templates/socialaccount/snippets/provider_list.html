@@ -1,28 +1,29 @@
 {% load socialaccount %}
 {% load static %}
 
-{% get_providers as socialaccount_providers %}
-
-{% for provider in socialaccount_providers %}
-{% if provider.id == "openid" %}
-{% for brand in provider.get_brands %}
-<div>
-  <a title="{{brand.name}}" 
-     class="socialaccount_provider {{provider.id}} {{brand.id}}" 
-     href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
-     >{{brand.name}}</a>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Sign in with:</h5>
+        {% get_providers as socialaccount_providers %}
+        {% for provider in socialaccount_providers %}
+            {% if provider.id == "openid" %}
+                {% for brand in provider.get_brands %}
+                    <div class="mb-2">
+                        <a title="{{brand.name}}" 
+                           class="btn btn-outline-secondary socialaccount_provider {{provider.id}} {{brand.id}}" 
+                           href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
+                           >{{brand.name}}</a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="mb-2">
+                <a title="{{provider.name}}" class="btn btn-outline-secondary socialaccount_provider {{provider.id}}" 
+                   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+                   <img src="{% with 'images/'|add:provider.name|add:'.png' as image %}{% static image %}{% endwith %}"
+                        alt="{{ provider.name }}" height="24" class="me-2" />
+                   Sign in with {{ provider.name }}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
 </div>
-{% endfor %}
-{% endif %}
-<div class="my-2">
-  <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" 
-     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
-     <img 
-      src="
-     {% with 'images/'|add:provider.name|add:'.png' as image %}
-      {% static image %}
-     {% endwith %}
-     " alt="{{ provider.name }}" height="50" width="300"/>
-     </a>
-</div>
-{% endfor %}

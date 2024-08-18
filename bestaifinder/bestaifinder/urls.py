@@ -2,15 +2,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from userauth.views import custom_google_login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
-    path('', include('userauth.urls')),
+    path('auth/', include('userauth.urls')),
     path('accounts/', include('allauth.urls')),
+    path('accounts/google/login/', custom_google_login, name='google_login'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    # path('auth/', include('django.contrib.auth.urls')),
-
 ]
 
 if settings.DEBUG:
