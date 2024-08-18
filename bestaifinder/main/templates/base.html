@@ -75,21 +75,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'about' %}">
-              <button type="button" class="btn btn-outline-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24">
-                  <path fill="white" d="M11 9h2V7h-2m1 13c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2m-1 15h2v-6h-2z"/>
-                </svg>
-                About
-              </button>
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="#">
               <button type="button" class="btn btn-outline-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 32 32">
-                  <path fill="white" d="M14 4v7.23L10.69 8.92l-4.47 4.47L3.69 11.5L10.69 4.5l3.31 3.31V1h2v6.81l3.31-3.31l7 7l-2.53 2.53l-4.47-4.47L18 11.23V4h-4zm12.31 9.5l-2.53 2.53l2.53 2.53l2.53-2.53l-2.53-2.53zM18 18h-4v5h4v-5zm-6 0H8v5h4v-5zm8 0v5h4v-5h-4zM4 19.5L1.47 22l7 7l3.53-3.5l-2.53-2.53L8 24.47L4 19.5zm20 0l-2.53 2.53l3.53 3.47l4-4l-2.53-2.5L24 24.47l-2.53-2.53z"/>
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24"><path fill="white" d="M3 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 2h10v4h8v10H3zm7 5v3H7v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
                 Add Tool
               </button>
             </a>
@@ -110,17 +98,41 @@
                         {{ user.username }}
                     {% endif %}
                 {% else %}
-                  User Menu
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="white" d="M12 4a4 4 0 1 1 0 8a4 4 0 0 1 0-8m0 16s8 0 8-2c0-2.4-3.9-5-8-5s-8 2.6-8 5c0 2 8 2 8 2"/></svg>
+                  Menu
                 {% endif %}
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 {% if user.is_authenticated %}
-                  <a class="dropdown-item" href="{% url 'home' %}">Profile</a>
-                  <a class="dropdown-item" href="{% url 'socialaccount_connections' %}">Account Settings</a>
-                  <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+                  <a class="dropdown-item" href="{% url 'home' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 14 14"><path fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5v2a1 1 0 0 1-1 1h-2m0-13h2a1 1 0 0 1 1 1v2m-13 0v-2a1 1 0 0 1 1-1h2m0 13h-2a1 1 0 0 1-1-1v-2m6.5-4a2 2 0 1 0 0-4a2 2 0 0 0 0 4m3.803 4.5a3.994 3.994 0 0 0-7.606 0z"/></svg>
+                    Profile
+                  </a>
+                  <a class="dropdown-item" href="{% url 'socialaccount_connections' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24"><path fill="black" d="M15 21h6v-.825q-.625-.575-1.4-.875T18 19t-1.6.3t-1.4.875zm3-3q.625 0 1.063-.437T19.5 16.5t-.437-1.062T18 15t-1.062.438T16.5 16.5t.438 1.063T18 18m-5.95-9.5q-1.45 0-2.475 1.025T8.55 12q0 1.2.675 2.1T11 15.35q0-.575.013-1.1t.212-.95q-.35-.2-.512-.55T10.55 12q0-.625.438-1.062t1.062-.438q.375 0 .713.188t.562.512q.275-.125.575-.175t.6-.05h.9Q15.075 9.9 14.163 9.2t-2.113-.7M9.25 22l-.4-3.2q-.325-.125-.612-.3t-.563-.375L4.7 19.375l-2.75-4.75l2.575-1.95Q4.5 12.5 4.5 12.338v-.675q0-.163.025-.338L1.95 9.375l2.75-4.75l2.975 1.25q.275-.2.575-.375t.6-.3l.4-3.2h5.5l.4 3.2q.325.125.613.3t.562.375l2.975-1.25l2.75 4.75L19.925 11H17.4q-.025-.125-.05-.262t-.075-.263l2.15-1.625l-.975-1.7l-2.475 1.05q-.55-.575-1.213-.962t-1.437-.588L13 4h-1.975l-.35 2.65q-.775.2-1.437.588t-1.213.937L5.55 7.15l-.975 1.7l2.15 1.6q-.125.375-.175.75t-.05.8q0 .4.05.775t.175.75l-2.15 1.625l.975 1.7l2.475-1.05q.6.625 1.35 1.05T11 17.4V22zm5.25 1q-.625 0-1.062-.437T13 21.5v-7q0-.625.438-1.062T14.5 13h7q.625 0 1.063.438T23 14.5v7q0 .625-.437 1.063T21.5 23z"/></svg>
+                    Account Settings
+                  </a>
+                  <a class="dropdown-item" href="{% url 'account_email' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24"><path fill="black" d="M3 4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h10.5a6.5 6.5 0 0 1-.5-2H3V8l8 5l8-5v3a7 7 0 0 1 .5 0a6.5 6.5 0 0 1 1.5.18V6c0-1.1-.9-2-2-2zm0 2h16l-8 5zm16 6l-2.25 2.25L19 16.5V15a2.5 2.5 0 0 1 2.5 2.5c0 .4-.09.78-.26 1.12l1.09 1.09c.42-.63.67-1.39.67-2.21c0-2.21-1.79-4-4-4zm-3.33 3.29c-.42.63-.67 1.39-.67 2.21c0 2.21 1.79 4 4 4V23l2.25-2.25L19 18.5V20a2.5 2.5 0 0 1-2.5-2.5c0-.4.09-.78.26-1.12z"/></svg>
+                    Manage Email
+                  </a>
+                  <a class="dropdown-item" href="{% url 'account_logout' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24"><path fill="black" d="M12 20a8 8 0 1 1 0-16z" opacity="0.5"/><path fill="black" fill-rule="evenodd" d="M16.47 8.47a.75.75 0 0 0 0 1.06l1.72 1.72H10a.75.75 0 0 0 0 1.5h8.19l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 0 0-1.06 0" clip-rule="evenodd"/></svg>
+                    Logout
+                  </a>
                 {% else %}
-                  <a class="dropdown-item" href="{% url 'account_login' %}">Login</a>
-                  <a class="dropdown-item" href="{% url 'account_signup' %}">Sign Up</a>
+                  <a class="dropdown-item" href="{% url 'account_login' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24"><path fill="black" d="M12 18.25a.75.75 0 0 0 0 1.5h6A1.75 1.75 0 0 0 19.75 18V6A1.75 1.75 0 0 0 18 4.25h-6a.75.75 0 0 0 0 1.5h6a.25.25 0 0 1 .25.25v12a.25.25 0 0 1-.25.25z"/><path fill="black" fill-rule="evenodd" d="M3.25 13.115c0 .69.56 1.25 1.25 1.25h4.613l.02.22l.054.556a1.227 1.227 0 0 0 1.752.988c1.634-.783 3.212-1.958 4.466-3.267a1.253 1.253 0 0 0 0-1.734l-.1-.104a15 15 0 0 0-4.366-3.163a1.227 1.227 0 0 0-1.752.988l-.054.555l-.02.22H4.5c-.69 0-1.25.56-1.25 1.25zm7.303.416a.75.75 0 0 0-.745-.666H4.75v-1.74h5.058a.75.75 0 0 0 .749-.704q.026-.435.069-.871l.016-.162a13.6 13.6 0 0 1 3.516 2.607a13.6 13.6 0 0 1-3.516 2.607l-.016-.162a26 26 0 0 1-.073-.91" clip-rule="evenodd"/></svg>
+                    Login
+                  </a>
+                  <a class="dropdown-item" href="{% url 'account_signup' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 2048 2048"><path fill="black" d="M1728 1152q26 0 45 19t19 45t-19 45t-45 19t-45-19t-19-45t19-45t45-19m-603-19q-79-54-170-81t-187-28q-88 0-170 23t-153 64t-129 100t-100 130t-65 153t-23 170H0q0-117 35-229t101-207t157-169t203-113q-56-36-100-83t-76-103t-47-118t-17-130q0-106 40-199t109-163T568 40T768 0t199 40t163 109t110 163t40 200q0 67-16 129t-48 119t-75 103t-101 83q81 29 156 80zM384 512q0 80 30 149t82 122t122 83t150 30q79 0 149-30t122-82t83-122t30-150q0-79-30-149t-82-122t-123-83t-149-30q-80 0-149 30t-122 82t-83 123t-30 149m1280 384q79 0 149 30t122 82t83 123t30 149q0 80-30 149t-82 122t-123 83t-149 30q-65 0-128-23v151h-128v128h-128v128H896v-282l395-396q-11-46-11-90q0-79 30-149t82-122t122-83t150-30m0 640q53 0 99-20t82-55t55-81t20-100q0-53-20-99t-55-82t-81-55t-100-20q-53 0-99 20t-82 55t-55 81t-20 100q0 35 9 64t21 61l-414 413v102h128v-128h128v-128h128v-91l93-92q40 23 77 39t86 16"/></svg>
+                    Sign Up
+                  </a>
+                  <a class="dropdown-item" href="{% url 'password_reset' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24"><path fill="black" d="M12 1a5 5 0 0 0-5 5v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-1V6a5 5 0 0 0-5-5m0 1.9c1.71 0 3.1 1.39 3.1 3.1v2H8.9V6c0-1.71 1.39-3.1 3.1-3.1m.19 7.6c.94 0 1.69.21 2.23.62q.81.63.81 1.68c0 .44-.15.83-.44 1.2c-.29.36-.67.64-1.13.85c-.26.15-.43.3-.52.47c-.09.18-.14.4-.14.68h-2c0-.5.1-.84.29-1.08c.21-.24.55-.52 1.07-.84c.26-.14.47-.32.64-.54c.14-.21.22-.46.22-.74c0-.3-.09-.52-.27-.69c-.18-.18-.45-.26-.76-.26c-.27 0-.49.07-.69.21c-.16.14-.26.35-.26.63H9.27c-.05-.69.23-1.29.78-1.65c.54-.36 1.25-.54 2.14-.54M11 17h2v2h-2z"/></svg>
+                    Forgot Password
+                  </a>
                 {% endif %}
               </div>
             </div>
@@ -145,52 +157,78 @@
       </a>
     </div>
     <br>
+  
     <footer class="bg-dark text-light py-6">
-        <div class="container">
-            <div class="row d-flex flex-wrap">
-                <div class="col-12 col-md-8 d-flex flex-column">
-                    <br>
-                    <br>
-                    <h5 class="mb-5 font-weight-bold">ABOUT</h5>
-                    <p class="text-light">Welcome to AI Finder Guru! This tool provides you access to a vast array of AI tools. 
-                        With {{ all_ai_tools_count }} tools and counting, we ensure you have access to the latest 
-                        and most relevant tools at your fingertips. Our database is 
-                        updated automatically...<a href="{% url 'about' %}"><u><i>Read More</i></u></a>
-                    </p>
-
-                </div>
-                <div class="col-12 col-md-4 d-flex flex-column">
-                    <br>
-                    <br>
-                    <h5 class="mb-5 font-weight-bold">MENU</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'google_custom_search' %}" class="text-light">Custom Search Engine</a></li>
-                        <hr style="background-color: white; height: 1px; border: 0;">
-                        <li><a href="mailto: aifinderguru@gmail.com" class="text-light">Contact Us</a></li>
-                        <hr style="background-color: white; height: 1px; border: 0;">
-                        <li><a href="{% url 'all_categories_page' %}" class="text-light">All Categories</a></li>
-                        <hr style="background-color: white; height: 1px; border: 0;">
-                        <li><a href="{% url 'all_tags_page' %}" class="text-light">All Tags</a></li>
-                        <hr style="background-color: white; height: 1px; border: 0;">
-                    </ul>
-                </div>
-            </div>
-            <br>
-            <div class="row mt-3">
-                <div class="col-12 text-center">
-                    <p><i>© <span id="currentYear"></span> <a href="/" class="text-light"><u>aifinderguru.com</u></a></i> | <i>All rights reserved.</i></p>
-                </div>
-                
-                <script>                     
-                    // Current Year for copyright
-                    var currentYear = new Date().getFullYear();
-                    document.getElementById("currentYear").innerHTML = currentYear;
-                </script>
-            </div>            
-            <br>
-            <br>
-        </div>
-    </footer>
+      <div class="container">
+          <div class="row d-flex flex-wrap">
+              <div class="col-12 col-md-8 d-flex flex-column">
+                  <br>
+                  <br>
+                  <h5 class="mb-5 font-weight-bold">ABOUT</h5>
+                  <p class="text-light">
+                      Welcome to AI Finder Guru! This tool provides you access to a vast array of AI tools.
+                      With {{ all_ai_tools_count }} tools and counting, we ensure you have access to the latest
+                      and most relevant tools at your fingertips. Our database is updated automatically...
+                      <a href="{% url 'about' %}"><u><i>Read More</i></u></a>
+                  </p>
+                  <p class="text-light">
+                      <a href="#"><u><i>Manually Add A Tool</i></u></a>
+                  </p>
+              </div>
+              <div class="col-12 col-md-4 d-flex flex-column">
+                  <br>
+                  <br>
+                  <h5 class="mb-5 font-weight-bold">MENU</h5>
+                  <ul class="list-unstyled">
+                      <li class="my-2">
+                          <a href="{% url 'google_custom_search' %}" class="text-light">Custom Search Engine</a>
+                      </li>
+                      <hr style="background-color: white; height: 1px; border: 0;">
+                      <li class="my-2">
+                          <a href="{% url 'about' %}" class="text-light">About</a> 
+                          <span class="mx-2">|</span> 
+                          <a href="mailto: aifinderguru@gmail.com" class="text-light">Contact Us</a>
+                      </li>
+                      <hr style="background-color: white; height: 1px; border: 0;">
+                      <li class="my-2">
+                          <a href="{% url 'all_categories_page' %}" class="text-light">All Categories</a> 
+                          <span class="mx-2">|</span> 
+                          <a href="{% url 'all_tags_page' %}" class="text-light">All Tags</a>
+                      </li>
+                      <hr style="background-color: white; height: 1px; border: 0;">
+                      <li class="my-2">
+                          <a href="#" class="text-light">Terms</a> 
+                          <span class="mx-2">|</span> 
+                          <a href="#" class="text-light">Privacy Policy</a>
+                      </li>
+                      <hr style="background-color: white; height: 1px; border: 0;">
+                      <li class="my-2">
+                        <a href="#" class="text-light">About The Developer</a> 
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <br>
+          <hr style="background-color: white; height: 1px; border: 0;">
+          <div class="row mt-3">
+              <div class="col-12 text-center">
+                  <p>
+                      <i>© <span id="currentYear"></span> <a href="/" class="text-light"><u>aifinderguru.com</u></a></i> 
+                      | 
+                      <i>All rights reserved.</i>
+                  </p>
+              </div>
+          </div>
+          <script>
+              // Current Year for copyright
+              var currentYear = new Date().getFullYear();
+              document.getElementById("currentYear").innerHTML = currentYear;
+          </script>
+          <br>
+          <br>
+      </div>
+  </footer>
+  
           
     <!-- Back to top button -->
     <button onclick="topFunction()" id="myBtn" title="Go back to the top">Top</button>

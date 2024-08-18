@@ -1,21 +1,17 @@
-<!-- userauth/templates/socialaccount/login.html -->
-
 {% extends "account/base.html" %}
 
 {% load i18n %}
-
 {% load socialaccount %}
 
 {% block head_title %}{% trans "Login" %}{% endblock %}
 
 {% block userauthcontent %}
-
 <div class="card shadow-lg border-0 rounded-lg">
     <div class="card-header">
-        <h3 class="font-weight-light my-4 text-center">{% trans "Sign In Via Google" %}</h3>
+        <h3 class="font-weight-light my-4 text-center">{% blocktrans with provider_name=provider.name %}Sign In Via {{ provider_name }}{% endblocktrans %}</h3>
     </div>
     <div class="card-body">
-        <p class="text-center">{% trans "You are about to sign in using a third-party account from Google." %}</p>
+        <p class="text-center">{% blocktrans with provider_name=provider.name %}You are about to sign in using a third-party account from {{ provider_name }}.{% endblocktrans %}</p>
         <form method="post" action="{{ action }}">
             {% csrf_token %}
             <div class="d-grid">

@@ -1,8 +1,7 @@
 {% extends "account/base.html" %}
-
 {% load i18n %}
 {% load account socialaccount %}
-{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
@@ -13,26 +12,30 @@
     </div>
     <div class="card-body">
         {% get_providers as socialaccount_providers %}
-
         {% if socialaccount_providers %}
             <p class="text-center">{% blocktrans %}Please sign in with one of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a> for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
-
             <div class="socialaccount_ballot">
                 <div class="socialaccount_providers mb-3">
                     {% include "socialaccount/snippets/provider_list.html" with process="login" %}
                 </div>
-
                 <div class="login-or border-top border-bottom my-3 text-center">{% trans 'OR' %}</div>
             </div>
-
             {% include "socialaccount/snippets/login_extra.html" %}
         {% else %}
             <p class="text-center">{% blocktrans %}If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
         {% endif %}
-
         <form class="login" method="POST" action="{% url 'account_login' %}">
             {% csrf_token %}
-            {{ form|crispy }}
+            {% for field in form %}
+                {% if field.name != 'remember' %}
+                    {{ field|as_crispy_field }}
+                {% endif %}
+            {% endfor %}
+            {% if form.remember %}
+                <div class="form-check">
+                    {{ form.remember|as_crispy_field }}
+                </div>
+            {% endif %}
             {% if redirect_field_value %}
                 <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
