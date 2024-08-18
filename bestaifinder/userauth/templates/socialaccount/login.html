@@ -1,10 +1,15 @@
+<!-- userauth/templates/socialaccount/login.html -->
+
 {% extends "account/base.html" %}
 
 {% load i18n %}
 
-{% block head_title %}{% trans "Sign In Via Google" %}{% endblock %}
+{% load socialaccount %}
+
+{% block head_title %}{% trans "Login" %}{% endblock %}
 
 {% block userauthcontent %}
+
 <div class="card shadow-lg border-0 rounded-lg">
     <div class="card-header">
         <h3 class="font-weight-light my-4 text-center">{% trans "Sign In Via Google" %}</h3>

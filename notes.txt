@@ -50,3 +50,9 @@ For blogs, we can also find a way for users to add blogs purely by pasting links
 -- Add The search vectors..in their colums, also ensure to be able to create a search vector for every tool formed, upon its addition
 
 -- Add |safe to every short_description in tools in every html
+
+-- For every email address at accounts/email remove the 'remove email' button
+
+-- The google logi, callback, htmls and their url and views...if dont work remove permanently
+
+-- Edit htmls for send password etc, seems to overlap too

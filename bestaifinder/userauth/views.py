@@ -64,11 +64,17 @@ class CustomPasswordResetView(PasswordResetView):
         except UserModel.DoesNotExist:
             return None
 
-from allauth.socialaccount.providers.oauth2.views import OAuth2LoginView
+from django.shortcuts import render
+from allauth.socialaccount.providers.oauth2.views import OAuth2CallbackView
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 
-class CustomGoogleLoginView(OAuth2LoginView):
-    template_name = 'socialaccount/google_login.html'
-    adapter_class = GoogleOAuth2Adapter
+class CustomGoogleOAuth2CallbackView(OAuth2CallbackView):
+    def dispatch(self, request, *args, **kwargs):
+        if 'code' in request.GET:
+            # This means Google has sent the authorization code
+            return render(request, 'socialaccount/google_callback.html', {
+                'callback_url': request.build_absolute_uri(),
+            })
+        return super().dispatch(request, *args, **kwargs)
 
-custom_google_login = CustomGoogleLoginView.as_view()
+custom_google_callback = CustomGoogleOAuth2CallbackView.adapter_view(GoogleOAuth2Adapter)
