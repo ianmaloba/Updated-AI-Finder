@@ -44,8 +44,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    # 'allauth.socialaccount.providers.twitter',
-    # 'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
     
     'crispy_bootstrap4',
     'crispy_forms',
@@ -199,7 +200,40 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'online',
         },
         'OAUTH_PKCE_ENABLED': True,
-    }
+    },
+    
+    'facebook': {
+        'METHOD': 'oauth2',  # Set to 'js_sdk' to use the Facebook connect SDK
+        #'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
+        'SCOPE': ['email', 'public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'first_name',
+            'last_name',
+            'middle_name',
+            'name',
+            'name_format',
+            'picture',
+            'short_name'
+        ],
+        'EXCHANGE_TOKEN': True,
+        #'LOCALE_FUNC': 'path.to.callable',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v13.0',
+        'GRAPH_API_URL': 'https://graph.facebook.com/v13.0',
+    },
+    'github': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    },
 }
 
 LOGIN_REDIRECT_URL = '/'
@@ -221,3 +255,6 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'kfcf yiro ndmm duik
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'aifinderguru@gmail.com')
 SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'aifinderguru@gmail.com')
 APP_NAME = 'AI FINDER GURU'
+
+# Ov23liNS8N3UV9NHx3Lm
+# 70d9e2529d31cdfd49b68126e2107e36b10c9e72

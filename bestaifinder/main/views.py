@@ -314,3 +314,6 @@ def charts(request):
     
 def google_custom_search(request):
     return render(request, 'google_custom_search.html')
+
+def data_deletion_instructions(request):
+    return render(request, 'data_deletion_instructions.html')

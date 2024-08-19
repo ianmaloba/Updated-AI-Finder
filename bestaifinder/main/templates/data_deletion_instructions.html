@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load socialaccount %}
+
+{% load custom_filters %}
+
+{% block title %}Data Deletion{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>{% trans "Data Deletion Instructions" %}</h2>
+    <p>{% trans "If you wish to request the deletion of your data, please follow these instructions:" %}</p>
+    <ol>
+        <li>{% trans "Send an email to us at" %} <a href="mailto:aifinderguru@gmail.com">aifinderguru@gmail.com</a> {% trans "with your request for data deletion." %}</li>
+        <li>{% trans "Include your account details and any additional information that may help us process your request." %}</li>
+        <li>{% trans "We will process your request and delete your data as per our privacy policy and applicable laws." %}</li>
+    </ol>
+    <p>{% trans "For more details about how we handle your data, please review our" %} <a href="#">{% trans "Privacy Policy" %}</a>.</p>
+</div>
+
+<div class="container py-4">
+  <a href="/" class="btn btn-primary btn-sm">HOME</a>
+</div>
+{% endblock %}

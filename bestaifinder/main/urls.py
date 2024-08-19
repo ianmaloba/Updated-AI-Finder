@@ -15,4 +15,5 @@ urlpatterns = [
     path('tag-tools/', views.tag_tools_ajax, name='tag_tools_ajax'),
     path('charts', views.charts, name='charts'),
     path('google-custom-search', views.google_custom_search, name='google_custom_search'),
+    path('data-deletion-instructions', views.data_deletion_instructions, name='data_deletion_instructions'),
 ]

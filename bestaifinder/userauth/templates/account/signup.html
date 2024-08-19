@@ -12,6 +12,13 @@
     </div>
     <div class="card-body">
         <p class="text-center">{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+        <p class="text-center">Or Sign in With a Third Party Account below:</p>
+        <div class="socialaccount_ballot">
+            <div class="socialaccount_providers mb-3">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            </div>
+            <div class="login-or border-top border-bottom my-3 text-center">{% trans 'OR' %}</div>
+        </div>
         <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
             {% csrf_token %}
             {{ form|crispy }}

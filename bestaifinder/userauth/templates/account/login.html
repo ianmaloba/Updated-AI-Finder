@@ -6,6 +6,12 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block userauthcontent %}
+
+<style>
+    #hint_id_password {
+        display: none;
+    }
+</style>
 <div class="card shadow-lg border-0 rounded-lg">
     <div class="card-header">
         <h3 class="font-weight-light my-4 text-center">{% trans "Sign In" %}</h3>
@@ -13,23 +19,26 @@
     <div class="card-body">
         {% get_providers as socialaccount_providers %}
         {% if socialaccount_providers %}
-            <p class="text-center">{% blocktrans %}Please sign in with one of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a> for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+            <p class="text-center">
+                {% blocktrans %}Please sign in with one of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a> if you do not have an account yet.{% endblocktrans %}
+            </p>
             <div class="socialaccount_ballot">
                 <div class="socialaccount_providers mb-3">
                     {% include "socialaccount/snippets/provider_list.html" with process="login" %}
                 </div>
                 <div class="login-or border-top border-bottom my-3 text-center">{% trans 'OR' %}</div>
             </div>
-            {% include "socialaccount/snippets/login_extra.html" %}
         {% else %}
-            <p class="text-center">{% blocktrans %}If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+            <p class="text-center">
+                {% blocktrans %}If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+            </p>
         {% endif %}
         <form class="login" method="POST" action="{% url 'account_login' %}">
             {% csrf_token %}
             {% for field in form %}
-                {% if field.name != 'remember' %}
-                    {{ field|as_crispy_field }}
-                {% endif %}
+            {% if field.name != 'remember'  and field.name != 'forgot_password' %}
+                {{ field|as_crispy_field }}
+            {% endif %}
             {% endfor %}
             {% if form.remember %}
                 <div class="form-check">
@@ -39,9 +48,10 @@
             {% if redirect_field_value %}
                 <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
-            <input type="hidden" name="next" value="{{ request.GET.next }}" />
             <div class="d-grid gap-2 mt-3">
                 <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+                <br>
+                <br>
                 <a class="btn btn-link" href="{% url 'password_reset' %}">{% trans "Forgot Password?" %}</a>
             </div>
         </form>
