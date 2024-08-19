@@ -317,3 +317,20 @@ def google_custom_search(request):
 
 def data_deletion_instructions(request):
     return render(request, 'data_deletion_instructions.html')
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .forms import AIToolForm
+
+@login_required
+def add_tool(request):
+    if request.method == 'POST':
+        form = AIToolForm(request.POST, request.FILES)
+        if form.is_valid():
+            tool = form.save(commit=False)
+            # Set the search vector (this will be handled by the signal we already have)
+            tool.save()
+            return redirect('index')  # or wherever you want to redirect after successful submission
+    else:
+        form = AIToolForm()
+    return render(request, 'add_tool.html', {'form': form})

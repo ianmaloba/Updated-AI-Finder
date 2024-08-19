@@ -75,7 +75,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{% url 'add_tool' %}">
               <button type="button" class="btn btn-outline-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24"><path fill="white" d="M3 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 2h10v4h8v10H3zm7 5v3H7v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
                 Add Tool
@@ -172,7 +172,7 @@
                       <a href="{% url 'about' %}"><u><i>Read More</i></u></a>
                   </p>
                   <p class="text-light">
-                      <a href="#"><u><i>Manually Add A Tool</i></u></a>
+                      <a href="{% url 'add_tool' %}"><u><i>Manually Add A Tool</i></u></a>
                   </p>
               </div>
               <div class="col-12 col-md-4 d-flex flex-column">

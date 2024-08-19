@@ -8,9 +8,9 @@ from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 
 class AITool(models.Model):
-    ai_image = models.ImageField(upload_to='images/ai-screenshot/', default='images/default.jpg')
+    ai_image = models.ImageField(upload_to='images/ai-screenshot/', default='images/default.jpg', blank=True)
     ai_name = models.CharField(max_length=255)
-    ai_tool_logo = models.ImageField(upload_to='images/logos/', default='images/default_logo.jpg')
+    ai_tool_logo = models.ImageField(upload_to='images/logos/', default='images/default_logo.jpg', blank=True)
     ai_short_description = RichTextField()
     ai_pricing_tag = models.CharField(max_length=255, db_index=True)
     ai_tags = models.CharField(max_length=255, blank=True, default="", db_index=True)
@@ -27,6 +27,24 @@ class AITool(models.Model):
 
     def __str__(self):
         return f"{self.id}. {self.ai_name}"
+
+
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._generate_unique_slug()
+        super().save(*args, **kwargs)
+
+    def _generate_unique_slug(self):
+        slug = slugify(self.ai_name)
+        unique_slug = slug
+        num = 1
+        while AITool.objects.filter(slug=unique_slug).exists():
+            unique_slug = '{}-{}'.format(slug, num)
+            num += 1
+        return unique_slug
+
+
 
     class Meta:
         app_label = 'main'

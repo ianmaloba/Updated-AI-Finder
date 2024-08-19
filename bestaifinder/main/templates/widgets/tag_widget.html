@@ -1,0 +1,11 @@
+<div class="tag-container">
+    {% for group, options, index in widget.optgroups %}
+        {% for option in options %}
+            <label class="tag-label">
+                <input type="checkbox" name="{{ widget.name }}" value="{{ option.value }}"
+                       {% if option.selected %}checked{% endif %}>
+                <span class="tag-text">{{ option.label }}</span>
+            </label>
+        {% endfor %}
+    {% endfor %}
+</div>

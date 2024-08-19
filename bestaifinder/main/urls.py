@@ -16,4 +16,5 @@ urlpatterns = [
     path('charts', views.charts, name='charts'),
     path('google-custom-search', views.google_custom_search, name='google_custom_search'),
     path('data-deletion-instructions', views.data_deletion_instructions, name='data_deletion_instructions'),
+    path('add-tool/', views.add_tool, name='add_tool'),
 ]
