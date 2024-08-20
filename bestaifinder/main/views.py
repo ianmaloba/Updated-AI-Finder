@@ -321,6 +321,9 @@ def data_deletion_instructions(request):
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import AIToolForm
+import logging
+
+logger = logging.getLogger(__name__)
 
 @login_required
 def add_tool(request):
@@ -329,8 +332,42 @@ def add_tool(request):
         if form.is_valid():
             tool = form.save(commit=False)
             # Set the search vector (this will be handled by the signal we already have)
+            tool.user = request.user
             tool.save()
-            return redirect('index')  # or wherever you want to redirect after successful submission
+            logger.debug(f"Tool '{tool.ai_name}' added by user {request.user.username}")
+            return redirect('home')  # or wherever you want to redirect after successful submission
     else:
         form = AIToolForm()
     return render(request, 'add_tool.html', {'form': form})
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+
+@login_required
+def edit_tool(request, tool_id):
+    tool = get_object_or_404(AITool, id=tool_id)
+    if tool.user != request.user:
+        return HttpResponseForbidden("You don't have permission to edit this tool.")
+    
+    if request.method == 'POST':
+        form = AIToolForm(request.POST, request.FILES, instance=tool)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = AIToolForm(instance=tool)
+    
+    return render(request, 'edit_tool.html', {'form': form, 'tool': tool})
+
+@login_required
+def delete_tool(request, tool_id):
+    tool = get_object_or_404(AITool, id=tool_id)
+    if tool.user != request.user:
+        return HttpResponseForbidden("You don't have permission to delete this tool.")
+    
+    if request.method == 'POST':
+        tool.delete()
+        return redirect('home')
+    
+    return render(request, 'delete_tool_confirm.html', {'tool': tool})

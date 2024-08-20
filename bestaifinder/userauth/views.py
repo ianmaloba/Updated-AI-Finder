@@ -1,4 +1,5 @@
 from django.contrib.auth.views import PasswordResetView
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -63,3 +64,16 @@ class CustomPasswordResetView(PasswordResetView):
             return UserModel.objects.get(email=email)
         except UserModel.DoesNotExist:
             return None
+
+from django.shortcuts import render
+from main.models import AITool
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def user_dashboard(request):
+    user_tools = AITool.objects.filter(user=request.user)
+    context = {
+        'user': request.user,
+        'user_tools': user_tools,
+    }
+    return render(request, 'dashboard/home.html', context)

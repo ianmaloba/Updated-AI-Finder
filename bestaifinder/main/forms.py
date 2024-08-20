@@ -9,7 +9,54 @@ class AIToolForm(forms.ModelForm):
     ai_short_description = forms.CharField(widget=CKEditorWidget())
     ai_tags = forms.MultipleChoiceField(
         choices=[],
-        widget=TagWidget,
+        widget=forms.CheckboxSelectMultiple(attrs={
+            'class': 'tag-checkbox',
+            'style': 'display: inline-block; width: auto; margin-right: 10px;'
+        }),
+        required=False
+    )
+    ai_name = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'placeholder': 'example: Sendbird AI Chatbot',
+            'class': 'form-control'
+        }),
+        label="Enter the AI Tool Name"
+    )
+    ai_tool_link = forms.URLField(
+        widget=forms.URLInput(attrs={
+            'placeholder': 'example: https://aifinderguru.com/',
+            'class': 'form-control'
+        }),
+        label="AI Tool Link"
+    )
+    ai_short_description = forms.CharField(
+        widget=CKEditorWidget(attrs={
+            'placeholder': 'example: Provide a description of your AI Tool',
+            'class': 'form-control'
+        }),
+        label="AI Tool Description"
+    )
+    ai_pricing_tag = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'placeholder': 'example: Free or $24/Month or Freemium ...',
+            'class': 'form-control'
+        }),
+        label="Enter the AI Pricing Tag"
+    )
+    ai_tool_logo = forms.ImageField(
+        widget=forms.ClearableFileInput(attrs={
+            'class': 'form-control-file',
+            'accept': 'image/*'
+        }),
+        label="AI Tool Logo",
+        required=False
+    )
+    ai_image = forms.ImageField(
+        widget=forms.ClearableFileInput(attrs={
+            'class': 'form-control-file',
+            'accept': 'image/*'
+        }),
+        label="AI Tool Image",
         required=False
     )
 
@@ -37,4 +84,7 @@ class AIToolForm(forms.ModelForm):
 
     def clean_ai_tags(self):
         ai_tags = self.cleaned_data.get('ai_tags')
+        if not ai_tags:
+            raise forms.ValidationError("PLEASE SELECT ATLEAST ONE TAG.")
         return ', '.join(ai_tags)
+

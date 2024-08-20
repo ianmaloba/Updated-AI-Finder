@@ -2,10 +2,11 @@ from django.urls import path
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 from .views import CustomPasswordResetView
+from .views import user_dashboard 
 
 urlpatterns = [
+    path('account/', user_dashboard, name='home'),
     path('account/', TemplateView.as_view(template_name='dashboard/home.html'), name='home'),
-    
     path('password-reset/', CustomPasswordResetView.as_view(), name='password_reset'),
     path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(
         template_name='password-reset/password_reset_done.html'), 

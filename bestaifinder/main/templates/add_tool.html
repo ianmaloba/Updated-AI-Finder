@@ -4,39 +4,75 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/add_tool.css' %}">
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+    .form-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .tag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+    .tag-label {
+        font-size: 0.85rem;
+    }
+    .form-control {
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+    }
+    .form-control:focus {
+        box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+        border-color: rgba(81, 203, 238, 1);
+    }
+    .tag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px; /* Adjust spacing between tags */
+    }
+    
+    .tag-label {
+        display: flex;
+        align-items: center;
+        margin-right: 10px; /* Adjust spacing between checkboxes and labels */
+    }
+    
+    .tag-checkbox {
+        margin-right: 5px; /* Adjust spacing between checkbox and label */
+    }
+    
+    .tag-container label:last-child {
+        margin-right: 0; /* Remove margin after the last item */
+    }
+    
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="form-container">
-        <h2 class="text-center mb-4">Add New AI Tool</h2>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form.ai_name|as_crispy_field }}
-                </div>
-                <div class="col-md-6">
-                    {{ form.ai_tool_link|as_crispy_field }}
-                </div>
+<section class="wrapper">
+        <div class="container">
+            <div class="form-container">
+                <h2>Add New AI Tool</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-primary">Submit AI Tool</button>
+                </form>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form.ai_image|as_crispy_field }}
-                </div>
-                <div class="col-md-6">
-                    {{ form.ai_tool_logo|as_crispy_field }}
-                </div>
-            </div>
-            {{ form.ai_short_description|as_crispy_field }}
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form.ai_pricing_tag|as_crispy_field }}
-                </div>
-            </div>
-            {{ form.ai_tags|as_crispy_field }}
-            <button type="submit" class="btn btn-primary btn-block mt-4">Add Tool</button>
-        </form>
-    </div>
-</div>
+        </div>
+</section>
+
 {% endblock %}

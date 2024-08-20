@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Delete AI Tool{% endblock %}
+
+{% block content %}
+
+<section class="wrapper">
+    <div class="container">
+        <h2>Confirm Deletion</h2>
+        <p>Are you sure you want to delete "{{ tool.ai_name }}"?</p>
+        <p style="color: red"><i>You Will Not Be Able To Recover It!</i></p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.contrib.auth.models import User
 
 class AITool(models.Model):
     ai_image = models.ImageField(upload_to='images/ai-screenshot/', default='images/default.jpg', blank=True)
@@ -16,7 +17,7 @@ class AITool(models.Model):
     ai_tags = models.CharField(max_length=255, blank=True, default="", db_index=True)
     ai_tool_link = models.URLField()
     slug = models.SlugField(unique=True, blank=True, null=True, editable=False, db_index=True)
-    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ai_tools')        
     # Add a SearchVectorField for full-text search
     search_vector = SearchVectorField(null=True, blank=True)
 
@@ -28,10 +29,8 @@ class AITool(models.Model):
     def __str__(self):
         return f"{self.id}. {self.ai_name}"
 
-
-
     def save(self, *args, **kwargs):
-        if not self.slug:
+        if not self.slug or AITool.objects.filter(slug=self.slug).exists():
             self.slug = self._generate_unique_slug()
         super().save(*args, **kwargs)
 
@@ -40,7 +39,7 @@ class AITool(models.Model):
         unique_slug = slug
         num = 1
         while AITool.objects.filter(slug=unique_slug).exists():
-            unique_slug = '{}-{}'.format(slug, num)
+            unique_slug = f"{slug}-{num}"
             num += 1
         return unique_slug
 

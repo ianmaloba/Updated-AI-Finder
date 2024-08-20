@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
         {% if form.accounts %}
-            <p>{% blocktrans %}You can sign in to your account using any of the following third party accounts:{% endblocktrans %}</p>
+            <p>{% blocktrans %}Below is/are active account/s. You can add an account by signing in using any of the following third party accounts:{% endblocktrans %}</p>
 
             <form method="post" action="{% url 'socialaccount_connections' %}">
                 {% csrf_token %}
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="d-grid">
-                    <button class="btn btn-danger" type="submit">{% trans 'Remove' %}</button>
+                    <!-- <button class="btn btn-danger" type="submit">{% trans 'Remove' %}</button> -->
                 </div>
             </form>
         {% else %}
@@ -41,7 +41,7 @@
         {% endif %}
 
         <hr>
-        <h4 class="mt-4">{% trans 'Add a 3rd Party Account' %}</h4>
+        <h4 class="mt-4">{% trans 'Add A Third Party Account' %}</h4>
 
         <div class="socialaccount_providers">
             {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
