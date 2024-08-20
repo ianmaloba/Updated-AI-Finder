@@ -62,3 +62,6 @@ redirecting to a page where they can acces the added tool,
 add more, or go home, or to thir profile
 
 - Have to select the top 9 tools that appear on the  page, such that if users add awful tools
+
+- Correct google plugin and also update tools cards appearance and tool detail appearances ...via jupiterweb claude\
+    Also correct other suff like inability to add images as it keeps requesting adding from admin...etc

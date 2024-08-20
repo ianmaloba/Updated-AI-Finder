@@ -208,7 +208,7 @@ CKEDITOR_CONFIGS = {
             'dialogui',
             'elementspath',
             'codesnippet',
-            'youtube',
+            #'youtube',
             'iframe',
         ]),
         'uploadUrl': '/ckeditor/upload/',
@@ -251,6 +251,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Static files (CSS, JavaScript, images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'bestaifinder', 'static'),
+]
 
 CKEDITOR_UPLOAD_PATH = "/media/uploads/"
 
