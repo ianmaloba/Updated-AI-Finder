@@ -65,3 +65,5 @@ add more, or go home, or to thir profile
 
 - Correct google plugin and also update tools cards appearance and tool detail appearances ...via jupiterweb claude\
     Also correct other suff like inability to add images as it keeps requesting adding from admin...etc
+
+Ensure the forms for adding tools are bold, i.e the words like 'Tool Name' in  old and capital..make tags in a paragraph
