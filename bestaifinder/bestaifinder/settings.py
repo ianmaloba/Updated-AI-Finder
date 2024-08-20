@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
-    
+    'easy_thumbnails',
+    'filer',
+    'ckeditor_filebrowser_filer',
     'crispy_bootstrap4',
     'crispy_forms',
     'ckeditor',
@@ -55,6 +57,13 @@ INSTALLED_APPS = [
     'main',
     'userauth'
 ]
+
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters',
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -144,6 +153,7 @@ AUTH_PASSWORD_VALIDATORS = [
 #        'width': 700,
 #   },
 #}
+"""
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',
@@ -156,6 +166,65 @@ CKEDITOR_CONFIGS = {
         'height': 300,
         'width': '100%',
     },
+}
+"""
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono-lisa',
+        'toolbar': 'Full',
+        'height': 300,
+        'width': '100%',
+        'toolbar_Full': [
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Flash', 'Table', 'HorizontalRule'],
+            ['TextColor', 'BGColor'],
+            ['Smiley', 'SpecialChar'],
+            ['Source'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['NumberedList', 'BulletedList'],
+            ['Indent', 'Outdent'],
+            ['Maximize'],
+            ['Scayt'],
+            ['Blockquote', 'CodeSnippet'],
+            ['Font', 'FontSize'],
+            ['Find', 'Replace'],
+            ['RemoveFormat', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'],
+            ['Subscript', 'Superscript'],
+            ['Youtube', 'Iframe'],
+            ['SelectAll', 'Print'],
+        ],
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath',
+            'codesnippet',
+            'youtube',
+            'iframe',
+        ]),
+        'uploadUrl': '/ckeditor/upload/',
+        'filebrowserBrowseUrl': '/ckeditor/browse/',
+        'filebrowserUploadUrl': '/ckeditor/upload/',
+        'filebrowserImageBrowseUrl': '/ckeditor/browse/',
+        'filebrowserImageUploadUrl': '/ckeditor/upload/',
+        'removeDialogTabs': 'image:advanced;link:advanced',
+        'tabSpaces': 4,
+        'allowedContent': True,
+        'contentsCss': ['/static/css/ckeditor_content.css'],
+        'language': 'en',
+        'entities': False,
+        'entities_latin': False,
+        'forcePasteAsPlainText': True,
+    }
 }
 
 CKEDITOR_RESTRICT_BY_DATE = False

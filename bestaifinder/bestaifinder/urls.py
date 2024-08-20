@@ -9,6 +9,8 @@ urlpatterns = [
     path('auth/', include('userauth.urls')),
     path('accounts/', include('allauth.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path(r'^filebrowser_filer/', include('ckeditor_filebrowser_filer.urls')),
+
 ]
 
 if settings.DEBUG:

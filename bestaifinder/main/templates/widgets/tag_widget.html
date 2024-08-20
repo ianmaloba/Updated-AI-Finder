@@ -2,21 +2,19 @@
     .tag-container {
         display: flex;
         flex-wrap: wrap;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #fff;
     }
-    
     .tag-label {
         display: inline-flex;
         align-items: center;
         margin-right: 10px;
         font-size: 0.9rem;
     }
-    
     .tag-checkbox {
         margin-right: 5px;
-    }
-    
-    .tag-container .tag-label {
-        margin-bottom: 0;
     }
 </style>
 <div class="tag-container">
@@ -26,7 +24,7 @@
                 <input type="checkbox" name="{{ widget.name }}" value="{{ option.value }}" 
                        class="tag-checkbox"
                        {% if option.selected %}checked{% endif %}>
-                {{ option.label }}{% if not forloop.last %}, {% endif %}
+                {{ option.label }}{% if not forloop.last %},{% endif %}
             </label>
         {% endfor %}
     {% endfor %}
