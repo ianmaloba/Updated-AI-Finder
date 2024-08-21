@@ -89,3 +89,17 @@ code {
     padding: 2px 4px;
     border-radius: 3px;
 }
+
+/* CKEditor Styles */
+.cke_top,
+.cke_bottom {
+    font-size: 18px !important;
+}
+
+.cke_editor {
+    border-radius: 5px !important;
+}
+
+.cke_contents {
+    border-radius: 0 0 5px 5px !important;
+}

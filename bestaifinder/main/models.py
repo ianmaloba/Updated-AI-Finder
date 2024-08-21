@@ -1,4 +1,5 @@
 from django.db import models
+from django.template.defaultfilters import register
 from django.utils.text import slugify
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField, SearchVector

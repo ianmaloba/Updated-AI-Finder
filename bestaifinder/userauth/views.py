@@ -10,6 +10,11 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 from django.templatetags.static import static
+from django.contrib.auth import get_user_model
+from django.db.models import Count
+from main.models import AITool
+from django.contrib.auth.decorators import login_required
+
 
 class CustomPasswordResetView(PasswordResetView):
     template_name = 'password-reset/password_reset_form.html'
@@ -65,9 +70,6 @@ class CustomPasswordResetView(PasswordResetView):
         except UserModel.DoesNotExist:
             return None
 
-from django.shortcuts import render
-from main.models import AITool
-from django.contrib.auth.decorators import login_required
 
 @login_required
 def user_dashboard(request):
@@ -77,3 +79,19 @@ def user_dashboard(request):
         'user_tools': user_tools,
     }
     return render(request, 'dashboard/home.html', context)
+
+
+
+User = get_user_model()
+
+from django.core.paginator import Paginator
+
+def user_list(request):
+    users = User.objects.annotate(tool_count=Count('ai_tools')).order_by('-tool_count')
+    paginator = Paginator(users, 20)  # Show 20 users per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'page_obj': page_obj,
+    }
+    return render(request, 'userauth/user_list.html', context)

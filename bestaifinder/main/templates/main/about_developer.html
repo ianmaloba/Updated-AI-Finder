@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about_developer.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container" style="font-family: 'Fragment Mono', monospace; padding-top: 40px;">
+    <h2 style="margin-top: 10px; text-align: center;">ABOUT THE DEVELOPER</h2>
+    <div class="developer-container" style="display: flex; flex-wrap: wrap; align-items: flex-start;">
+        <div class="image-content" style="flex: 1 1 100%; text-align: center;">
+            <img src="{% static 'images/dev/ian.png' %}" alt="Developer's photo" class="developer-photo" 
+                 style="border-radius: 25px; border: 1px solid #000000; width: ; max-width: 80%; height: auto;">
+            <h4 style="margin-top: 10px;">Ian Maloba</h4>
+        </div>
+        <div class="about-me" style="flex: 1 1 100%; margin-top: 20px; text-align: center;">
+            <p class="developer-role" style="font-style: italic;">➜ Software Engineer</p>
+            <p class="developer-bio">
+                Hey, I'm Ian Maloba. I am a Passionate Programmer and Tech Enthusiast.
+            </p>
+            <p class="developer-bio">
+                I'm open to opportunities and collaborating on projects.
+            </p>
+            <p class="developer-bio">
+                Check out my <a href="https://ianmaloba.com" target="_blank" class="social-link" style="text-decoration: none; color: #000000;"><u>Portfolio</u></a> for more about me.
+            </p>
+            <br>
+            <div class="developer-contact" style="margin-top: 20px;">
+                <h3>Connect with Me🔗🤝</h3>
+                <a href="https://github.com/IanMalobaMwakha" target="_blank" class="social-link" style="text-decoration: none; color: #000000; margin-right: 15px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48"><g fill-rule="evenodd" clip-rule="evenodd"><path d="M24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4ZM0 24C0 10.7452 10.7452 0 24 0C37.2548 0 48 10.7452 48 24C48 37.2548 37.2548 48 24 48C10.7452 48 0 37.2548 0 24Z"/><path d="M19.1833 45.4716C18.9898 45.2219 18.9898 42.9973 19.1833 38.798C17.1114 38.8696 15.8024 38.7258 15.2563 38.3667C14.437 37.828 13.6169 36.1667 12.8891 34.9959C12.1614 33.8251 10.5463 33.64 9.89405 33.3783C9.24182 33.1165 9.07809 32.0496 11.6913 32.8565C14.3044 33.6634 14.4319 35.8607 15.2563 36.3745C16.0806 36.8883 18.0515 36.6635 18.9448 36.2519C19.8382 35.8403 19.7724 34.3078 19.9317 33.7007C20.1331 33.134 19.4233 33.0083 19.4077 33.0037C18.5355 33.0037 13.9539 32.0073 12.6955 27.5706C11.437 23.134 13.0581 20.2341 13.9229 18.9875C14.4995 18.1564 14.4485 16.3852 13.7699 13.6737C16.2335 13.3589 18.1347 14.1343 19.4734 16.0001C19.4747 16.0108 21.2285 14.9572 24.0003 14.9572C26.772 14.9572 27.7553 15.8154 28.5142 16.0001C29.2731 16.1848 29.88 12.7341 34.5668 13.6737C33.5883 15.5969 32.7689 18.0001 33.3943 18.9875C34.0198 19.9749 36.4745 23.1147 34.9666 27.5706C33.9614 30.5413 31.9853 32.3523 29.0384 33.0037C28.7005 33.1115 28.5315 33.2855 28.5315 33.5255C28.5315 33.8856 28.9884 33.9249 29.6465 35.6117C30.0853 36.7362 30.117 39.948 29.7416 45.247C28.7906 45.4891 28.0508 45.6516 27.5221 45.7347C26.5847 45.882 25.5669 45.9646 24.5669 45.9965C23.5669 46.0284 23.2196 46.0248 21.837 45.8961C20.9154 45.8103 20.0308 45.6688 19.1833 45.4716Z"/></g></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/ianmalobamwakha/" target="_blank" class="social-link" style="text-decoration: none; color: #000000; margin-right: 15px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 256 256"><path fill="#0a66c2" d="M218.123 218.127h-37.931v-59.403c0-14.165-.253-32.4-19.728-32.4c-19.756 0-22.779 15.434-22.779 31.369v60.43h-37.93V95.967h36.413v16.694h.51a39.91 39.91 0 0 1 35.928-19.733c38.445 0 45.533 25.288 45.533 58.186zM56.955 79.27c-12.157.002-22.014-9.852-22.016-22.009s9.851-22.014 22.008-22.016c12.157-.003 22.014 9.851 22.016 22.008A22.013 22.013 0 0 1 56.955 79.27m18.966 138.858H37.95V95.967h37.97zM237.033.018H18.89C8.58-.098.125 8.161-.001 18.471v219.053c.122 10.315 8.576 18.582 18.89 18.474h218.144c10.336.128 18.823-8.139 18.966-18.474V18.454c-.147-10.33-8.635-18.588-18.966-18.453"/></svg>
+                </a>
+                <a href="https://twitter.com/malobaian" target="_blank" class="social-link" style="text-decoration: none; color: #000000;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 128 128"><path d="M75.916 54.2L122.542 0h-11.05L71.008 47.06L38.672 0H1.376l48.898 71.164L1.376 128h11.05L55.18 78.303L89.328 128h37.296L75.913 54.2ZM60.782 71.79l-4.955-7.086l-39.42-56.386h16.972L65.19 53.824l4.954 7.086l41.353 59.15h-16.97L60.782 71.793Z"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,7 +2,8 @@ from django.urls import path
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 from .views import CustomPasswordResetView
-from .views import user_dashboard 
+from .views import user_dashboard
+from . import views 
 
 urlpatterns = [
     path('account/', user_dashboard, name='home'),
@@ -18,4 +19,6 @@ urlpatterns = [
         template_name='password-reset/password_reset_complete.html'), 
         name='password_reset_complete'),
     path('accounts/google/login/', TemplateView.as_view(template_name='socialaccount/login.html'), name='google_login'),
+    path('user-list/', views.user_list, name='user_list'),
+
 ]

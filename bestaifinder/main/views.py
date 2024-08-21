@@ -371,3 +371,13 @@ def delete_tool(request, tool_id):
         return redirect('home')
     
     return render(request, 'delete_tool_confirm.html', {'tool': tool})
+
+
+def terms_of_service(request):
+    return render(request, 'main/terms_of_service.html')
+
+def privacy_policy(request):
+    return render(request, 'main/privacy_policy.html')
+
+def about_developer(request):
+    return render(request, 'main/about_developer.html')

@@ -27,7 +27,7 @@
                           </a>
                       </h4>
                       <p class="">
-                          {{ tool.ai_short_description|truncatechars:80 }} <a href="{% url 'ai_body' slug=tool.slug %}">Learn more</a>
+                          {{ tool.ai_short_description|strip_html|truncatechars:80 }} <a href="{% url 'ai_body' slug=tool.slug %}">Learn more</a>
                       </p>
                       <p style="font-style: italic;">
                         Pricing: <i style="color:red;">{{ tool.ai_pricing_tag }}</i>

@@ -19,4 +19,7 @@ urlpatterns = [
     path('add-tool/', views.add_tool, name='add_tool'),
     path('edit-tool/<int:tool_id>/', views.edit_tool, name='edit_tool'),
     path('delete-tool/<int:tool_id>/', views.delete_tool, name='delete_tool'),
+    path('terms-of-service/', views.terms_of_service, name='terms_of_service'),
+    path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
+    path('about-developer/', views.about_developer, name='about_developer'),
 ]

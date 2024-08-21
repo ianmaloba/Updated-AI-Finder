@@ -66,4 +66,9 @@ add more, or go home, or to thir profile
 - Correct google plugin and also update tools cards appearance and tool detail appearances ...via jupiterweb claude\
     Also correct other suff like inability to add images as it keeps requesting adding from admin...etc
 
-Ensure the forms for adding tools are bold, i.e the words like 'Tool Name' in  old and capital..make tags in a paragraph
+Ensure the forms for adding tools are bold, i.e the words like 'Tool Name' in  old and capital..make tags in a paragraph 
+
+
+MAIN: Work on Submit Tool Form. Work on Comments and rating. Deploy!!!!
+    -Add the |strip_html widget to the all tags and all categories tools modals
+    Have top 9 tools on top...then the rest
