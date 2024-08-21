@@ -197,6 +197,7 @@ CKEDITOR_CONFIGS = {
         'extraPlugins': ','.join([
             'uploadimage',
             'div',
+            'blockquote',
             'autolink',
             'autoembed',
             'embedsemantic',
@@ -208,8 +209,10 @@ CKEDITOR_CONFIGS = {
             'dialogui',
             'elementspath',
             'codesnippet',
-            #'youtube',
+            'youtube',
             'iframe',
+            'uploadfile',
+
         ]),
         'uploadUrl': '/ckeditor/upload/',
         'filebrowserBrowseUrl': '/ckeditor/browse/',
@@ -228,6 +231,7 @@ CKEDITOR_CONFIGS = {
 }
 
 CKEDITOR_RESTRICT_BY_DATE = False
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -252,10 +256,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'bestaifinder', 'static'),
+    os.path.join(BASE_DIR, 'bestaifinder/static'),
 ]
 
-CKEDITOR_UPLOAD_PATH = "/media/uploads/"
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
