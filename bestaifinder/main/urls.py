@@ -22,4 +22,10 @@ urlpatterns = [
     path('terms-of-service/', views.terms_of_service, name='terms_of_service'),
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
     path('about-developer/', views.about_developer, name='about_developer'),
+    path('ai-tool/<slug:slug>/add-comment/', views.add_comment, name='add_comment'),
+    path('ai-tool/<slug:slug>/add-rating/', views.add_rating, name='add_rating'),
+    path('ai-tool/<slug:slug>/get-comments/', views.get_comments, name='get_comments'),
+    path('ai-tool/<slug:slug>/get-ratings/', views.get_ratings, name='get_ratings'),
+    path('ai-tool/<slug:slug>/edit-comment/<int:comment_id>/', views.edit_comment, name='edit_comment'),
+    path('ai-tool/<slug:slug>/delete-comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
 ]

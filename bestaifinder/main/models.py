@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
+from mptt.models import MPTTModel, TreeForeignKey
 
 class AITool(models.Model):
     ai_image = models.ImageField(upload_to='images/ai-screenshot/', default='images/default.jpg', blank=True)
@@ -84,4 +85,15 @@ class Category(models.Model):
         indexes = [
             models.Index(fields=['name']),
         ]
-        
+
+class ToolComment(models.Model):
+    tool = models.ForeignKey(AITool, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tool_comments')
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class ToolRating(models.Model):
+    tool = models.ForeignKey(AITool, on_delete=models.CASCADE, related_name='ratings')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tool_ratings')
+    rating = models.PositiveIntegerField(default=5)
+    created_at = models.DateTimeField(auto_now_add=True)

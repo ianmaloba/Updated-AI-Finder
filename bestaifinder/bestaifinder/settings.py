@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.twitter',
     'easy_thumbnails',
     'filer',
+    'mptt',
     'ckeditor_filebrowser_filer',
     'crispy_bootstrap4',
     'crispy_forms',

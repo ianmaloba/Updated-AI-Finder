@@ -88,3 +88,20 @@ class AIToolForm(forms.ModelForm):
             raise forms.ValidationError("PLEASE SELECT ATLEAST ONE TAG.")
         return ', '.join(ai_tags)
 
+from .models import ToolComment, ToolRating
+
+class ToolCommentForm(forms.ModelForm):
+    class Meta:
+        model = ToolComment
+        fields = ['comment']
+        widgets = {
+            'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Enter your comment...'}),
+        }
+
+class ToolRatingForm(forms.ModelForm):
+    class Meta:
+        model = ToolRating
+        fields = ['rating']
+        widgets = {
+            'rating': forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'step': '1'}),
+        }

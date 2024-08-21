@@ -228,10 +228,236 @@
         }
    </style>
   <hr>
+
+<!-- ai_body.html -->
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h2>Comments</h2>
+      <div id="comments-container"></div>
+
+      {% if request.user.is_authenticated %}
+      <div class="mt-3">
+        <h3>Add a Comment</h3>
+        <form id="comment-form">
+          {{ comment_form.as_p }}
+          <button class="btn btn-primary mt-2" type="submit">Submit</button>
+        </form>
+      </div>
+      {% else %}
+      <div class="mt-3">
+        <h3>Comments</h3>
+        {% include 'includes/comments.html' with all_comments=all_comments %}
+        <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-primary">Login to Comment</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h2>Ratings</h2>
+      <div class="d-flex align-items-center">
+        <div class="rating-stars">
+          {% for i in "12345"|make_list %}
+          <span class="star {% if user_rating and user_rating.rating >= forloop.counter %}active{% endif %}" data-rating="{{ forloop.counter }}">&#9733;</span>
+        {% endfor %}
+        </div>
+        <span class="ml-2" id="rating-info">{{ tool_avg_rating|floatformat:1 }} ({{ tool_num_ratings }} ratings)</span>
+      </div>
+
+      {% if request.user.is_authenticated %}
+      <div class="mt-3">
+        <h3>Rate this Tool</h3>
+        <form id="rating-form">
+          {{ rating_form.as_p }}
+          <button class="btn btn-primary mt-2" type="submit">Submit Rating</button>
+        </form>
+      </div>
+      {% else %}
+      <div class="mt-3">
+        <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-primary">Login to Rate</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Add comment functionality
+  document.getElementById('comment-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+    fetch('{% url "add_comment" ai_tool.slug %}', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: formData
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      if (data.success) {
+        this.reset();
+        refreshComments();
+      } else {
+        alert(data.message);
+      }
+    }.bind(this))
+    .catch(function(error) {
+      console.error('Error:', error);
+    });
+  });
+
+  function refreshComments() {
+    fetch('{% url "get_comments" ai_tool.slug %}')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      document.getElementById('comments-container').innerHTML = data.html;
+      addCommentActions();
+    })
+    .catch(function(error) {
+      console.error('Error:', error);
+    });
+  }
+
+  function addCommentActions() {
+    // Edit comment functionality
+    var editLinks = document.querySelectorAll('.edit-comment');
+    editLinks.forEach(function(link) {
+      link.addEventListener('click', function(event) {
+        event.preventDefault();
+        var commentId = this.dataset.commentId;
+        editComment(commentId);
+      });
+    });
+
+    // Delete comment functionality
+    var deleteLinks = document.querySelectorAll('.delete-comment');
+    deleteLinks.forEach(function(link) {
+      link.addEventListener('click', function(event) {
+        event.preventDefault();
+        var commentId = this.dataset.commentId;
+        deleteComment(commentId);
+      });
+    });
+  }
+
+  function editComment(commentId) {
+    fetch('{% url "edit_comment" ai_tool.slug commentId %}', {
+      method: 'GET',
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      // Update the comment form with the comment data
+      var commentForm = document.getElementById('comment-form');
+      commentForm.querySelector('textarea').value = data.comment;
+      commentForm.dataset.commentId = data.id;
+      // Show the comment form
+      commentForm.style.display = 'block';
+    })
+    .catch(function(error) {
+      console.error('Error:', error);
+    });
+  }
+
+  function deleteComment(commentId) {
+    fetch('{% url "delete_comment" ai_tool.slug commentId %}', {
+      method: 'DELETE',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}'
+      }
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      if (data.success) {
+        // Remove the comment from the DOM
+        var commentItem = document.querySelector('.comment-item[data-comment-id="' + commentId + '"]');
+        commentItem.remove();
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(function(error) {
+      console.error('Error:', error);
+    });
+  }
+
+  // Add rating functionality
+  var ratingStars = document.querySelectorAll('.rating-stars .star');
+  ratingStars.forEach(function(star) {
+    star.addEventListener('click', function(event) {
+      var rating = this.dataset.rating;
+      document.getElementById('rating-form').querySelector('input[name="rating"]').value = rating;
+      submitRating();
+    });
+  });
+
+  function submitRating() {
+    var ratingForm = document.getElementById('rating-form');
+    var formData = new FormData(ratingForm);
+    fetch('{% url "add_rating" ai_tool.slug %}', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: formData
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      if (data.success) {
+        ratingForm.reset();
+        refreshRatings();
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(function(error) {
+      console.error('Error:', error);
+    });
+  }
+
+  function refreshRatings() {
+    fetch('{% url "get_ratings" ai_tool.slug %}')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      ratingStars.forEach(function(star, index) {
+        if (index < data.user_rating) {
+          star.classList.add('active');
+        } else {
+          star.classList.remove('active');
+        }
+      });
+      document.getElementById('rating-info').textContent = data.avg_rating.toFixed(1) + ' (' + data.num_ratings + ' ratings)';
+    })
+    .catch(function(error) {
+      console.error('Error:', error);
+    });
+  }
+
+  refreshComments();
+  refreshRatings();
+</script>
+
+
   <br>
   <br>
   <br>
   <h3 style="color: red; font-size: 2.5rem; font-weight: bold;">RELATED TOOLS</h3>
+  <br>
+  <br>
   <div class="row">
     {% for related_tool in related_tools %}
     <br>
