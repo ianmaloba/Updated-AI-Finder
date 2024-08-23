@@ -21,6 +21,8 @@ class AITool(models.Model):
     slug = models.SlugField(unique=True, blank=True, null=True, editable=False, db_index=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ai_tools')        
     search_vector = SearchVectorField(null=True, blank=True)
+    is_featured = models.BooleanField(default=False)
+    featured_order = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         # Generate slug only if this is a new object (no slug exists yet)
@@ -47,6 +49,7 @@ class AITool(models.Model):
             models.Index(fields=['ai_pricing_tag']),
             models.Index(fields=['ai_tags']),
             GinIndex(fields=['search_vector']),
+            models.Index(fields=['is_featured', 'featured_order']),
         ]
 
 # Avoid recursion by checking if the save was triggered by the signal

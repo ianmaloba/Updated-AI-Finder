@@ -74,7 +74,7 @@ MAIN: Work on Submit Tool Form. Work on Comments and rating. Deploy!!!!
     Have top 9 tools on top...then the rest
 
 -- Editing tool - ensure tool slug remains the same. other stuff too -- DONE ...........
--- Make all categories and all tags all use the same for short short_description
+-- Make all categories and all tags all use the same for short short_description -- DONE
 -- Edit the Submit tool and edit tool , while edtiting..the data should be saved, uploading new is a must 
     if one deletes image, to avoid errors. Also make the firm questions bold.
 -- Sow the comments and ratings in backend. DONE.........

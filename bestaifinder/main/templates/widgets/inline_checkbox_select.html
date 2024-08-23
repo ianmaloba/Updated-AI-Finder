@@ -1,11 +1,14 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %}Add AI Tool{% endblock %}
-
-{% load crispy_forms_tags %}
-
-{% block extra_css %}
+<div class="inline-checkbox-select">
+    {% for group, options, index in widget.optgroups %}
+        {% for option in options %}
+            <label class="inline-checkbox">
+                <input type="checkbox" name="{{ widget.name }}" value="{{ option.value }}"
+                       {% if option.selected %}checked{% endif %}>
+                {{ option.label }}
+            </label>
+        {% endfor %}
+    {% endfor %}
+</div>
 
 <style>
     .form-control {
@@ -28,10 +31,10 @@
         display: inline-flex;
         align-items: center;
         margin-right: 5px;
-        font-size: 0.8rem;  /* Smaller font size */
+        font-size: 0.6rem;  /* Smaller font size */
     }
     .inline-checkbox input {
-        margin-right: 3px;
+        margin-right: 1px;
         transform: scale(0.8);  /* Slightly smaller checkboxes */
     }
     label {
@@ -39,11 +42,12 @@
     }
     .help-text {
         font-size: 0.85rem;
-        color: #007bff;
+        color: blue;
         margin-top: 5px;
+        font-style: italic;
     }
     .form-container {
-        max-width: 600px;
+        max-width: 80%%;
         margin: 0 auto;
         padding: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -67,33 +71,3 @@
         border-color: #0056b3;
     }
 </style>
-
-{% endblock %}
-
-{% block content %}
-<section class="wrapper">
-    <div class="container">
-        <div class="form-container">
-            <br>
-            <h2 style="text-align: center;">ADD NEW AI TOOL</h2>
-            <br>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% for field in form %}
-                    <div class="form-group">
-                        {{ field.label_tag }}
-                        {{ field }}
-                        {% if field.help_text %}
-                            <small class="help-text">{{ field.help_text }}</small>
-                        {% endif %}
-                        {% for error in field.errors %}
-                            <p class="text-danger">{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endfor %}
-                <button type="submit" class="btn btn-primary">Submit AI Tool</button>
-            </form>
-        </div>
-    </div>
-</section>
-{% endblock %}

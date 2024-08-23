@@ -87,6 +87,18 @@
         const categoryTitle = document.getElementById('category-title');
         const categoryName = document.getElementById('category-name');
         
+        // Function to strip HTML tags
+        function stripHtml(html) {
+            let tmp = document.createElement("DIV");
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || "";
+        }
+
+        // Function to truncate text
+        function truncate(str, n) {
+            return (str.length > n) ? str.substr(0, n-1) + '...' : str;
+        }
+        
         // Handle category button click
         categories.forEach(button => {
             button.addEventListener('click', function() {
@@ -108,7 +120,8 @@
                     .then(data => {
                         let toolsHtml = '';
                         data.tools.forEach((tool, index) => {
-                            toolsHtml += `${index > 0 ? ' ' : ''}<svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 512 512"><path fill="grey" d="M58.79 439.13A16 16 0 0 1 48 424c0-73.1 14.68-131.56 43.65-173.77c35-51 90.21-78.46 164.35-81.87V88a16 16 0 0 1 27.05-11.57l176 168a16 16 0 0 1 0 23.14l-176 168A16 16 0 0 1 256 424v-79.77c-45 1.36-79 8.65-106.07 22.64c-29.25 15.12-50.46 37.71-73.32 67a16 16 0 0 1-17.82 5.28Z"/></svg> <a href="#" class="tool-link" data-toggle="modal" data-target="#toolInfoModal" data-tool-id="${tool.id}" data-tool-name="${tool.ai_name}" data-tool-slug="${tool.slug}" data-tool-description="${tool.ai_short_description}" data-tool-pricing="${tool.ai_pricing_tag}" data-tool-tags="${tool.ai_tags}" style="font-size: smaller;">${tool.ai_name}</a>`;
+                            const strippedDescription = stripHtml(tool.ai_short_description);
+                            toolsHtml += `${index > 0 ? ' ' : ''}<svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 512 512"><path fill="grey" d="M58.79 439.13A16 16 0 0 1 48 424c0-73.1 14.68-131.56 43.65-173.77c35-51 90.21-78.46 164.35-81.87V88a16 16 0 0 1 27.05-11.57l176 168a16 16 0 0 1 0 23.14l-176 168A16 16 0 0 1 256 424v-79.77c-45 1.36-79 8.65-106.07 22.64c-29.25 15.12-50.46 37.71-73.32 67a16 16 0 0 1-17.82 5.28Z"/></svg> <a href="#" class="tool-link" data-toggle="modal" data-target="#toolInfoModal" data-tool-id="${tool.id}" data-tool-name="${tool.ai_name}" data-tool-slug="${tool.slug}" data-tool-description="${strippedDescription}" data-tool-pricing="${tool.ai_pricing_tag}" data-tool-tags="${tool.ai_tags}" style="font-size: smaller;">${tool.ai_name}</a>`;
                         });
                         toolsList.innerHTML = toolsHtml;
                         
@@ -138,9 +151,9 @@
                 // Update modal content
                 document.getElementById('toolInfoModalLabel').textContent = toolName;
                 document.getElementById('toolInfoContent').innerHTML = `
-                    <p>${toolDescription.length > 200 ? toolDescription.substring(0, 200) + '...' : toolDescription}</p>
-                    <p><strong>Pricing:</strong> ${toolPricing.length > 50 ? toolPricing.substring(0, 50) + '...' : toolPricing}</p>
-                    <p><strong>Tags:</strong> ${toolTags.length > 100 ? toolTags.substring(0, 100) + '...' : toolTags}</p>
+                    <p>${truncate(toolDescription, 200)}</p>
+                    <p><strong>Pricing:</strong> ${truncate(stripHtml(toolPricing), 50)}</p>
+                    <p><strong>Tags:</strong> ${truncate(stripHtml(toolTags), 100)}</p>
                 `;
                 
                 // Update the Learn More button link
@@ -150,7 +163,6 @@
             }
         });
     });
-       
 </script>
 
 <style>

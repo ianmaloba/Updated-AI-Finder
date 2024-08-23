@@ -29,7 +29,8 @@ def index(request):
         ).order_by('-search_rank')
     else:
         # Get all tools, ordered by ID for pagination
-        tools = AITool.objects.all().order_by('-id')
+        #tools = AITool.objects.all().order_by('-id')
+        tools = AITool.objects.order_by(F('is_featured').desc(), '-featured_order', '-id')
     
     # Pagination
     page_number = request.GET.get('page')
@@ -359,9 +360,12 @@ def add_tool(request):
         form = AIToolForm()
     return render(request, 'add_tool.html', {'form': form})
 
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
+from .models import AITool
+from .forms import AIToolForm
+from django.contrib import messages
 
 @login_required
 def edit_tool(request, tool_id):
@@ -373,9 +377,12 @@ def edit_tool(request, tool_id):
         form = AIToolForm(request.POST, request.FILES, instance=tool)
         if form.is_valid():
             form.save()
+            messages.success(request, "Tool successfully updated!")
             return redirect('home')
     else:
         form = AIToolForm(instance=tool)
+        # Manually set initial value for ai_tags
+        form.fields['ai_tags'].initial = [tag.strip() for tag in tool.ai_tags.split(',')]
     
     return render(request, 'edit_tool.html', {'form': form, 'tool': tool})
 

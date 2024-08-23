@@ -78,12 +78,22 @@
         const tagLink = document.getElementById('tag-link');
         const tagName = document.getElementById('tag-name');
         
+        function stripHtml(html) {
+            let temp = document.createElement("div");
+            temp.innerHTML = html;
+            return temp.textContent || temp.innerText || "";
+        }
+
+        function truncate(str, n) {
+            return (str.length > n) ? str.substr(0, n-1) + '...' : str;
+        }
+
         function openToolModal(tool) {
             document.getElementById('toolModalLabel').textContent = tool.ai_name;
             document.getElementById('toolInfoContent').innerHTML = `
-                <p>${tool.ai_short_description.length > 200 ? tool.ai_short_description.substring(0, 200) + '...' : tool.ai_short_description}</p>
-                <p><strong>Pricing:</strong> ${tool.ai_pricing_tag.length > 50 ? tool.ai_pricing_tag.substring(0, 50) + '...' : tool.ai_pricing_tag}</p>
-                <p><strong>Tags:</strong> ${tool.ai_tags.length > 100 ? tool.ai_tags.substring(0, 100) + '...' : tool.ai_tags}</p>
+                <p>${truncate(stripHtml(tool.ai_short_description), 200)}</p>
+                <p><strong>Pricing:</strong> ${truncate(stripHtml(tool.ai_pricing_tag), 50)}</p>
+                <p><strong>Tags:</strong> ${truncate(stripHtml(tool.ai_tags), 100)}</p>
             `;
             document.getElementById('learnMoreBtn').onclick = function() {
                 window.location.href = `/ai-tool/${tool.slug}`;
@@ -109,23 +119,17 @@
                     .then(data => {
                         let toolsHtml = '';
                         data.tools.forEach((tool, index) => {
-                            // Escape and truncate the description
-                            const escapedDescription = tool.ai_short_description
-                                .replace(/[&<>'"]/g, char => ({
-                                    '&': '&amp;',
-                                    '<': '&lt;',
-                                    '>': '&gt;',
-                                    "'": '&#39;',
-                                    '"': '&quot;'
-                                })[char])
-                                .substring(0, 200);
+                            // Strip HTML and truncate the description
+                            const cleanDescription = truncate(stripHtml(tool.ai_short_description), 200);
+                            const cleanPricing = truncate(stripHtml(tool.ai_pricing_tag), 50);
+                            const cleanTags = truncate(stripHtml(tool.ai_tags), 100);
 
                             // Create a safe version of the tool object for the data attribute
                             const safeTool = {
                                 ...tool,
-                                ai_short_description: escapedDescription,
-                                ai_pricing_tag: tool.ai_pricing_tag.substring(0, 50),
-                                ai_tags: tool.ai_tags.substring(0, 100)
+                                ai_short_description: cleanDescription,
+                                ai_pricing_tag: cleanPricing,
+                                ai_tags: cleanTags
                             };
 
                             toolsHtml += `${index > 0 ? ' ' : ''}<svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 512 512"><path fill="grey" d="M58.79 439.13A16 16 0 0 1 48 424c0-73.1 14.68-131.56 43.65-173.77c35-51 90.21-78.46 164.35-81.87V88a16 16 0 0 1 27.05-11.57l176 168a16 16 0 0 1 0 23.14l-176 168A16 16 0 0 1 256 424v-79.77c-45 1.36-79 8.65-106.07 22.64c-29.25 15.12-50.46 37.71-73.32 67a16 16 0 0 1-17.82 5.28Z"/></svg> <a href="#" class="tool-link" data-tool='${JSON.stringify(safeTool)}' style="font-size: smaller;">${tool.ai_name}</a>`;
