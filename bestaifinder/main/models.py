@@ -14,7 +14,7 @@ class AITool(models.Model):
     ai_image = models.ImageField(upload_to='images/ai-screenshot/', default='images/default.jpg', blank=True)
     ai_name = models.CharField(max_length=255)
     ai_tool_logo = models.ImageField(upload_to='images/logos/', default='images/default_logo.jpg', blank=True)
-    ai_short_description = RichTextField()
+    ai_short_description = RichTextUploadingField()
     ai_pricing_tag = models.CharField(max_length=255, db_index=True)
     ai_tags = models.CharField(max_length=255, blank=True, default="", db_index=True)
     ai_tool_link = models.URLField()
