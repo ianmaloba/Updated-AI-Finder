@@ -106,6 +106,7 @@ def ai_body(request, slug):
 
     if request.user.is_authenticated:
         user_rating = ai_tool.ratings.filter(user=request.user).first()
+        user_rating = user_rating.rating if user_rating else None
     else:
         user_rating = None
     
@@ -423,52 +424,76 @@ def add_comment(request, slug):
 
 @login_required
 def edit_comment(request, slug, comment_id):
-    comment = get_object_or_404(ToolComment, id=comment_id)
-    if comment.user == request.user:
-        if request.method == 'GET':
-            return JsonResponse({'id': comment.id, 'comment': comment.comment})
-        elif request.method == 'POST':
-            form = ToolCommentForm(request.POST, instance=comment)
-            if form.is_valid():
-                form.save()
-                return JsonResponse({'success': True, 'message': 'Comment updated successfully.'})
-            return JsonResponse({'success': False, 'message': 'Invalid form data.'})
-    return JsonResponse({'success': False, 'message': 'You are not authorized to edit this comment.'}, status=403)
+    comment = get_object_or_404(ToolComment, id=comment_id, tool__slug=slug)
+    if comment.user != request.user:
+        return JsonResponse({'success': False, 'message': 'You are not authorized to edit this comment.'}, status=403)
+    
+    if request.method == 'GET':
+        return JsonResponse({'id': comment.id, 'comment': comment.comment})
+    elif request.method == 'POST':
+        form = ToolCommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'success': True, 'message': 'Comment updated successfully.'})
+        return JsonResponse({'success': False, 'message': 'Invalid form data.'})
 
 @login_required
 def delete_comment(request, slug, comment_id):
-    comment = get_object_or_404(ToolComment, id=comment_id)
-    if comment.user == request.user:
+    comment = get_object_or_404(ToolComment, id=comment_id, tool__slug=slug)
+    if comment.user != request.user:
+        return JsonResponse({'success': False, 'message': 'You are not authorized to delete this comment.'}, status=403)
+    
+    if request.method == 'DELETE':
         comment.delete()
         return JsonResponse({'success': True, 'message': 'Comment deleted successfully.'})
-    return JsonResponse({'success': False, 'message': 'You are not authorized to delete this comment.'}, status=403)
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
+from django.db.models import Avg
+from django.views.decorators.http import require_http_methods
+import json
 
 @login_required
+@require_http_methods(["POST"])
 def add_rating(request, slug):
-    if request.method == 'POST':
-        tool = get_object_or_404(AITool, slug=slug)
-        form = ToolRatingForm(request.POST)
-        if form.is_valid():
-            rating = form.save(commit=False)
-            rating.tool = tool
-            rating.user = request.user
-            rating.save()
-            return JsonResponse({'success': True, 'message': 'Rating added/updated successfully.'})
-        return JsonResponse({'success': False, 'message': 'Invalid form data.'})
-    return JsonResponse({'success': False, 'message': 'Invalid request.'})
+    tool = get_object_or_404(AITool, slug=slug)
+    data = json.loads(request.body)
+    rating = data.get('rating')
+    
+    if not rating or not (1 <= int(rating) <= 5):
+        return JsonResponse({'success': False, 'message': 'Invalid rating.'})
 
+    rating_obj, created = ToolRating.objects.update_or_create(
+        tool=tool,
+        user=request.user,
+        defaults={'rating': rating}
+    )
+
+    avg_rating = tool.ratings.aggregate(Avg('rating'))['rating__avg']
+    num_ratings = tool.ratings.count()
+
+    return JsonResponse({
+        'success': True,
+        'message': 'Rating added/updated successfully.',
+        'avg_rating': avg_rating or 0,
+        'num_ratings': num_ratings,
+        'user_rating': int(rating)
+    })
+
+def get_ratings(request, slug):
+    ai_tool = get_object_or_404(AITool, slug=slug)
+    tool_avg_rating = ai_tool.ratings.aggregate(avg_rating=Avg('rating'))['avg_rating'] or 0
+    tool_num_ratings = ai_tool.ratings.count()
+    user_rating = None
+    if request.user.is_authenticated:
+        user_rating = ai_tool.ratings.filter(user=request.user).first()
+    return JsonResponse({
+        'avg_rating': tool_avg_rating,
+        'num_ratings': tool_num_ratings,
+        'user_rating': user_rating.rating if user_rating else None
+    })
+    
 def get_comments(request, slug):
     ai_tool = get_object_or_404(AITool, slug=slug)
     all_comments = ai_tool.comments.order_by('-created_at')
     html = render_to_string('includes/comments.html', {'all_comments': all_comments})
     return JsonResponse({'html': html})
-
-def get_ratings(request, slug):
-    ai_tool = get_object_or_404(AITool, slug=slug)
-    tool_avg_rating = ai_tool.ratings.aggregate(avg_rating=Avg('rating'))['avg_rating']
-    tool_num_ratings = ai_tool.ratings.count()
-    if request.user.is_authenticated:
-        user_rating = ai_tool.ratings.filter(user=request.user).first()
-    else:
-        user_rating = None
-    return JsonResponse({'avg_rating': tool_avg_rating, 'num_ratings': tool_num_ratings, 'user_rating': user_rating.rating if user_rating else None})

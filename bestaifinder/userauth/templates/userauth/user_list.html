@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}User List{% endblock %}
 
 {% block content %}
@@ -18,7 +19,26 @@
                 {% for user in page_obj %}
                 <tr>
                     <td>{{ forloop.counter0|add:start_index }}</td> <!-- Continuous numbering -->
-                    <td>{{ user.username }}</td>
+                    <td>
+                        {% if user.socialaccount_set.exists %}
+                        {% with account=user.socialaccount_set.first %}
+                            {% if account.provider == 'github' %}
+                                <img src="{{ account.extra_data.avatar_url }}" class="rounded-circle" alt="" width="25" height="25">
+                            {% elif account.provider == 'Google' %}
+                                <img src="{{ account.extra_data.picture }}" class="rounded-circle" alt="" width="25" height="25">
+                            {% elif account.provider == 'twitter' %}
+                                <img src="{{ account.extra_data.profile_image_url_https }}" class="rounded-circle" alt="" width="25" height="25">
+                            {% elif account.provider == 'facebook' %}
+                                <img src="{{ account.extra_data.picture.data.url }}" class="rounded-circle" alt="" width="25" height="25">
+                            {% else %}
+                                <img src="{% static 'images/app-logo/default-profile-pic.jpg' %}" class="rounded-circle" alt="" width="25" height="25">
+                            {% endif %}
+                        {% endwith %}
+                        {% else %}
+                            <img src="{% static 'images/app-logo/default-profile-pic.jpg' %}" class="rounded-circle" alt="" width="25" height="25">
+                        {% endif %}
+                        {{ user.username }}
+                    </td>
                     <td>{{ user.tool_count }}</td>
                     <td>{{ user.date_joined|date:"F d, Y" }}</td>
                 </tr>

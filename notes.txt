@@ -72,3 +72,11 @@ Ensure the forms for adding tools are bold, i.e the words like 'Tool Name' in  o
 MAIN: Work on Submit Tool Form. Work on Comments and rating. Deploy!!!!
     -Add the |strip_html widget to the all tags and all categories tools modals
     Have top 9 tools on top...then the rest
+
+-- Editing tool - ensure tool slug remains the same. other stuff too -- DONE ...........
+-- Make all categories and all tags all use the same for short short_description
+-- Edit the Submit tool and edit tool , while edtiting..the data should be saved, uploading new is a must 
+    if one deletes image, to avoid errors. Also make the firm questions bold.
+-- Sow the comments and ratings in backend. DONE.........
+-- Generate 9 top tools, update index.html.
+Deploy.

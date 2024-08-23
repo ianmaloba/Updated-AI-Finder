@@ -14,7 +14,7 @@
                     {% with account=user.socialaccount_set.first %}
                         {% if account.provider == 'github' %}
                             <img src="{{ account.extra_data.avatar_url }}" class="rounded-circle" alt="" width="100" height="100">
-                        {% elif account.provider == 'google' %}
+                        {% elif account.provider == 'Google' %}
                             <img src="{{ account.extra_data.picture }}" class="rounded-circle" alt="" width="100" height="100">
                         {% elif account.provider == 'twitter' %}
                             <img src="{{ account.extra_data.profile_image_url_https }}" class="rounded-circle" alt="" width="100" height="100">

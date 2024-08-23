@@ -20,19 +20,11 @@ class AITool(models.Model):
     ai_tool_link = models.URLField()
     slug = models.SlugField(unique=True, blank=True, null=True, editable=False, db_index=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ai_tools')        
-    # Add a SearchVectorField for full-text search
     search_vector = SearchVectorField(null=True, blank=True)
 
-    def full_clean(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.ai_name)
-        super().full_clean(*args, **kwargs)
-
-    def __str__(self):
-        return f"{self.id}. {self.ai_name}"
-
     def save(self, *args, **kwargs):
-        if not self.slug or AITool.objects.filter(slug=self.slug).exists():
+        # Generate slug only if this is a new object (no slug exists yet)
+        if not self.slug:
             self.slug = self._generate_unique_slug()
         super().save(*args, **kwargs)
 
@@ -45,7 +37,8 @@ class AITool(models.Model):
             num += 1
         return unique_slug
 
-
+    def __str__(self):
+        return f"{self.id}. {self.ai_name}"
 
     class Meta:
         app_label = 'main'
@@ -91,9 +84,15 @@ class ToolComment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tool_comments')
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.id}. {self.tool}"
 
 class ToolRating(models.Model):
     tool = models.ForeignKey(AITool, on_delete=models.CASCADE, related_name='ratings')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tool_ratings')
     rating = models.PositiveIntegerField(default=5)
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.id}. {self.tool}"

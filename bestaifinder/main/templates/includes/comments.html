@@ -7,8 +7,8 @@
     </div>
     {% if request.user == comment.user %}
     <div>
-      <a href="{% url 'edit_comment' %}" class="edit-comment" data-comment-id="{{ comment.id }}">Edit</a>
-      <a href="{% url 'delete_comment' %}" class="delete-comment" data-comment-id="{{ comment.id }}">Delete</a>
+      <!-- <a href="#" class="edit-comment" data-comment-id="{{ comment.id }}">Edit</a> -->
+      <a href="#" class="delete-comment" data-comment-id="{{ comment.id }}">Delete</a>
     </div>
     {% endif %}
   </div>
