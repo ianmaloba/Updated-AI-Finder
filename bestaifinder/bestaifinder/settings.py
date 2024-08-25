@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-o9*i%mj(&)_^urj0g8@zu@9i!m31^m1q@!#7ngybfzucxmcu1u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*'] # localhost', '127.0.0.1:8000
+ALLOWED_HOSTS = ['24.144.124.10', 'localhost', '127.0.0.1:8000']
+#ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -114,6 +115,7 @@ WSGI_APPLICATION = 'bestaifinder.wsgi.application'
 #    }
 #}
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -122,6 +124,17 @@ DATABASES = {
         'PASSWORD': '@scientisT.1',
         'HOST': 'localhost',
         'PORT': '5432',
+    }
+}
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ai_finder_guru',
+        'USER': 'ianadmin',
+        'PASSWORD': '@scientisT.1',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
