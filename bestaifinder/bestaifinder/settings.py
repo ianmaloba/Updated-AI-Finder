@@ -69,6 +69,7 @@ THUMBNAIL_PROCESSORS = (
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', #added for railway
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -372,5 +373,5 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'aifinderguru@gmail.co
 SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'aifinderguru@gmail.com')
 APP_NAME = 'AI FINDER GURU'
 
-# Ov23liNS8N3UV9NHx3Lm
-# 70d9e2529d31cdfd49b68126e2107e36b10c9e72
+# For Railway
+STATICSTORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
