@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-o9*i%mj(&)_^urj0g8@zu@9i!m31^m1q@!#7ngybfzucxmcu1u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['24.144.124.10', 'localhost', '127.0.0.1:8000']
-#ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['24.144.124.10', 'localhost', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -116,6 +116,7 @@ WSGI_APPLICATION = 'bestaifinder.wsgi.application'
 #}
 
 """
+# Digital Ocean
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -126,7 +127,8 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-"""
+
+# Localhost
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -135,6 +137,17 @@ DATABASES = {
         'PASSWORD': '@scientisT.1',
         'HOST': 'localhost',
         'PORT': '',
+    }
+}
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'NGbvcbNiJNlXifrTcxGliQeuYNEtjYhB',
+        'HOST': 'meticulous-empathy.railway.internal',
+        'PORT': '5432',
     }
 }
 

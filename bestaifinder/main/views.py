@@ -37,11 +37,25 @@ def index(request):
     paginator = Paginator(tools, per_page=9)
     page_obj = paginator.get_page(page_number)
 
+    """
     # Cache random tools selection to avoid repeated sampling
     randomtools = cache.get('randomtools')
     if not randomtools:
         randomtools = random.sample(list(tools), 9)
         cache.set('randomtools', randomtools, timeout=300)  # Cache for 5 minutes
+    """
+
+    
+    randomtools = cache.get('randomtools')
+    
+    if not randomtools:
+        all_tools = list(tools)
+        if all_tools:
+            sample_size = min(len(all_tools), 9)
+            randomtools = random.sample(all_tools, sample_size)
+            cache.set('randomtools', randomtools, timeout=300)  # Cache for 5 minutes
+        else:
+            randomtools = []  # or handle the empty case as appropriate
 
     # Fetch and cache all unique tags
     unique_tags = cache.get('unique_tags')
@@ -122,6 +136,7 @@ def ai_body(request, slug):
         'tool_num_ratings': tool_num_ratings,
         'user_rating': user_rating,
     })
+
 
 
 def search_results(request):
