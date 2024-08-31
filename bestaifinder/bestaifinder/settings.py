@@ -69,7 +69,6 @@ THUMBNAIL_PROCESSORS = (
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', #added for railway
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -129,6 +128,19 @@ DATABASES = {
     }
 }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'NGbvcbNiJNlXifrTcxGliQeuYNEtjYhB',
+        'HOST': 'meticulous-empathy.railway.internal',
+        'PORT': '5432',
+    }
+}
+
+"""
+
 # Localhost
 DATABASES = {
     'default': {
@@ -138,17 +150,6 @@ DATABASES = {
         'PASSWORD': '@scientisT.1',
         'HOST': 'localhost',
         'PORT': '',
-    }
-}
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'NGbvcbNiJNlXifrTcxGliQeuYNEtjYhB',
-        'HOST': 'meticulous-empathy.railway.internal',
-        'PORT': '5432',
     }
 }
 
@@ -373,5 +374,3 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'aifinderguru@gmail.co
 SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'aifinderguru@gmail.com')
 APP_NAME = 'AI FINDER GURU'
 
-# For Railway
-STATICSTORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
