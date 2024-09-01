@@ -135,7 +135,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'NGbvcbNiJNlXifrTcxGliQeuYNEtjYhB',
         'HOST': 'meticulous-empathy.railway.internal',
-        'PORT': '5432',
+        'PORT':'5432,
     }
 }
 
@@ -145,11 +145,11 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ai_finder_guru',
-        'USER': 'ianadmin',
+        'NAME': 'ai-finder-guru',
+        'USER': 'postgres',
         'PASSWORD': '@scientisT.1',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
 
