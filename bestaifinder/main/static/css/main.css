@@ -153,72 +153,81 @@ footer .col-12.col-md-8, footer .col-12.col-md-4 {
     margin-bottom: 20px;
     line-height: 1.42857143;
     background-color: #fff;
-    border: 2px solid #000;  /* Solid black border */
     border-radius: 2px;
+    border: 2px solid #000; /* Solid black border */
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
-    transition: all .25s;
-}
-
-.card:hover {
-    box-shadow: 0 12px 24px 0 rgba(0,0,0,0.25), 0 8px 30px 0 rgba(0,0,0,0.22);  /* Enhanced shadow for more movement */
-    transform: translateY(-5px);  /* Slight upward movement */
-    background-color: #d3c4b7;  /* Light gray-brownish color */
-}
-
-.img-card img {
+    transition: all .25s ease; /* Smooth transition */
+  }
+  
+  .card:hover {
+    box-shadow: 0 12px 22px 0 rgba(0,0,0,0.3), 0 8px 26px 0 rgba(0,0,0,0.22); /* Enhanced shadow */
+    transform: translateY(-8px); /* Movement on hover */
+    background-color: #f4f0e6; /* Light grey-brownish color */
+  }
+  
+  .img-card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    transition: all .25s ease;
-}
-
-.card-title {
+    transition: transform .25s ease, opacity .25s ease;
+  }
+  
+  .img-card img:hover {
+    transform: scale(1.05); /* Image zoom-in on hover */
+    opacity: 0.9; /* Slight transparency */
+  }
+  
+  .card-content {
+    padding: 15px;
+    text-align: left;
+  }
+  
+  .card-title {
     margin-top: 0px;
     font-weight: 700;
     font-size: 1.65em;
     display: flex;
     align-items: center;
-    white-space: nowrap;  /* Prevents text wrapping */
-    overflow: hidden;     /* Hides overflow text */
-    text-overflow: ellipsis; /* Adds ... for overflow text */
-}
-
-.card-title a {
+    overflow: hidden; /* Truncate long titles */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .card-title a {
     color: #000;
     text-decoration: none !important;
-}
-
-.logo-img {
+  }
+  
+  .logo-img {
     width: 24px;
     height: 24px;
     border-radius: 50%;
     margin-right: 8px;
-}
-
-.logo-bg-black {
+  }
+  
+  .logo-bg-black {
     background-color: #000;
     padding: 2px;
     border-radius: 50%;
-}
-
-.card-read-more {
+  }
+  
+  .card-read-more {
     border-top: 1px solid #D4D4D4;
     display: flex;
     justify-content: space-between;
-}
-
-.card-read-more a {
+  }
+  
+  .card-read-more a {
     text-decoration: none !important;
     padding: 10px;
     font-weight: 600;
     text-transform: uppercase;
-}
-
-.tags {
+  }
+  
+  .tags {
     font-size: 0.77em;
     color: #999;
-}
-
+  }  
 
 .frontpage-tags {
     font-size: 0.84em;
