@@ -80,3 +80,6 @@ MAIN: Work on Submit Tool Form. Work on Comments and rating. Deploy!!!!
 -- Sow the comments and ratings in backend. DONE.........
 -- Generate 9 top tools, update index.html.
 Deploy.
+
+-- Names of AI adders passing by which can open the 'ianadmin's ai tools' page, with them paginated. And below we have all
+    all users page as a button below...
