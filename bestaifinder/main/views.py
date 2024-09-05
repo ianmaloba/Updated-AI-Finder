@@ -570,4 +570,24 @@ def remove_bookmark(request, bookmark_id):
     
     return redirect('bookmarks')
 
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
+import json
+
+@require_POST
+@csrf_exempt
+def voice_search(request):
+    data = json.loads(request.body)
+    query = data.get('query', '')
+    
+    # Construct the URL for the search results page
+    search_url = reverse('search_results') + f'?ai_name_contains={query}'
+    
+    return JsonResponse({'redirect_url': search_url})
+
+def voice_search_page(request):
+    return render(request, 'index.html')
+
 

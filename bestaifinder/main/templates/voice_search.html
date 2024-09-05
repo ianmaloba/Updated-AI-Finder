@@ -1,0 +1,81 @@
+{% extends 'base.html' %}  {# Assuming you have a base template #}
+
+{% block content %}
+<div class="container">
+    <h2>Voice Search</h2>
+    <button id="start-record-btn" title="Start Voice Search">Start Voice Search</button>
+    <p id="recording-status">Click the button to start voice search</p>
+    <p id="voice-search-result"></p>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const startRecordBtn = document.getElementById('start-record-btn');
+    const recordingStatus = document.getElementById('recording-status');
+    const voiceSearchResult = document.getElementById('voice-search-result');
+
+    if ('webkitSpeechRecognition' in window) {
+        const recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        recognition.onstart = () => {
+            recordingStatus.textContent = 'Voice recognition activated. Speak now.';
+        };
+
+        recognition.onerror = (event) => {
+            recordingStatus.textContent = 'Error occurred in recognition: ' + event.error;
+        };
+
+        recognition.onend = () => {
+            recordingStatus.textContent = 'Voice recognition ended.';
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            voiceSearchResult.textContent = 'You said: ' + transcript;
+            
+            // Send the transcript to the server for search
+            fetch('/voice-search/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({query: transcript})
+            })
+            .then(response => response.json())
+            .then(data => {
+                window.location.href = data.redirect_url;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        };
+
+        startRecordBtn.onclick = () => {
+            recognition.start();
+        };
+    } else {
+        startRecordBtn.style.display = 'none';
+        recordingStatus.textContent = 'Voice recognition not supported in this browser.';
+    }
+
+    // Function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
+{% endblock %}

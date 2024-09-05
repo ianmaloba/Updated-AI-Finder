@@ -90,5 +90,9 @@ MAIN AGENDA!!!!!!
 --  Also ckeditor content saved upon editing
 --Add bookmark fucntionality -> DONE
 -- Correct Dshboard buttons and navigations -> DONE
--- Correct Sign In Third Party --> DONE (Except FB, register for Business and Activate)
--- Also try to add the trigam search fucntionality
+-- Correct Sign In Third Party (Except FB, register for Business and Activate) --> DONE 
+-- Also try to add the trigam search fucntionality 
+-- The words passing..' Find your .... AI'v find the AI tool you need 
+-- At search add a featur that someone can talk and text is written there and searched .../perhapa replace this with s by id
+-- Make the sliding text on top better
+-- Quotes about AI Passing by...

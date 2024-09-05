@@ -30,4 +30,6 @@ urlpatterns = [
     path('ai-tool/<slug:slug>/delete-comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
     path('bookmarks/', views.bookmarks, name='bookmarks'),
     path('bookmarks/remove/<int:bookmark_id>/', views.remove_bookmark, name='remove_bookmark'),
+    path('voice-search/', views.voice_search, name='voice_search'),
+    path('voice-search-page/', views.voice_search_page, name='voice_search_page'),
 ]
