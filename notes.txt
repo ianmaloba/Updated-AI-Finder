@@ -85,3 +85,5 @@ Deploy.
     all users page as a button below...
 
 -- Correct Images to avoid errors, try to ensure tags ticked in editing is saved, add bookmark fucntionality
+    Correct Sign In Third Party
+    Also try to add the trigam search fucntionality

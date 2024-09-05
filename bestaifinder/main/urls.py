@@ -28,4 +28,6 @@ urlpatterns = [
     path('ai-tool/<slug:slug>/get-ratings/', views.get_ratings, name='get_ratings'),
     path('ai-tool/<slug:slug>/edit-comment/<int:comment_id>/', views.edit_comment, name='edit_comment'),
     path('ai-tool/<slug:slug>/delete-comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
+    path('bookmarks/', views.bookmarks, name='bookmarks'),
+    path('bookmarks/remove/<int:bookmark_id>/', views.remove_bookmark, name='remove_bookmark'),
 ]

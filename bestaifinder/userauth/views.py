@@ -1,5 +1,5 @@
 from django.contrib.auth.views import PasswordResetView
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -12,7 +12,7 @@ from django.conf import settings
 from django.templatetags.static import static
 from django.contrib.auth import get_user_model
 from django.db.models import Count
-from main.models import AITool
+from main.models import AITool, Bookmark
 from django.contrib.auth.decorators import login_required
 
 

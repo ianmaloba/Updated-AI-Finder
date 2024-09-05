@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.core.cache import cache
 from django.db.models.functions import Greatest
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
-from .models import AITool, Category
+from .models import AITool, Category, Bookmark
 import random
 
 def index(request):
@@ -95,10 +95,29 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+from django.shortcuts import redirect
+from django.contrib import messages
 
 def ai_body(request, slug):
     ai_tool = get_object_or_404(AITool, slug=slug)
     current_tags = [tag.strip() for tag in ai_tool.ai_tags.split(',') if tag.strip() and tag.strip() != "#"]
+
+    # Handling bookmark logic
+    if request.method == 'POST' and 'bookmark' in request.POST:
+        if request.user.is_authenticated:
+            bookmark, created = Bookmark.objects.get_or_create(user=request.user, tool=ai_tool)
+            if not created:
+                # Bookmark exists, so remove it
+                bookmark.delete()
+                messages.success(request, f'{ai_tool.ai_name} removed from bookmarks.')
+            else:
+                # Bookmark was created (new)
+                messages.success(request, f'{ai_tool.ai_name} bookmarked.')
+        else:
+            return redirect('account_login')
+
+    # Fetching bookmark status
+    is_bookmarked = Bookmark.objects.filter(user=request.user, tool=ai_tool).exists() if request.user.is_authenticated else False
 
     related_tools = AITool.objects.exclude(id=ai_tool.id).annotate(
         num_common_tags=Count('ai_tags', filter=Q(ai_tags__icontains=current_tags[0]))
@@ -107,7 +126,6 @@ def ai_body(request, slug):
         related_tools = related_tools.annotate(
             num_common_tags=Count('ai_tags', filter=Q(ai_tags__icontains=tag)) + F('num_common_tags')
         )
-
     related_tools = related_tools.order_by('-num_common_tags')[:9]
 
     all_ai_tools_count = cache.get_or_set('all_ai_tools_count', AITool.objects.count(), 60 * 15)
@@ -124,9 +142,10 @@ def ai_body(request, slug):
         user_rating = user_rating.rating if user_rating else None
     else:
         user_rating = None
-    
-    return render(request, 'ai_body.html', {
+
+    context = {
         'ai_tool': ai_tool,
+        'current_tags': current_tags,
         'related_tools': related_tools,
         'all_ai_tools_count': all_ai_tools_count,
         'comment_form': comment_form,
@@ -135,8 +154,10 @@ def ai_body(request, slug):
         'tool_avg_rating': tool_avg_rating,
         'tool_num_ratings': tool_num_ratings,
         'user_rating': user_rating,
-    })
+        'is_bookmarked': is_bookmarked,  # Pass bookmark status to the template
+    }
 
+    return render(request, 'ai_body.html', context)
 
 
 def search_results(request):
@@ -519,3 +540,34 @@ def get_comments(request, slug):
     all_comments = ai_tool.comments.order_by('-created_at')
     html = render_to_string('includes/comments.html', {'all_comments': all_comments})
     return JsonResponse({'html': html})
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Bookmark
+
+# View for listing user's bookmarks
+def bookmarks(request):
+    if not request.user.is_authenticated:
+        return redirect('account_login')  # Redirect to login if the user is not authenticated
+
+    # Fetch bookmarks for the current user
+    user_bookmarks = Bookmark.objects.filter(user=request.user).select_related('tool')
+
+    context = {
+        'user': request.user,
+        'user_bookmarks': user_bookmarks,
+    }
+
+    return render(request, 'account/bookmarks.html', context)
+
+from django.shortcuts import get_object_or_404, redirect
+from .models import Bookmark
+
+def remove_bookmark(request, bookmark_id):
+    if request.method == 'POST':
+        bookmark = get_object_or_404(Bookmark, id=bookmark_id, user=request.user)
+        bookmark.delete()
+        return redirect('bookmarks')
+    
+    return redirect('bookmarks')
+
+
