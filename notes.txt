@@ -83,3 +83,5 @@ Deploy.
 
 -- Names of AI adders passing by which can open the 'ianadmin's ai tools' page, with them paginated. And below we have all
     all users page as a button below...
+
+-- Correct Images to avoid errors, try to ensure tags ticked in editing is saved, add bookmark fucntionality
