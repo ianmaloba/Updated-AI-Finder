@@ -84,9 +84,11 @@ Deploy.
 -- Names of AI adders passing by which can open the 'ianadmin's ai tools' page, with them paginated. And below we have all
     all users page as a button below...
 
+MAIN AGENDA!!!!!!
 -- Correct Images to avoid errors
 --Try to ensure tags ticked in editing is saved
+--  Also ckeditor content saved upon editing
 --Add bookmark fucntionality -> DONE
 -- Correct Dshboard buttons and navigations -> DONE
--- Correct Sign In Third Party
+-- Correct Sign In Third Party --> DONE (Except FB, register for Business and Activate)
 -- Also try to add the trigam search fucntionality
