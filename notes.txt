@@ -96,3 +96,4 @@ MAIN AGENDA!!!!!!
 -- At search add a featur that someone can talk and text is written there and searched .../perhapa replace this with s by id
 -- Make the sliding text on top better
 -- Quotes about AI Passing by...
+-- Images loading feature before images appear 
