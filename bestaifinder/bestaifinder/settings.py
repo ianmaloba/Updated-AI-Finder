@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.reddit',
     'easy_thumbnails',
     'filer',
     'mptt',
@@ -352,7 +353,16 @@ SOCIALACCOUNT_PROVIDERS = {
         },
         'OAUTH_PKCE_ENABLED': True,
     },
+    'reddit': {
+        'AUTH_PARAMS': {'duration': 'permanent'},  # Make the Reddit OAuth token permanent
+        'SCOPE': ['identity', 'submit'],  # Specify Reddit OAuth scopes
+        'USER_AGENT': 'django:myappid:1.0 (by /u/AmbitiousDev-001)',  # Comply with Reddit API rules
+    },
 }
+
+# Reddit API credentials
+SOCIAL_AUTH_REDDIT_KEY = 'NWn2a6yePxSiv1FXkVTSHw'
+SOCIAL_AUTH_REDDIT_SECRET = 'u54VNFomgGF0HhhcOn8W9DIceq6qcg'
 
 LOGIN_REDIRECT_URL = '/'
 
