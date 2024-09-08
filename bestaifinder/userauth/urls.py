@@ -20,5 +20,5 @@ urlpatterns = [
         name='password_reset_complete'),
     path('accounts/google/login/', TemplateView.as_view(template_name='socialaccount/login.html'), name='google_login'),
     path('user-list/', views.user_list, name='user_list'),
-
+    path('users-tools/', views.users_and_tools, name='users_and_tools'),
 ]

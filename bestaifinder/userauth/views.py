@@ -95,3 +95,36 @@ def user_list(request):
         'page_obj': page_obj,
     }
     return render(request, 'userauth/user_list.html', context)
+
+from django.core.paginator import Paginator
+from django.shortcuts import render
+from django.db.models import Count
+from django.contrib.auth import get_user_model
+
+
+def users_and_tools(request):
+    # Get users with their tool counts
+    users = User.objects.annotate(tool_count=Count('ai_tools')).order_by('-tool_count')
+
+    # Pagination for users
+    user_paginator = Paginator(users, 10)  # Show 10 users per page
+    user_page_number = request.GET.get('page')
+    user_page_obj = user_paginator.get_page(user_page_number)
+
+    # Prepare tools for each user
+    user_tools_pagination = []
+    for user in user_page_obj:
+        tools = AITool.objects.filter(user=user)
+        tool_paginator = Paginator(tools, 100)  # Show 100 tools per user
+        tool_page_number = request.GET.get(f'page-{user.id}')
+        tool_page_obj = tool_paginator.get_page(tool_page_number)
+        user_tools_pagination.append({
+            'user': user,
+            'tools': tool_page_obj
+        })
+
+    context = {
+        'user_page_obj': user_page_obj,
+        'user_tools_pagination': user_tools_pagination,
+    }
+    return render(request, 'userauth/users_and_tools.html', context)

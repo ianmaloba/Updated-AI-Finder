@@ -107,5 +107,11 @@ BELOW DONE!!!!!!!
 -> Category Tools Image/logo 
 -> Tag Tools Image/logo 
 
--> IMPORTANT: 1) Finish AI Tools Tags And Categories Passing 2) Finish Delete comment Immediately upon adding
+-> IMPORTANT: 
+    1) Finish AI Tools Tags And Categories Passing 
+    2) Finish Delete comment Immediately upon adding
+    3) Show Number of tools basically in a star on top right like the NEW or something attractive..
+        have an oval shaped serrated sourcer with number e.g '5000 AI Tools' inside. And then beside it words 'And Counting ...'
+            the '...' should be actually using the javascript typing effect . Make the oval be kind of bouncing 
+    4) Make spacing in submit tool form
 

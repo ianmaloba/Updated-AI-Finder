@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Users and Tools{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Users and Their Tools</h2>
+    
+    {% for user_tools in user_tools_pagination %}
+    <div class="user-block">
+        <h4>{{ user_tools.user.username }}</h4>
+        <p>Number of Tools: {{ user_tools.user.tool_count }}</p>
+        <div class="tools-list">
+            <ul>
+                {% for tool in user_tools.tools %}
+                ➜ {{ tool.ai_name }}
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <!-- Show pagination for tools if user has more than 100 tools -->
+        <nav aria-label="Tool page navigation">
+            <ul class="pagination">
+                {% if user_tools.tools.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page-{{ user_tools.user.id }}={{ user_tools.tools.previous_page_number }}">Previous</a></li>
+                {% endif %}
+
+                <li class="page-item disabled"><a class="page-link" href="#">Page {{ user_tools.tools.number }} of {{ user_tools.tools.paginator.num_pages }}</a></li>
+
+                {% if user_tools.tools.has_next %}
+                <li class="page-item"><a class="page-link" href="?page-{{ user_tools.user.id }}={{ user_tools.tools.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    <hr>
+    {% endfor %}
+
+    <!-- Pagination for users -->
+    <nav aria-label="User page navigation">
+        <ul class="pagination">
+            {% if user_page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ user_page_obj.previous_page_number }}">Previous</a></li>
+            {% endif %}
+
+            <li class="page-item disabled"><a class="page-link" href="#">Page {{ user_page_obj.number }} of {{ user_page_obj.paginator.num_pages }}</a></li>
+
+            {% if user_page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ user_page_obj.next_page_number }}">Next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ user_page_obj.paginator.num_pages }}">Last &raquo;</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}
