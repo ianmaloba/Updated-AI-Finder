@@ -31,7 +31,7 @@
     <div class="row">
         <div class="col-md-6">
             <!-- Left Side: Search and Filter -->
-            <h5 style="font-family: "Lucida Console", "Courier New", monospace;"><i><b>SEARCH FOR AN AI TOOL BY VOICE</b></i></h5>
+            <h5 style="font-family: "Lucida Console", "Courier New", monospace;">SEARCH BY VOICE</h5>
             <div class="filter-part">
                 <table style="width:100%; border: none; border-collapse: collapse;">
                     <tr style="border: none;">
@@ -83,6 +83,7 @@
                                         border: 2px solid rgba(0, 123, 255, 0.1); 
                                         animation: wave 2s 1s infinite; 
                                         opacity: 0;
+                                        cursor: pointer;
                                         ">
                                     </div>
                                 </div>
@@ -114,26 +115,26 @@
                 }
             </style>
 
-            <hr style="border-top: 1px solid red;">
-            <h5 style="font-family: "Lucida Console", "Courier New", monospace;"><i><b>SEARCH AND FILTER BY TEXT</b></i></h5>
-            <p><i>Fill in part or whole of the form and click search.. or try <a href="{% url 'google_custom_search' %}" class="text-bold">Custom Search Engine</a></i></p>
+            <hr>
+            <h5 style="font-family: "Lucida Console", "Courier New", monospace;">SEARCH AND FILTER BY TEXT</h5>
+            <!-- <p><i>Fill in part or whole of the form and click search.. or try <a href="{% url 'google_custom_search' %}" class="text-bold">Custom Search Engine</a></i></p> -->
             <div class="filter-part">
                 <form id="search-form" method="GET" action="{% url 'search_results' %}">
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <!-- Enlarged text input field -->
-                            <label for="ai_name_contains">What kind of AI tool are you looking for?</label>
-                            <textarea class="form-control" id="ai_name_contains" name="ai_name_contains" placeholder="Explain briefly..." rows="3" style="border: 1px solid blue;"></textarea>
+                            <textarea class="form-control textarea" id="ai_name_contains" name="ai_name_contains" placeholder="Explain briefly..." rows="3"></textarea>
                         </div>
+                        
                         <div class="form-group col-md-6">
-                            <!-- Half width input fields -->
+                            <!-- Half width input fields with the same styling as the textarea -->
                             <label for="publishDateMin">Launched Before</label>
-                            <input type="date" class="form-control" id="publishDateMin" name="date_min" style="border: 1px solid blue;">
+                            <input type="date" class="form-control date-input" id="publishDateMin" name="date_min">
                         </div>
+                        
                         <div class="form-group col-md-6">
-                            <!-- Half width input fields -->
+                            <!-- Half width input fields with the same styling as the textarea -->
                             <label for="category">AI Type</label>
-                            <select id="category" class="form-control" name="ai_type" style="border: 1px solid blue;">
+                            <select id="category" class="form-control select-input" name="ai_type">
                                 <option value="">Choose...</option>
                                 <option value="Video">Video</option>
                                 <option value="Text">Text</option>
@@ -144,16 +145,162 @@
                                 <option value="GPT">GPT</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-12">
+                        
+                        <style>
+                            .textarea, .date-input, .select-input {
+                                height: 80px !important;
+                                background-color: #eeeeee;
+                                color: #666666;
+                                border-radius: 8px;
+                                border: 2px solid transparent;
+                                outline: none;
+                                font-size: 17px;
+                                font-weight: 500;
+                                resize: none;
+                                font-family: 'Heebo', sans-serif;
+                                transition: 0.2s;
+                                border: 2px solid #ccc;
+                            }
+
+                            .textarea, .date-input {
+                                padding: 1rem;
+                            }
+                        
+                            /* Ensuring date and select fields have their own specific heights */
+                            .date-input, .select-input {
+                                height: 40px !important;
+                            }
+                        
+                            .textarea:hover, .date-input:hover, .select-input:hover {
+                                cursor: pointer;
+                                background-color: white;
+                            }
+                        
+                            .textarea:focus, .date-input:focus, .select-input:focus {
+                                cursor: text;
+                                color: black;
+                                border-color: black;
+                            }
+                        </style>
+                        
+                        <div class="form-group col-md-12" style="display: flex; align-items: center;">
                             <!-- Full width input fields -->
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="free" value="true" {% if query_params.free == 'true' %}checked{% endif %} style="border: 1px solid lightblue;">
-                                <label class="form-check-label" for="free">Free</label>
+                            <div class="checkbox-wrapper-19" style="margin-right: 5px;">
+                                <input type="checkbox" id="cbtest-19" name="free" value="true"
+                                    {% if query_params.free == 'true' %}checked{% endif %} />
+                                <label for="cbtest-19" class="check-box"></label>
                             </div>
-                        </div>
+                            <span style="font-size: 18px; position: relative; top: -2px;">Free</span>
+                        </div>                                                
                     </div>
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </form>  
+                    <button type="submit" class="btn btn-primary" style="padding: 6px 12px; background-color: #007bff; border: none; border-radius: 4px; font-size: 16px; color: white;">Search</button>
+                </form>
+                
+                <style>
+                    .checkbox-wrapper-19 {
+                        box-sizing: border-box;
+                        --background-color: #fff;
+                        --checkbox-height: 25px;
+                    }
+                
+                    @-moz-keyframes dothabottomcheck-19 {
+                        0% {
+                            height: 0;
+                        }
+                        100% {
+                            height: calc(var(--checkbox-height) / 2);
+                        }
+                    }
+                
+                    @-webkit-keyframes dothabottomcheck-19 {
+                        0% {
+                            height: 0;
+                        }
+                        100% {
+                            height: calc(var(--checkbox-height) / 2);
+                        }
+                    }
+                
+                    @keyframes dothabottomcheck-19 {
+                        0% {
+                            height: 0;
+                        }
+                        100% {
+                            height: calc(var(--checkbox-height) / 2);
+                        }
+                    }
+                
+                    @keyframes dothatopcheck-19 {
+                        0% {
+                            height: 0;
+                        }
+                        50% {
+                            height: 0;
+                        }
+                        100% {
+                            height: calc(var(--checkbox-height) * 1.2);
+                        }
+                    }
+                
+                    .checkbox-wrapper-19 input[type=checkbox] {
+                        display: none;
+                    }
+                
+                    .checkbox-wrapper-19 .check-box {
+                        height: var(--checkbox-height);
+                        width: var(--checkbox-height);
+                        background-color: transparent;
+                        border: calc(var(--checkbox-height) * .1) solid #000;
+                        border-radius: 5px;
+                        position: relative;
+                        display: inline-block;
+                        box-sizing: border-box;
+                        transition: border-color ease 0.2s;
+                        cursor: pointer;
+                    }
+                
+                    .checkbox-wrapper-19 .check-box::before,
+                    .checkbox-wrapper-19 .check-box::after {
+                        box-sizing: border-box;
+                        position: absolute;
+                        height: 0;
+                        width: calc(var(--checkbox-height) * .2);
+                        background-color: #34b93d;
+                        display: inline-block;
+                        transform-origin: left top;
+                        border-radius: 5px;
+                        content: " ";
+                        transition: opacity ease 0.5;
+                    }
+                
+                    .checkbox-wrapper-19 .check-box::before {
+                        top: calc(var(--checkbox-height) * .72);
+                        left: calc(var(--checkbox-height) * .41);
+                        box-shadow: 0 0 0 calc(var(--checkbox-height) * .05) var(--background-color);
+                        transform: rotate(-135deg);
+                    }
+                
+                    .checkbox-wrapper-19 .check-box::after {
+                        top: calc(var(--checkbox-height) * .37);
+                        left: calc(var(--checkbox-height) * .05);
+                        transform: rotate(-45deg);
+                    }
+                
+                    .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box {
+                        border-color: #34b93d;
+                    }
+                
+                    .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::after {
+                        height: calc(var(--checkbox-height) / 2);
+                        animation: dothabottomcheck-19 0.2s ease 0s forwards;
+                    }
+                
+                    .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::before {
+                        height: calc(var(--checkbox-height) * 1.2);
+                        animation: dothatopcheck-19 0.4s ease 0s forwards;
+                    }
+                </style>                
+                                  
             </div>
             <hr>
         </div>
@@ -280,10 +427,17 @@
         </script>
 
 
-        <div class="col-md-6">
-            <!-- Right Side: Categories and Tags -->
-            <div>
-                <h3>Popular Categories</h3>
+        <!-- Swiper CSS (include this in the <head>) -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+<!-- Popular Categories Section -->
+<div class="col-md-6">
+    <!-- Right Side: Categories with Arrows -->
+    <div class="category-container">
+        <h3>Popular Categories</h3>
+        <div class="category-carousel-wrapper">
+            <button class="carousel-nav left-nav">&#10094;</button>
+            <div class="category-carousel">
                 {% for category, count in popular_categories %}
                     <a href="{% url 'category_tools' category_slug=category.slug %}" class="frontpage-tags">
                         <button class="category-button">
@@ -303,14 +457,21 @@
                         </button>
                     </a>
                 {% endfor %}
-                • • • • •
-                <a href="{% url 'all_categories_page' %}">
-                    <button type="submit" class="btn btn-secondary btn-sm">ALL CATEGORIES</button>
-                </a>
             </div>
-            <hr>
-            <div>
-                <h3>Popular Tags</h3>
+            <button class="carousel-nav right-nav">&#10095;</button>
+        </div>
+        <a href="{% url 'all_categories_page' %}">
+            <button type="submit" class="btn btn-secondary btn-sm">ALL CATEGORIES</button>
+        </a>
+    </div>
+    <hr>
+    
+    <!-- Tags with Arrows -->
+    <div class="tag-container">
+        <h3>Popular Tags</h3>
+        <div class="tag-carousel-wrapper">
+            <button class="carousel-nav left-nav">&#10094;</button>
+            <div class="tag-carousel">
                 {% for tag, count in popular_tags %}
                     {% if tag %}
                         {% with tag_slug=tag|slugify %}
@@ -321,20 +482,119 @@
                                     </svg>
                                     {{ tag }} ({{ count }})
                                 </a>
-                            {% else %}
-                                <!-- Debugging: Show a message when tag_slug is empty -->
-                                <span class="frontpage-tags error">Invalid tag: {{ tag }}</span>
                             {% endif %}
                         {% endwith %}
                     {% endif %}
                 {% endfor %}
-                • • • • •
-                <a href="{% url 'all_tags_page' %}">
-                    <button type="submit" class="btn btn-secondary btn-sm">ALL TAGS</button>
-                </a>
             </div>
-            <hr>            
-        </div>        
+            <button class="carousel-nav right-nav">&#10095;</button>
+        </div>
+        <a href="{% url 'all_tags_page' %}">
+            <button type="submit" class="btn btn-secondary btn-sm">ALL TAGS</button>
+        </a>
+    </div>
+        </div>
+
+        <!-- Include Swiper JS at the end of the body -->
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const carousels = document.querySelectorAll('.category-carousel, .tag-carousel');
+            
+                carousels.forEach(function (carousel) {
+                    const leftNav = carousel.closest('.category-carousel-wrapper, .tag-carousel-wrapper').querySelector('.left-nav');
+                    const rightNav = carousel.closest('.category-carousel-wrapper, .tag-carousel-wrapper').querySelector('.right-nav');
+                    let scrollAmount = 0;
+            
+                    leftNav.addEventListener('click', function () {
+                        carousel.scrollBy({ left: -200, behavior: 'smooth' });
+                    });
+            
+                    rightNav.addEventListener('click', function () {
+                        carousel.scrollBy({ left: 200, behavior: 'smooth' });
+                    });
+            
+                    // Infinite scrolling logic - move to the start after reaching the end
+                    carousel.addEventListener('scroll', function () {
+                        if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth) {
+                            carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                        }
+                    });
+                });
+            });            
+        </script>
+
+        <style>
+            .category-container, .tag-container {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            .category-carousel-wrapper, .tag-carousel-wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+            
+            .category-carousel, .tag-carousel {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 per row for categories */
+                grid-auto-flow: column;
+                grid-gap: 10px; /* Adjust the space between items */
+                overflow: hidden;
+                max-width: 100%;
+                white-space: nowrap;
+                padding: 10px;
+            }
+            
+            .tag-carousel {
+                grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 per row for tags */
+            }
+            
+            .carousel-nav {
+                background-color: transparent;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 1;
+            }
+            
+            .left-nav {
+                left: -10px;
+            }
+            
+            .right-nav {
+                right: -10px;
+            }
+            
+            .frontpage-tags {
+                display: inline-block;
+                margin: 5px;
+                padding: 10px;
+            }
+            
+            .category-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 8px 15px;
+                font-size: 14px;
+                background-color: #f8f9fa;
+                border-radius: 5px;
+                border: 1px solid #ced4da;
+            }
+            
+            svg {
+                margin-right: 5px;
+            }
+                        
+        </style>
+            
     </div>
 </div>
 

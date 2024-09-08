@@ -93,11 +93,12 @@ MAIN AGENDA!!!!!!
 -- Correct Sign In Third Party (Except FB, register for Business and Activate) --> DONE 
 -- Also try to add the trigam search fucntionality 
 -- The words passing..' Find your .... AI'v find the AI tool you need 
--- At search add a featur that someone can talk and text is written there and searched .../perhapa replace this with s by id
+-- At search add a featur that someone can talk and text is written there and searched .../perhapa replace this with s by id --> DONE 
 -- Make the sliding text on top better
 -- Quotes about AI Passing by...
 -- Images loading feature before images appear 
--- Redirect and Bookmark if user not logged in -> DONE
+-- Redirect and Bookmark if user not logged in -> DONE 
+-- Comments delete feature correct 'delete' button appear immediately upon adding comment 
 
 BELOW DONE!!!!!!!
 -> Index cards Image/logo
@@ -105,4 +106,6 @@ BELOW DONE!!!!!!!
 -> Search Results Image/logo -> No Results Image/logo 
 -> Category Tools Image/logo 
 -> Tag Tools Image/logo 
+
+-> IMPORTANT: 1) Finish AI Tools Tags And Categories Passing 2) Finish Delete comment Immediately upon adding
 

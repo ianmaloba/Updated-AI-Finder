@@ -308,7 +308,7 @@
    </style>
   <hr>
 
-<!-- ai_body.html -->
+<!-- COMMENTS -->
 <div class="container">
   <div class="row mt-5">
     <div class="col-md-12">
@@ -361,113 +361,74 @@
 </div>
 
 <script>
-  // Add comment functionality
-  document.getElementById('comment-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    var formData = new FormData(this);
-    fetch('{% url "add_comment" ai_tool.slug %}', {
-      method: 'POST',
-      headers: {
-        'X-CSRFToken': '{{ csrf_token }}'
-      },
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        this.reset();
-        refreshComments();
-      } else {
-        alert(data.message);
+  /// Add comment functionality
+document.getElementById('comment-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  var formData = new FormData(this);
+  fetch('{% url "add_comment" ai_tool.slug %}', {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': '{{ csrf_token }}'
+    },
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      this.reset();
+      addNewComment(data.comment);
+    } else {
+      alert(data.message);
+    }
+  })
+  .catch(error => console.error('Error:', error));
+});
+
+function addNewComment(comment) {
+  const commentsContainer = document.getElementById('comments-container');
+  const newCommentHTML = `
+    <div class="comment" id="comment-${comment.id}">
+      <p>${comment.text}</p>
+      <small>Posted by ${comment.user} on ${comment.created_at}</small>
+      <a href="#" class="edit-comment" data-comment-id="${comment.id}">Edit</a>
+      <a href="#" class="delete-comment" data-comment-id="${comment.id}">Delete</a>
+    </div>
+  `;
+  commentsContainer.insertAdjacentHTML('afterbegin', newCommentHTML);
+  addCommentActions(document.getElementById(`comment-${comment.id}`));
+}
+
+function addCommentActions(container = document) {
+
+  container.querySelectorAll('.delete-comment').forEach(link => {
+    link.addEventListener('click', function(event) {
+      event.preventDefault();
+      var commentId = this.dataset.commentId;
+      if (confirm('Are you sure you want to delete this comment?')) {
+        deleteComment(commentId);
       }
-    })
-    .catch(error => console.error('Error:', error));
+    });
   });
+}
 
-  function refreshComments() {
-    fetch('{% url "get_comments" ai_tool.slug %}')
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById('comments-container').innerHTML = data.html;
-      addCommentActions();
-    })
-    .catch(error => console.error('Error:', error));
-  }
+function deleteComment(commentId) {
+  fetch(`{% url "delete_comment" ai_tool.slug 0 %}`.replace('0', commentId), {
+    method: 'DELETE',
+    headers: {
+      'X-CSRFToken': '{{ csrf_token }}'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById(`comment-${commentId}`).remove();
+    } else {
+      alert(data.message);
+    }
+  })
+  .catch(error => console.error('Error:', error));
+}
 
-  function addCommentActions() {
-    document.querySelectorAll('.edit-comment').forEach(link => {
-      link.addEventListener('click', function(event) {
-        event.preventDefault();
-        var commentId = this.dataset.commentId;
-        editComment(commentId);
-      });
-    });
-
-    document.querySelectorAll('.delete-comment').forEach(link => {
-      link.addEventListener('click', function(event) {
-        event.preventDefault();
-        var commentId = this.dataset.commentId;
-        if (confirm('Are you sure you want to delete this comment?')) {
-          deleteComment(commentId);
-        }
-      });
-    });
-  }
-
-  function editComment(commentId) {
-    fetch(`{% url "edit_comment" ai_tool.slug 0 %}`.replace('0', commentId), {
-      method: 'GET',
-    })
-    .then(response => response.json())
-    .then(data => {
-      var commentForm = document.getElementById('comment-form');
-      commentForm.querySelector('textarea').value = data.comment;
-      commentForm.dataset.commentId = data.id;
-      commentForm.querySelector('button[type="submit"]').textContent = 'Update Comment';
-      commentForm.onsubmit = function(event) {
-        event.preventDefault();
-        var formData = new FormData(this);
-        fetch(`{% url "edit_comment" ai_tool.slug 0 %}`.replace('0', data.id), {
-          method: 'POST',
-          headers: {
-            'X-CSRFToken': '{{ csrf_token }}'
-          },
-          body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            refreshComments();
-            this.reset();
-            this.querySelector('button[type="submit"]').textContent = 'Submit';
-            this.onsubmit = null;
-          } else {
-            alert(data.message);
-          }
-        })
-        .catch(error => console.error('Error:', error));
-      };
-    })
-    .catch(error => console.error('Error:', error));
-  }
-  
-  function deleteComment(commentId) {
-    fetch(`{% url "delete_comment" ai_tool.slug 0 %}`.replace('0', commentId), {
-      method: 'DELETE',
-      headers: {
-        'X-CSRFToken': '{{ csrf_token }}'
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        refreshComments();
-      } else {
-        alert(data.message);
-      }
-    })
-    .catch(error => console.error('Error:', error));
-  }
 
 // Add rating functionality
 document.querySelectorAll('.rating-stars .star').forEach(star => {
@@ -526,7 +487,8 @@ function updateStarsDisplay(rating) {
   });
 }
 
-  addCommentActions();
+addCommentActions();
+
 </script>
 
 <style>

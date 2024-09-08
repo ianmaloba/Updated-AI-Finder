@@ -451,6 +451,8 @@ from .forms import ToolCommentForm, ToolRatingForm
 from django.template.loader import render_to_string
 from django.db.models import Avg
 
+from django.utils import timezone
+
 @login_required
 def add_comment(request, slug):
     if request.method == 'POST':
@@ -461,7 +463,16 @@ def add_comment(request, slug):
             comment.tool = tool
             comment.user = request.user
             comment.save()
-            return JsonResponse({'success': True, 'message': 'Comment added successfully.'})
+            return JsonResponse({
+                'success': True,
+                'message': 'Comment added successfully.',
+                'comment': {
+                    'id': comment.id,
+                    'text': comment.comment,
+                    'user': comment.user.username,
+                    'created_at': timezone.localtime(comment.created_at).strftime('%Y-%m-%d %H:%M:%S')
+                }
+            })
         return JsonResponse({'success': False, 'message': 'Invalid form data.'})
     return JsonResponse({'success': False, 'message': 'Invalid request.'})
 
