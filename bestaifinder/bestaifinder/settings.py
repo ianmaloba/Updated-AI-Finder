@@ -242,7 +242,6 @@ CKEDITOR_CONFIGS = {
             'youtube',
             'iframe',
             'uploadfile',
-
         ]),
         'uploadUrl': '/ckeditor/upload/',
         'filebrowserBrowseUrl': '/ckeditor/browse/',
@@ -252,14 +251,22 @@ CKEDITOR_CONFIGS = {
         'removeDialogTabs': 'image:advanced;link:advanced',
         'tabSpaces': 4,
         'allowedContent': True,
+        'extraAllowedContent': 'iframe[*]',
         'contentsCss': ['/static/css/ckeditor_content.css'],
         'language': 'en',
         'entities': False,
         'entities_latin': False,
-        'forcePasteAsPlainText': True,
+        'forcePasteAsPlainText': False,
+        'removeFormatAttributes': '',
+        'youtube_responsive': True,
+        'youtube_related': False,
+        'youtube_privacy': True,
+        'youtube_width': '640',
+        'youtube_height': '480',
+        'enterMode': 2,
+        'shiftEnterMode': 1,
     }
 }
-
 CKEDITOR_RESTRICT_BY_DATE = False
 
 

@@ -416,11 +416,11 @@ def edit_tool(request, tool_id):
             messages.success(request, "Tool successfully updated!")
             return redirect('home')
     else:
-        form = AIToolForm(instance=tool)
-        # Manually set initial value for ai_tags
-        form.fields['ai_tags'].initial = [tag.strip() for tag in tool.ai_tags.split(',')]
+        initial_data = {'ai_tags': [tag.strip() for tag in tool.ai_tags.split(',') if tag.strip()]}
+        form = AIToolForm(instance=tool, initial=initial_data)
     
     return render(request, 'edit_tool.html', {'form': form, 'tool': tool})
+
 
 @login_required
 def delete_tool(request, tool_id):

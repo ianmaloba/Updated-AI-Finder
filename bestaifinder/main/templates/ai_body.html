@@ -11,7 +11,17 @@
   <div class="row">
     <div class="col-md-12 d-flex justify-content-center align-items-center text-uppercase font-weight-bold position-relative">
       <div style="display: flex; align-items: center; border-bottom: 2px solid red; padding-bottom: 5px;">
-        <img style="border-radius: 50%; width: 60px; height: 60px; margin-right: 20px;" src="{{ ai_tool.ai_tool_logo.url }}" alt="{{ ai_tool.ai_name }} Logo">
+        {% if ai_tool.ai_tool_logo %}
+            <img 
+                style="border-radius: 50%; width: 60px; height: 60px; margin-right: 20px;" 
+                src="{{ ai_tool.ai_tool_logo.url }}" 
+                alt="{{ ai_tool.ai_name }} Logo">
+        {% else %}
+            <img 
+                style="border-radius: 50%; width: 60px; height: 60px; margin-right: 20px;" 
+                src="/media/images/default_logo.jpg" 
+                alt="{{ ai_tool.ai_name }} Logo">
+        {% endif %}
         <h1 style="color: red; font-size: 2rem; font-weight: bold; margin-bottom: 0;" id="tool-name">{{ ai_tool.ai_name }}</h1>
         <br>
         <br>
@@ -28,11 +38,19 @@
   <br>
   <div class="row">
     <div class="col-md-6">
-      <img 
-        onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', '{{ ai_tool.slug }}', '{{ ai_tool.ai_tool_link }}')" 
-        style="width: 100%; height: 300px; object-fit: cover; border: 1px solid black; border-radius: 5%; cursor: pointer;" 
-        src="{{ ai_tool.ai_image.url }}" 
-        alt="{{ ai_tool.ai_name }}">
+      {% if ai_tool.ai_image %}
+          <img 
+              onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', '{{ ai_tool.slug }}', '{{ ai_tool.ai_tool_link }}')" 
+              style="width: 100%; height: 300px; object-fit: cover; border: 1px solid black; border-radius: 5%; cursor: pointer;" 
+              src="{{ ai_tool.ai_image.url }}" 
+              alt="{{ ai_tool.ai_name }}">
+      {% else %}
+          <img 
+              onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', '{{ ai_tool.slug }}', '{{ ai_tool.ai_tool_link }}')" 
+              style="width: 100%; height: 300px; object-fit: cover; border: 1px solid black; border-radius: 5%; cursor: pointer;" 
+              src="/media/images/default.jpg" 
+              alt="{{ ai_tool.ai_name }}">
+      {% endif %}
     </div>    
     <div class="col-md-6">
       <br>
@@ -66,24 +84,54 @@
       </p>
       <p>
         {% if user.is_authenticated %}
-            <form method="POST">
+            <form method="POST" id="bookmark-form">
                 {% csrf_token %}
                 {% if is_bookmarked %}
-                    <button type="submit" name="bookmark" class="btn btn-danger">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><g fill="white"><path fill-rule="evenodd" d="m6.245 17.667l3.755-4.2l3.755 4.2c.611.684 1.745.251 1.745-.667V3a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1v14c0 .918 1.134 1.35 1.745.666M6.5 14.38V4h7v10.381l-2.754-3.08a1 1 0 0 0-1.491 0z" clip-rule="evenodd"/><path d="M1.293 2.707a1 1 0 0 1 1.414-1.414l16 16a1 1 0 0 1-1.414 1.414z"/></g></svg>
-                      Remove Bookmark
+                    <button type="submit" name="bookmark" value="remove" class="btn btn-danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><g fill="white"><path fill-rule="evenodd" d="m6.245 17.667l3.755-4.2l3.755 4.2c.611.684 1.745.251 1.745-.667V3a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1v14c0 .918 1.134 1.35 1.745.666M6.5 14.38V4h7v10.381l-2.754-3.08a1 1 0 0 0-1.491 0z" clip-rule="evenodd"/><path d="M1.293 2.707a1 1 0 0 1 1.414-1.414l16 16a1 1 0 0 1-1.414 1.414z"/></g></svg>
+                        Remove Bookmark
                     </button>
                 {% else %}
-                    <button type="submit" name="bookmark" class="btn btn-success">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path stroke-linecap="round" d="M34 10V4H8V38L14 35"/><path fill="#2f88ff" d="M14 44V10H40V44L27 37.7273L14 44Z"/></g></svg>
-                      Bookmark
+                    <button type="submit" name="bookmark" value="add" class="btn btn-success">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path stroke-linecap="round" d="M34 10V4H8V38L14 35"/><path fill="#2f88ff" d="M14 44V10H40V44L27 37.7273L14 44Z"/></g></svg>
+                        Bookmark
                     </button>
                 {% endif %}
             </form>
         {% else %}
-            <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-success">Bookmark</a>
+            <a href="{% url 'account_login' %}?next={{ request.path }}%3Faction%3Dbookmark" class="btn btn-success">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path stroke-linecap="round" d="M34 10V4H8V38L14 35"/><path fill="#2f88ff" d="M14 44V10H40V44L27 37.7273L14 44Z"/></g></svg>
+                Bookmark
+            </a>
         {% endif %}
-      </p>    
+      </p>
+      
+        <script>
+        // LOGIC TO REDIRECT AND AUTOMATICALLY BOOKMARK TOOLS FOR UNAUTH USERS
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if the user just logged in and the action is to bookmark
+            if (new URLSearchParams(window.location.search).get('action') === 'bookmark') {
+                // Remove the query parameter
+                var newUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, newUrl);
+        
+                // Submit the bookmark form
+                var form = document.getElementById('bookmark-form');
+                if (form) {
+                    var input = form.querySelector('input[name="bookmark"]');
+                    if (!input) {
+                        input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'bookmark';
+                        form.appendChild(input);
+                    }
+                    input.value = 'add';
+                    form.submit();
+                }
+            }
+        });
+        </script>
+        
       <p class="lead">
         <span class="font-weight-bold" style="color:#59255F;">TAGS:</span>
         {% for tag in ai_tool.ai_tags|split_tags %}
@@ -508,12 +556,33 @@ function updateStarsDisplay(rating) {
     <div class="col-xs-12 col-sm-4">
       <div class="card">
         <a class="img-card" href="{% url 'ai_body' slug=related_tool.slug %}">
-          <img src="{{ related_tool.ai_image.url }}" alt="{{ related_tool.ai_name }}" style="width: 100%; height: auto; object-fit: cover;">
+          {% if related_tool.ai_image %}
+              <img 
+                  src="{{ related_tool.ai_image.url }}" 
+                  alt="{{ related_tool.ai_name }}" 
+                  style="width: 100%; height: auto; object-fit: cover;">
+          {% else %}
+              <img 
+                  src="/media/images/default.jpg" 
+                  alt="{{ related_tool.ai_name }}" 
+                  style="width: 100%; height: auto; object-fit: cover;">
+          {% endif %}
         </a>
         <div class="card-content">
           <h4 class="card-title">
             <a href="{% url 'ai_body' slug=related_tool.slug %}">
-              <img src="{{ related_tool.ai_tool_logo.url }}" alt="{{ related_tool.ai_name }} Logo" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;"> {{ related_tool.ai_name }}
+              {% if related_tool.ai_tool_logo %}
+                  <img 
+                      src="{{ related_tool.ai_tool_logo.url }}" 
+                      alt="{{ related_tool.ai_name }} Logo" 
+                      style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+              {% else %}
+                  <img 
+                      src="/media/images/default_logo.jpg" 
+                      alt="{{ related_tool.ai_name }} Logo" 
+                      style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+              {% endif %}
+              {{ related_tool.ai_name }}
             </a>
           </h4>
           <p class="">{{ related_tool.ai_short_description|strip_html|truncatechars:80 }} <a href="{% url 'ai_body' slug=related_tool.slug %}">Learn more</a></p>

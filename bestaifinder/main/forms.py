@@ -2,12 +2,13 @@ from django import forms
 from .models import AITool
 from ckeditor.widgets import CKEditorWidget
 from django.utils.safestring import mark_safe
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class InlineCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
     template_name = 'widgets/inline_checkbox_select.html'
 
 class AIToolForm(forms.ModelForm):
-    ai_short_description = forms.CharField(widget=CKEditorWidget(config_name='default'))
+    ai_short_description = RichTextUploadingField()
     ai_tags = forms.MultipleChoiceField(
         choices=[],
         widget=InlineCheckboxSelectMultiple,

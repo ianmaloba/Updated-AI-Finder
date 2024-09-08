@@ -2,6 +2,8 @@
 
 {% load custom_filters %}
 
+{% load static %}
+
 {% block title %}Home{% endblock %}
 
 {% block content %}
@@ -351,12 +353,27 @@
                         <div class="col-xs-12 col-sm-4">
                             <div class="card">
                                 <a class="img-card" href="{% url 'ai_body' slug=tool.slug %}">
-                                    <img src="{{ tool.ai_image.url }}" alt="{{ tool.ai_name }}" />
+                                    {% if tool.ai_image %}
+                                        <img src="{{ tool.ai_image.url }}" alt="{{ tool.ai_name }}" />
+                                    {% else %}
+                                        <img src="/media/images/default.jpg" alt="{{ tool.ai_name }}" />
+                                    {% endif %}
                                 </a>
                                 <div class="card-content">
                                     <h4 class="card-title">
                                         <a href="{% url 'ai_body' slug=tool.slug %}">
-                                            <img src="{{ tool.ai_tool_logo.url }}" alt="{{ tool.ai_name }} Logo" class="logo-img {% if tool.needs_black_bg %}logo-bg-black{% endif %}"/> {{ tool.ai_name }}
+                                            {% if tool.ai_tool_logo %}
+                                                <img 
+                                                    src="{{ tool.ai_tool_logo.url }}" 
+                                                    alt="{{ tool.ai_name }} Logo" 
+                                                    class="logo-img {% if tool.needs_black_bg %}logo-bg-black{% endif %}" />
+                                            {% else %}
+                                                <img 
+                                                    src="/media/images/default_logo.jpg" 
+                                                    alt="{{ tool.ai_name }} Logo" 
+                                                    class="logo-img {% if tool.needs_black_bg %}logo-bg-black{% endif %}" />
+                                            {% endif %}
+                                            {{ tool.ai_name }}
                                         </a>
                                     </h4>
                                     <p class="">

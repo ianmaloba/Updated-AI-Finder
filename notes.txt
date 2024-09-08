@@ -85,8 +85,8 @@ Deploy.
     all users page as a button below...
 
 MAIN AGENDA!!!!!!
--- Correct Images to avoid errors
---Try to ensure tags ticked in editing is saved
+-- Correct Images to avoid errors -> DONE
+--Try to ensure tags ticked in editing is saved -> DONE
 --  Also ckeditor content saved upon editing
 --Add bookmark fucntionality -> DONE
 -- Correct Dshboard buttons and navigations -> DONE
@@ -97,3 +97,12 @@ MAIN AGENDA!!!!!!
 -- Make the sliding text on top better
 -- Quotes about AI Passing by...
 -- Images loading feature before images appear 
+-- Redirect and Bookmark if user not logged in -> DONE
+
+BELOW DONE!!!!!!!
+-> Index cards Image/logo
+-> About Image/logo -> Related Tools Images/logo
+-> Search Results Image/logo -> No Results Image/logo 
+-> Category Tools Image/logo 
+-> Tag Tools Image/logo 
+
