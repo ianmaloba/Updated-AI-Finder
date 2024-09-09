@@ -1,44 +1,122 @@
-<!-- charts/templates/charts/tools_chart.html -->
 {% extends "charts/base.html" %}
 
 {% block chart_content %}
-<div class="chart-container">
-    <h2>AI Tools Distribution</h2>
-    <canvas id="toolsChart"></canvas>
-    <div class="chart-legend">
-        <p>Hover over the chart to see the details of each AI tool.</p>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container">
+
+<div class="chart-container container" style="position: relative; height: 500px; width: 100%;">
+    <h2>AI Tools Distribution Overview</h2>
+
+    <div class="filter-container">
+        <label for="chartFilter">Select Chart Type:</label>
+        <select id="chartFilter" onchange="updateChartType(this.value)">
+            <option value="pie">Pie Chart</option>
+            <option value="bar">Bar Chart</option>
+            <option value="line">Line Chart</option>
+        </select>
+
+        <label for="filterCriteria">Filter By:</label>
+        <select id="filterCriteria" onchange="updateChartData(this.value)">
+            <option value="most_popular">Most Popular Tools</option>
+            <option value="highest_rated">Highest Rated Tools</option>
+            <option value="recently_added">Recently Added Tools</option>
+        </select>
     </div>
+
+    <div id="loading" style="display: none;">Loading...</div>
+    <canvas id="toolsChart" width="400" height="400"></canvas>
+</div>
+
 </div>
 
 <script>
-    var ctx = document.getElementById('toolsChart').getContext('2d');
-    var toolsChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: {{ tool_names|safe }},
-            datasets: [{
-                data: {{ tool_counts|safe }},
-                backgroundColor: {{ colors|safe }},
-                hoverBackgroundColor: '{{ colors|safe }}',
-                hoverOffset: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'bottom',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw;
+    let ctx = document.getElementById('toolsChart').getContext('2d');
+    let chartType = 'pie';
+    let toolsChart = null;
+
+    function initChart(labels, data) {
+        const chartConfig = {
+            type: chartType,
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: generateColors(data.length),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,  // Ensure the chart maintains its aspect ratio
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed.toFixed(2);
+                                }
+                                return label;
+                            }
                         }
+                    }
+                },
+                layout: {
+                    padding: {
+                        bottom: 20  // Add padding to prevent overflowing to the bottom
                     }
                 }
             }
+        };
+
+        if (toolsChart) {
+            toolsChart.destroy();  // Destroy the previous chart to avoid memory leaks
         }
-    });
+        toolsChart = new Chart(ctx, chartConfig);
+    }
+
+    function updateChartType(selectedType) {
+        chartType = selectedType;
+        updateChartData(document.getElementById('filterCriteria').value);
+    }
+
+    function updateChartData(filter) {
+        document.getElementById('loading').style.display = 'block';
+        fetch(`/charts/tools-data/?filter=${filter}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                initChart(data.tool_names, data.tool_counts);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while fetching data. Please try again.');
+            })
+            .finally(() => {
+                document.getElementById('loading').style.display = 'none';
+            });
+    }
+
+    function generateColors(count) {
+        let colors = [];
+        for (let i = 0; i < count; i++) {
+            colors.push(`hsl(${(i * 360 / count) % 360}, 70%, 60%)`);
+        }
+        return colors;
+    }
+
+    // Initial chart load
+    updateChartData('most_popular');
 </script>
 {% endblock %}

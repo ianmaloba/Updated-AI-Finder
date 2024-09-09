@@ -9,4 +9,5 @@ urlpatterns = [
     path('categories/', views.categories_chart, name='categories_chart'),
     path('tags/', views.tags_chart, name='tags_chart'),
     path('date_added/', views.date_added_chart, name='date_added_chart'),
+    path('tools-data/', views.tools_data, name='tools_data'),
 ]

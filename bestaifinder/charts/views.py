@@ -1,23 +1,40 @@
 from django.shortcuts import render
 from main.models import AITool, Category
-from django.db.models import Count
+from django.db.models import Count, Avg
 import random
+from django.http import JsonResponse
 
 def dashboard(request):
     return render(request, 'charts/dashboard.html')
 
-def tools_chart(request):
-    # Get data for tools
-    tools = AITool.objects.all().values('ai_name').annotate(count=Count('id')).order_by('-count')
-    tool_names = [tool['ai_name'] for tool in tools]
-    tool_counts = [tool['count'] for tool in tools]
+def tools_data(request):
+    filter_criteria = request.GET.get('filter', 'most_popular')
+    
+    if filter_criteria == 'most_popular':
+        tools = AITool.objects.annotate(count=Count('bookmarked_by')).order_by('-count')[:10]
+    elif filter_criteria == 'highest_rated':
+        tools = AITool.objects.annotate(avg_rating=Avg('ratings__rating')).order_by('-avg_rating')[:10]
+    elif filter_criteria == 'recently_added':
+        tools = AITool.objects.order_by('-id')[:10]
+    else:
+        return JsonResponse({'error': 'Invalid filter'}, status=400)
 
-    context = {
+    tool_names = [tool.ai_name for tool in tools]
+    tool_counts = [tool.count if hasattr(tool, 'count') else (tool.avg_rating if hasattr(tool, 'avg_rating') else tool.id) for tool in tools]
+
+    return JsonResponse({
         'tool_names': tool_names,
         'tool_counts': tool_counts,
-        'colors': generate_random_colors(len(tool_names)),
-    }
-    return render(request, 'charts/tools_chart.html', context)
+    })
+
+def tools_chart(request):
+    return render(request, 'charts/tools_chart.html')
+
+def generate_random_color():
+    return f'rgb({random.randint(0, 255)}, {random.randint(0, 255)}, {random.randint(0, 255)})'
+
+def generate_random_colors(count):
+    return [generate_random_color() for _ in range(count)]
 
 def categories_chart(request):
     # Get data for categories
