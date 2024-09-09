@@ -1,0 +1,49 @@
+<!-- charts/templates/charts/categories_chart.html -->
+{% extends "charts/base.html" %}
+
+{% block chart_content %}
+<div class="chart-container">
+    <h2>AI Tools by Category</h2>
+    <canvas id="categoriesChart"></canvas>
+    <div class="chart-legend">
+        <p>Hover over the bars to see the category and tool count.</p>
+    </div>
+</div>
+
+<script>
+    var ctx = document.getElementById('categoriesChart').getContext('2d');
+    var categoriesChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ category_names|safe }},
+            datasets: [{
+                label: 'Number of Tools',
+                data: {{ category_counts|safe }},
+                backgroundColor: {{ colors|safe }},
+                borderColor: '{{ colors|safe }}',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

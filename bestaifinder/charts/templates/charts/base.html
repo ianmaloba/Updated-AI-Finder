@@ -1,0 +1,66 @@
+<!-- charts/templates/charts/base.html -->
+{% extends "base.html" %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    /* charts/static/charts/style.css */
+.chart-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.sidebar {
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.chart-legend {
+    text-align: center;
+    margin-top: 20px;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto !important;
+}
+
+</style>
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar for chart navigation -->
+        <div class="col-md-3">
+            <div class="sidebar">
+                <h3>Chart Navigation</h3>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'charts:tools_chart' %}">AI Tools Chart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'charts:categories_chart' %}">Categories Chart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'charts:tags_chart' %}">Tags Chart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'charts:date_added_chart' %}">Tools Added by Date</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main content for displaying charts -->
+        <div class="col-md-9">
+            {% block chart_content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+<!-- Script for Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}

@@ -58,7 +58,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'main',
-    'userauth'
+    'userauth',
+    'charts',
 ]
 
 THUMBNAIL_PROCESSORS = (

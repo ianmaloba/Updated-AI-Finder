@@ -13,7 +13,6 @@ urlpatterns = [
     path('category-tools/', views.get_category_tools, name='get_category_tools'),
     path('all-tags', views.all_tags_page, name='all_tags_page'),
     path('tag-tools/', views.tag_tools_ajax, name='tag_tools_ajax'),
-    path('charts', views.charts, name='charts'),
     path('google-custom-search', views.google_custom_search, name='google_custom_search'),
     path('data-deletion-instructions', views.data_deletion_instructions, name='data_deletion_instructions'),
     path('add-tool/', views.add_tool, name='add_tool'),

@@ -363,10 +363,6 @@ def tag_tools_ajax(request):
     } for tool in tools]
     
     return JsonResponse({'tools': tools_list})
-
-    
-def charts(request):
-    return render(request, 'charts.html')
     
 def google_custom_search(request):
     return render(request, 'google_custom_search.html')

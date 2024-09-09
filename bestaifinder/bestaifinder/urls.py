@@ -15,6 +15,7 @@ urlpatterns = [
     path('filebrowser_filer/', include('ckeditor_filebrowser_filer.urls')),
     path('ckeditor/upload/', login_required(ckeditor_views.upload), name='ckeditor_upload'),
     path('ckeditor/browse/', never_cache(login_required(ckeditor_views.browse)), name='ckeditor_browse'),
+    path('charts/', include('charts.urls')),
 
 ]
 
