@@ -80,7 +80,7 @@
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% for field in form %}
-                    <div class="form-group">
+                    <div class="form-group" style=" margin-bottom: 40px;">
                         {{ field.label_tag }}
                         {{ field }}
                         {% if field.help_text %}

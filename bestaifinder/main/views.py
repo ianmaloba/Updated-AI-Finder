@@ -249,7 +249,7 @@ def search_results(request):
 
 def tag_list(request, tag_slug):
     tag = tag_slug.replace('-', ' ')
-    tools_with_tag = AITool.objects.filter(ai_tags__icontains=tag)
+    tools_with_tag = AITool.objects.filter(ai_tags__icontains=tag).order_by('-id')
     randomtools = cache.get_or_set('randomtools', random.sample(list(AITool.objects.all()), 9), 60 * 15)
     
     paginator = Paginator(tools_with_tag, per_page=9)
