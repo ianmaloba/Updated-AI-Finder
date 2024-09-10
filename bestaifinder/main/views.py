@@ -8,89 +8,103 @@ from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from .models import AITool, Category, Bookmark
 import random
 
+
+from django.db.models.functions import Lower
+from django.views.decorators.cache import cache_page
+from django.db.models import Prefetch
+
+def custom_elided_page_range(current_page, total_pages, on_each_side=2, on_ends=1):
+    if total_pages <= 10:
+        return range(1, total_pages + 1)
+    
+    range_start = max(current_page - on_each_side, 1)
+    range_end = min(current_page + on_each_side + 1, total_pages + 1)
+    
+    if range_start > 2:
+        yield 1
+        if range_start > 3:
+            yield '...'
+        elif range_start == 3:
+            yield 2
+    
+    for i in range(range_start, range_end):
+        yield i
+    
+    if range_end < total_pages:
+        if range_end < total_pages - 1:
+            yield '...'
+        elif range_end == total_pages - 1:
+            yield total_pages - 1
+        yield total_pages
+
+def parse_tags(tag_string):
+    return [tag.strip() for tag in tag_string.split(',') if tag.strip() and tag.strip() != "#"]
+
+@cache_page(60 * 15)  # Cache the entire view for 15 minutes
 def index(request):
-    # Get the search query
     search_query = request.GET.get('search', '').strip()
     
-    # Initialize filters
-    filters = Q()
+    # Use select_related to fetch related fields in a single query
+    tools_queryset = AITool.objects.select_related('user').prefetch_related(
+        Prefetch('ratings', queryset=ToolRating.objects.only('rating'))
+    )
     
-    # Apply search filter if there is a search query
     if search_query:
-        search_vector = (
-            SearchVector('ai_name', weight='A') +
-            SearchVector('ai_short_description', weight='B') +
-            SearchVector('ai_tags', weight='C')
-        )
-        tools = AITool.objects.annotate(
-            search_rank=SearchRank(search_vector, search_query)
-        ).filter(
-            search_rank__gte=0.1  # Adjust this threshold as needed
-        ).order_by('-search_rank')
+        tools = tools_queryset.annotate(
+            search_rank=SearchRank(F('search_vector'), search_query)
+        ).filter(search_rank__gte=0.1).order_by('-search_rank', '-id')
     else:
-        # Get all tools, ordered by ID for pagination
-        #tools = AITool.objects.all().order_by('-id')
-        tools = AITool.objects.order_by(F('is_featured').desc(), '-featured_order', '-id')
+        tools = tools_queryset.order_by(F('is_featured').desc(), '-featured_order', '-id')
     
-    # Pagination
-    page_number = request.GET.get('page')
+    # Paginate results
     paginator = Paginator(tools, per_page=9)
+    page_number = int(request.GET.get('page', 1))
     page_obj = paginator.get_page(page_number)
-
-    """
-    # Cache random tools selection to avoid repeated sampling
-    randomtools = cache.get('randomtools')
-    if not randomtools:
-        randomtools = random.sample(list(tools), 9)
-        cache.set('randomtools', randomtools, timeout=300)  # Cache for 5 minutes
-    """
-
     
-    randomtools = cache.get('randomtools')
+    # Use custom elided page range
+    elided_page_range = custom_elided_page_range(page_obj.number, paginator.num_pages)
     
+    # Cache random tools
+    cache_key = f'randomtools_{page_number}'
+    randomtools = cache.get(cache_key)
     if not randomtools:
-        all_tools = list(tools)
-        if all_tools:
-            sample_size = min(len(all_tools), 9)
-            randomtools = random.sample(all_tools, sample_size)
-            cache.set('randomtools', randomtools, timeout=300)  # Cache for 5 minutes
-        else:
-            randomtools = []  # or handle the empty case as appropriate
-
-    # Fetch and cache all unique tags
+        all_tools = list(tools[:100])  # Limit to first 100 for better performance
+        sample_size = min(len(all_tools), 9)
+        randomtools = random.sample(all_tools, sample_size)
+        cache.set(cache_key, randomtools, timeout=300)
+    
+    # Cache unique tags
     unique_tags = cache.get('unique_tags')
     if not unique_tags:
-        all_tags = tools.values_list('ai_tags', flat=True).distinct()
-        unique_tags = set(tag.strip() for tags in all_tags for tag in tags.split(',') if tag.strip() and tag.strip() != "#")
-        cache.set('unique_tags', unique_tags, timeout=300)
-
-    # Fetch categories and cache category counts
-    categories = Category.objects.all()
-    popular_categories = cache.get('popular_categories')
-    if not popular_categories:
-        category_counts = {category: tools.filter(
-            Q(ai_name__icontains=category.name) |
-            Q(ai_short_description__icontains=category.name) |
-            Q(ai_tags__icontains=category.name)
-        ).count() for category in categories}
-        popular_categories = sorted(category_counts.items(), key=lambda item: item[1], reverse=True)[:16]
-        cache.set('popular_categories', popular_categories, timeout=300)
-
-    # Cache tag counts
+        all_tags = tools.values_list('ai_tags', flat=True).distinct()[:1000]  # Limit to 1000 most recent
+        unique_tags = set()
+        for tags in all_tags:
+            unique_tags.update(parse_tags(tags))
+        cache.set('unique_tags', unique_tags, timeout=3600)  # Cache for 1 hour
+    
+    # Cache categories and counts
+    categories = cache.get('categories')
+    if not categories:
+        categories = Category.objects.annotate(tool_count=Count('name')).order_by('-tool_count')[:16]
+        cache.set('categories', categories, timeout=3600)
+    
+    # Cache popular tags
     popular_tags = cache.get('popular_tags')
     if not popular_tags:
-        tag_counts = {tag: tools.filter(ai_tags__icontains=tag).count() for tag in unique_tags}
-        popular_tags = sorted(tag_counts.items(), key=lambda item: item[1], reverse=True)[:35]
-        cache.set('popular_tags', popular_tags, timeout=300)
-
+        tag_counts = {}
+        for tool in tools[:1000]:  # Limit to 1000 most recent tools for performance
+            for tag in parse_tags(tool.ai_tags):
+                tag_counts[tag] = tag_counts.get(tag, 0) + 1
+        popular_tags = sorted(tag_counts.items(), key=lambda x: x[1], reverse=True)[:35]
+        cache.set('popular_tags', popular_tags, timeout=3600)
+    
     context = {
         "randomtools": randomtools,
         "page_obj": page_obj,
         "tags": unique_tags,
-        "elided_page_range": paginator.get_elided_page_range(number=page_obj.number, on_each_side=2, on_ends=1),
+        "elided_page_range": elided_page_range,
         "categories": categories,
         'all_ai_tools_count': tools.count(),
-        "popular_categories": popular_categories,
         "popular_tags": popular_tags,
     }
     return render(request, 'index.html', context)

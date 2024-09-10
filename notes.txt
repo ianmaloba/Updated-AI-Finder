@@ -116,5 +116,10 @@ BELOW DONE!!!!!!!
     4) Make spacing in submit tool form
     5) The search by voice feature, ensure the spinner loads untill results page is completely loaded! like normal search
     6) Ensure when one searches and clikes back there is no error --> DONE
-    6) Chart.js to make charts like https://youtu.be/_SipEeFe-cw?si=8ITY8uxCACRil3gi start one by one making even models etc
+    6) Chart.js to make charts like https://youtu.be/_SipEeFe-cw?si=8ITY8uxCACRil3gi 
+        start one by one making even models etc
+        Make the highest rated tool perfect.
+        Make tool labels truncate to avoid stuff in charts
     7) Make the image in detai appear as if raised...try it.
+    8) Crads should shrink or increase in size based on screen size
+    9) Site is loading slowly... find a way to make it so fast...even the paginations..we have about 5000 AI tools there

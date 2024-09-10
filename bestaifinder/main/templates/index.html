@@ -432,19 +432,80 @@
 
 <!-- Popular Categories Section -->
 <div class="col-md-6">
-    <!-- Right Side: Categories with Arrows -->
-    <div class="category-container">
-        <h3>Popular Categories</h3>
-        <div class="category-carousel-wrapper">
-            <button class="carousel-nav left-nav">&#10094;</button>
-            <div class="category-carousel">
-                {% for category, count in popular_categories %}
+    <!-- Right Side: Categories and Tags -->
+    <a href="#all-tools">
+        <div class="tools-count-container">
+            <span class="tools-count">{{ all_ai_tools_count }}</span> AI Tools and Counting<span class="dots"></span>
+        </div>
+        </a>
+        
+        <style>
+        /* Styling the container */
+        .tools-count-container {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            animation: pulse 1s ease-in-out infinite; /* Slight pulsing animation for attention */
+        }
+        
+        /* Emphasizing the number */
+        .tools-count {
+            color: #d9534f; /* Emphasizing with red color */
+            font-size: 32px;
+            font-weight: 900;
+        }
+        
+        
+        /* Pulse animation for emphasis */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            .tools-count-container {
+                font-size: 18px; /* Smaller font size for container */
+                padding: 10px; /* Reduced padding */
+            }
+        
+            .tools-count {
+                font-size: 24px; /* Smaller number size */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tools-count-container {
+                font-size: 14px; /* Further reduced font size */
+                padding: 6px; /* Further reduced padding */
+            }
+        
+            .tools-count {
+                font-size: 28px; /* Smaller number size */
+            }
+        }
+        </style>
+
+
+    <div>
+        <h5 style="font-family: "Lucida Console", "Courier New", monospace;">POPULAR CATEGORIES</h5>
+        <div class="cylindrical-scroll" id="categories-scroll">
+            <div class="scroll-row">
+                {% for category in categories %}
                     <a href="{% url 'category_tools' category_slug=category.slug %}" class="frontpage-tags">
                         <button class="category-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 16 16">
                                 <g fill="none">
                                     <g clip-path="url(#gravityUiHandPointRight0)">
-                                        <path fill="red" fill-rule="evenodd" d="m2.5 6l2.906-3.737a1.978 1.978 0 0 1 3.48 1.694L8.626 5h5.432a1.942 1.942 0 0 1 .421 3.838L11.5 9.5l-.457 2.744a3 3 0 0 1-3.732 2.405L3 13.5zm5.197 7.2l-3.272-.872l-.39-5.858L6.59 3.184a.478.478 0 0 1 .84.41l-.26 1.042L6.704 6.5h7.354a.442.442 0 0 1 .096.874l-2.98.662l-.987.22l-.166.997l-.458 2.744A1.5 1.5 0 0 1 7.697 13.2m-7.195.103a.75.75 0 0 0 1.496-.106l-.5-7a.75.75 0 1 0-1.496.106z" clip-rule="evenodd"/>
+                                        <path fill="blue" fill-rule="evenodd" d="m2.5 6l2.906-3.737a1.978 1.978 0 0 1 3.48 1.694L8.626 5h5.432a1.942 1.942 0 0 1 .421 3.838L11.5 9.5l-.457 2.744a3 3 0 0 1-3.732 2.405L3 13.5zm5.197 7.2l-3.272-.872l-.39-5.858L6.59 3.184a.478.478 0 0 1 .84.41l-.26 1.042L6.704 6.5h7.354a.442.442 0 0 1 .096.874l-2.98.662l-.987.22l-.166.997l-.458 2.744A1.5 1.5 0 0 1 7.697 13.2m-7.195.103a.75.75 0 0 0 1.496-.106l-.5-7a.75.75 0 1 0-1.496.106z" clip-rule="evenodd"/>
                                     </g>
                                     <defs>
                                         <clipPath id="gravityUiHandPointRight0">
@@ -453,150 +514,132 @@
                                     </defs>
                                 </g>
                             </svg>
-                            {{ category.name }} ({{ count }})
+                            {{ category.name }}
                         </button>
                     </a>
                 {% endfor %}
             </div>
-            <button class="carousel-nav right-nav">&#10095;</button>
         </div>
         <a href="{% url 'all_categories_page' %}">
             <button type="submit" class="btn btn-secondary btn-sm">ALL CATEGORIES</button>
         </a>
     </div>
     <hr>
-    
-    <!-- Tags with Arrows -->
-    <div class="tag-container">
-        <h3>Popular Tags</h3>
-        <div class="tag-carousel-wrapper">
-            <button class="carousel-nav left-nav">&#10094;</button>
-            <div class="tag-carousel">
-                {% for tag, count in popular_tags %}
-                    {% if tag %}
-                        {% with tag_slug=tag|slugify %}
-                            {% if tag_slug %}
-                                <a href="{% url 'tag_list' tag_slug=tag_slug %}" class="frontpage-tags">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 1024 1024">
-                                        <path fill="red" d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3M664.8 561.6l36.1 210.3L512 672.7L323.1 772l36.1-210.3l-152.8-149L417.6 382L512 190.7L606.4 382l211.2 30.7z"/>
-                                    </svg>
-                                    {{ tag }} ({{ count }})
-                                </a>
-                            {% endif %}
-                        {% endwith %}
-                    {% endif %}
+    <div>
+        <h5 style="font-family: "Lucida Console", "Courier New", monospace;">POPULAR TAGS</h5>
+        <div class="cylindrical-scroll" id="tags-scroll">
+            <div class="scroll-row">
+                {% for tag in tags %}
+                    {% with tag_slug=tag|slugify %}
+                        {% if tag_slug %}
+                            <a href="{% url 'tag_list' tag_slug=tag_slug %}" class="frontpage-tags">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 1024 1024">
+                                    <path fill="blue" d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3M664.8 561.6l36.1 210.3L512 672.7L323.1 772l36.1-210.3l-152.8-149L417.6 382L512 190.7L606.4 382l211.2 30.7z"/>
+                                </svg>
+                                {{ tag }}
+                            </a>
+                        {% endif %}
+                    {% endwith %}
                 {% endfor %}
             </div>
-            <button class="carousel-nav right-nav">&#10095;</button>
         </div>
         <a href="{% url 'all_tags_page' %}">
             <button type="submit" class="btn btn-secondary btn-sm">ALL TAGS</button>
         </a>
     </div>
-        </div>
+    <hr>            
+</div>
+    
+<style>
+.cylindrical-scroll {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100px;
+}
 
-        <!-- Include Swiper JS at the end of the body -->
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+.scroll-row {
+    display: flex;
+    gap: 2px;
+    justify-content: space-between;
+    white-space: nowrap;
+    margin-bottom: 3px;
+}
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const carousels = document.querySelectorAll('.category-carousel, .tag-carousel');
-            
-                carousels.forEach(function (carousel) {
-                    const leftNav = carousel.closest('.category-carousel-wrapper, .tag-carousel-wrapper').querySelector('.left-nav');
-                    const rightNav = carousel.closest('.category-carousel-wrapper, .tag-carousel-wrapper').querySelector('.right-nav');
-                    let scrollAmount = 0;
-            
-                    leftNav.addEventListener('click', function () {
-                        carousel.scrollBy({ left: -200, behavior: 'smooth' });
-                    });
-            
-                    rightNav.addEventListener('click', function () {
-                        carousel.scrollBy({ left: 200, behavior: 'smooth' });
-                    });
-            
-                    // Infinite scrolling logic - move to the start after reaching the end
-                    carousel.addEventListener('scroll', function () {
-                        if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth) {
-                            carousel.scrollTo({ left: 0, behavior: 'smooth' });
-                        }
-                    });
-                });
-            });            
-        </script>
+.scroll-row svg {
+    margin-right: 5px;
+}
 
-        <style>
-            .category-container, .tag-container {
-                text-align: center;
-                margin-bottom: 30px;
+@keyframes scroll-horizontal {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+#categories-scroll .scroll-row, #tags-scroll .scroll-row {
+    animation: scroll-horizontal 20s linear infinite; /* Cylindrical scrolling animation */
+}
+
+#categories-scroll:hover .scroll-row, #tags-scroll:hover .scroll-row {
+    animation-play-state: paused;
+}
+
+.frontpage-tags {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    color: #000;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.category-button {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    padding: 5px;
+}
+
+.continuous-row-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function shuffleRow(row) {
+            // Shuffling the items in the row
+            for (let i = row.children.length; i >= 0; i--) {
+                row.appendChild(row.children[Math.random() * i | 0]);
             }
+        }
+    
+        function setupScroll(elementId) {
+            const element = document.getElementById(elementId);
+            const row = element.querySelector('.scroll-row');
             
-            .category-carousel-wrapper, .tag-carousel-wrapper {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                position: relative;
-            }
-            
-            .category-carousel, .tag-carousel {
-                display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 per row for categories */
-                grid-auto-flow: column;
-                grid-gap: 10px; /* Adjust the space between items */
-                overflow: hidden;
-                max-width: 100%;
-                white-space: nowrap;
-                padding: 10px;
-            }
-            
-            .tag-carousel {
-                grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 per row for tags */
-            }
-            
-            .carousel-nav {
-                background-color: transparent;
-                border: none;
-                font-size: 20px;
-                cursor: pointer;
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                z-index: 1;
-            }
-            
-            .left-nav {
-                left: -10px;
-            }
-            
-            .right-nav {
-                right: -10px;
-            }
-            
-            .frontpage-tags {
-                display: inline-block;
-                margin: 5px;
-                padding: 10px;
-            }
-            
-            .category-button {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 8px 15px;
-                font-size: 14px;
-                background-color: #f8f9fa;
-                border-radius: 5px;
-                border: 1px solid #ced4da;
-            }
-            
-            svg {
-                margin-right: 5px;
-            }
-                        
-        </style>
-            
+            // Clone the row for the infinite scroll effect
+            const clone = row.cloneNode(true);
+    
+            // Shuffle the original and the cloned row so they are different
+            shuffleRow(row);
+            shuffleRow(clone);
+    
+            element.appendChild(clone);  // Append the shuffled clone
+        }
+    
+        setupScroll('categories-scroll');
+        setupScroll('tags-scroll');
+    });
+    </script>
+    
     </div>
 </div>
+
 
     <section class="wrapper">
         <div class="container-fostrap">
@@ -670,38 +713,51 @@
                     </div>
                     <br>
                     <br>
-                        <!-- Pagination -->
-                        <div class="pagination-container">
-                            {% if page_obj.has_other_pages %}
-                            <nav>
-                                <ul class="pagination">
-                                    {% if page_obj.has_previous %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}#all-tools" aria-label="Previous">
-                                                <span aria-hidden="true">PREV</span>
-                                            </a>
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <style>
+                            /* CSS for pagination */
+                            .pagination .page-item .page-link.no-click {
+                                pointer-events: none;
+                                color: #6c757d;
+                                cursor: default;
+                            }
+                        </style>
+                        {% if page_obj.has_other_pages %}
+                        <nav>
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}#all-tools" aria-label="Previous">
+                                            <span aria-hidden="true">PREV</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% for num in elided_page_range %}
+                                    {% if num == page_obj.paginator.ELLIPSIS %}
+                                        <!-- Ensure the ellipsis is not a link -->
+                                        <li class="page-item disabled">
+                                            <span class="page-link no-click">…</span>
+                                        </li>
+                                    {% elif num %}
+                                        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                            <a class="page-link" href="?page={{ num }}#all-tools">{{ num }}</a>
                                         </li>
                                     {% endif %}
-                                    {% for num in elided_page_range %}
-                                        {% if num == page_obj.paginator.ELLIPSIS %}
-                                            <li class="page-item disabled"><span class="page-link">…</span></li>
-                                        {% elif num %}
-                                            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                                                <a class="page-link" href="?page={{ num }}#all-tools">{{ num }}</a>
-                                            </li>
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% if page_obj.has_next %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page={{ page_obj.next_page_number }}#all-tools" aria-label="Next">
-                                                <span aria-hidden="true">NEXT</span>
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </nav>
-                            {% endif %}
-                        </div>                                              
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}#all-tools" aria-label="Next">
+                                            <span aria-hidden="true">NEXT</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        {% endif %}
+                    </div>
+
+                                             
                 </div>
             </div>
         </div>
