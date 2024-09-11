@@ -8,644 +8,677 @@
 
 {% block content %}
 
-<br>
-<div class="container">
-    <p class="auto-typed-text"><span class="auto-type"></span></p>
-</div>
-<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-<script>
-    var totalCount = {{ all_ai_tools_count }};
+<div class="custom-background">
+    <br>
+    <div class="container">
+        <p class="auto-typed-text"><span class="auto-type"></span></p>
+    </div>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script>
+        var totalCount = {{ all_ai_tools_count }};
 
-    var typed = new Typed(".auto-type", {
-        strings: [
-            totalCount + "+ AI Tools As at Now",
-            "Database Updated Automatically"
-        ],
-        typeSpeed: 50,
-        backSpeed: 35,
-        loop: true
-    });
-</script>
+        var typed = new Typed(".auto-type", {
+            strings: [
+                totalCount + "+ AI Tools As at Now",
+                "Database Updated Automatically"
+            ],
+            typeSpeed: 50,
+            backSpeed: 35,
+            loop: true
+        });
+    </script>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <!-- Left Side: Search and Filter -->
-            <h5 style="font-family: 'Lucida Console', 'Courier New', monospace;">SEARCH BY VOICE</h5>
-            <div class="filter-part">
-                <table style="width:100%; border: none; border-collapse: collapse;">
-                    <tr style="border: none;">
-                        <td style="border: none;">
-                            <button id="start-record-btn" title="Start Voice Search">
-                                <div style="
-                                    position: relative; 
-                                    width: 50px; 
-                                    height: 50px; 
-                                    border-radius: 50%; 
-                                    background-color: #007bff; 
-                                    display: flex; 
-                                    justify-content: center; 
-                                    align-items: center;
-                                    box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
-                                    ">
-                                    <span style="
-                                        position: absolute; 
-                                        width: 20px; 
-                                        height: 20px; 
-                                        background: url('https://cdn-icons-png.flaticon.com/512/727/727245.png') no-repeat center; 
-                                        background-size: contain;">
-                                    </span>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Left Side: Search and Filter -->
+                <h5 style="font-family: 'Lucida Console', 'Courier New', monospace;">SEARCH BY VOICE</h5>
+                <div class="filter-part">
+                    <table style="width:100%; border: none; border-collapse: collapse;">
+                        <tr style="border: none;">
+                            <td style="border: none;">
+                                <butto id="start-record-btn" title="Start Voice Search">
                                     <div style="
-                                        position: absolute; 
-                                        width: 100%; 
-                                        height: 100%; 
+                                        position: relative; 
+                                        width: 50px; 
+                                        height: 50px; 
                                         border-radius: 50%; 
-                                        border: 40px solid rgba(0, 123, 255, 0.5); 
-                                        animation: wave 2s infinite; 
-                                        opacity: 0;
+                                        background-color: #007bff; 
+                                        display: flex; 
+                                        justify-content: center; 
+                                        align-items: center;
+                                        box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
                                         ">
+                                        <span style="
+                                            position: absolute; 
+                                            width: 20px; 
+                                            height: 20px; 
+                                            background: url('https://cdn-icons-png.flaticon.com/512/727/727245.png') no-repeat center; 
+                                            background-size: contain;">
+                                        </span>
+                                        <div style="
+                                            position: absolute; 
+                                            width: 100%; 
+                                            height: 100%; 
+                                            border-radius: 50%; 
+                                            border: 40px solid rgba(0, 123, 255, 0.5); 
+                                            animation: wave 2s infinite; 
+                                            opacity: 0;
+                                            ">
+                                        </div>
+                                        <div style="
+                                            position: absolute; 
+                                            width: 100%; 
+                                            height: 100%; 
+                                            border-radius: 50%; 
+                                            border: 2px solid rgba(0, 123, 255, 0.3); 
+                                            animation: wave 2s 0.5s infinite; 
+                                            opacity: 0;
+                                            ">
+                                        </div>
+                                        <div style="
+                                            position: absolute; 
+                                            width: 100%; 
+                                            height: 100%; 
+                                            border-radius: 50%; 
+                                            border: 2px solid rgba(0, 123, 255, 0.1); 
+                                            animation: wave 2s 1s infinite; 
+                                            opacity: 0;
+                                            cursor: pointer;
+                                            ">
+                                        </div>
                                     </div>
-                                    <div style="
-                                        position: absolute; 
-                                        width: 100%; 
-                                        height: 100%; 
-                                        border-radius: 50%; 
-                                        border: 2px solid rgba(0, 123, 255, 0.3); 
-                                        animation: wave 2s 0.5s infinite; 
-                                        opacity: 0;
-                                        ">
-                                    </div>
-                                    <div style="
-                                        position: absolute; 
-                                        width: 100%; 
-                                        height: 100%; 
-                                        border-radius: 50%; 
-                                        border: 2px solid rgba(0, 123, 255, 0.1); 
-                                        animation: wave 2s 1s infinite; 
-                                        opacity: 0;
-                                        cursor: pointer;
-                                        ">
-                                    </div>
+                                </button>
+                            </td>
+                            <td style="border: none;">
+                                <p id="recording-status"><i>Click this icon to start voice search</i></p>
+                                <p id="voice-search-result"></p>
+                            </td>
+                        </tr>
+                    </table>                
+                </div>
+                
+                <!-- Loading Indicator -->
+                <div id="loading" style="display: none; text-align: center; margin-top: 20px;">
+                    <div class="spinner" style="display: inline-block; width: 50px; height: 50px; border: 5px solid lightblue; border-top: 5px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                    <p>Searching...</p>
+                </div>
+                
+                
+                <!-- Inline CSS for Animation -->
+                <style>
+                    @keyframes wave {
+                        0% {
+                            transform: scale(0.8);
+                            opacity: 0.8;
+                        }
+                        50% {
+                            transform: scale(1.3);
+                            opacity: 0.5;
+                        }
+                        100% {
+                            transform: scale(1.8);
+                            opacity: 0;
+                        }
+                    }
+                </style>
+
+                <hr>
+                <h5 style="font-family: "Lucida Console", "Courier New", monospace;">SEARCH AND FILTER BY TEXT</h5>
+                <!-- <p><i>Fill in part or whole of the form and click search.. or try <a href="{% url 'google_custom_search' %}" class="text-bold">Custom Search Engine</a></i></p> -->
+                <div class="filter-part">
+                    <form id="search-form" method="GET" action="{% url 'search_results' %}">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <textarea class="form-control textarea" id="ai_name_contains" name="ai_name_contains" placeholder="Explain briefly..." rows="3"></textarea>
+                            </div>
+                            
+                            <div class="form-group col-md-6">
+                                <!-- Half width input fields with the same styling as the textarea -->
+                                <label for="publishDateMin">Launched Before</label>
+                                <input type="date" class="form-control date-input" id="publishDateMin" name="date_min">
+                            </div>
+                            
+                            <div class="form-group col-md-6">
+                                <!-- Half width input fields with the same styling as the textarea -->
+                                <label for="category">AI Type</label>
+                                <select id="category" class="form-control select-input" name="ai_type">
+                                    <option class="option" value="">Choose...</option>
+                                    <option class="option" value="Video">Video</option>
+                                    <option class="option" value="Text">Text</option>
+                                    <option class="option" value="Audio">Audio</option>
+                                    <option class="option" value="Assistant">Assistant</option>
+                                    <option class="option" value="Business">Business</option>
+                                    <option class="option" value="Trading">Trading</option>
+                                    <option class="option" value="GPT">GPT</option>
+                                </select>
+                            </div>
+                            
+                            <style>
+                                .option {
+                                    cursor: pointer;
+                                }
+                                .textarea, .date-input, .select-input {
+                                    height: 80px !important;
+                                    background-color: #eeeeee;
+                                    color: #666666;
+                                    border-radius: 8px;
+                                    border: 2px solid transparent;
+                                    outline: none;
+                                    font-size: 17px;
+                                    font-weight: 500;
+                                    resize: none;
+                                    font-family: 'Heebo', sans-serif;
+                                    transition: 0.2s;
+                                    border: 2px solid #ccc;
+                                }
+
+                                .textarea, .date-input {
+                                    padding: 1rem;
+                                }
+                            
+                                /* Ensuring date and select fields have their own specific heights */
+                                .date-input, .select-input {
+                                    height: 40px !important;
+                                }
+                            
+                                .textarea:hover, .date-input:hover, .select-input:hover {
+                                    cursor: pointer;
+                                    background-color: white;
+                                }
+                            
+                                .textarea:focus, .date-input:focus, .select-input:focus {
+                                    cursor: text;
+                                    color: black;
+                                    border-color: black;
+                                }
+                            </style>
+                            
+                            <div class="form-group col-md-12" style="display: flex; align-items: center;">
+                                <!-- Full width input fields -->
+                                <div class="checkbox-wrapper-19" style="margin-right: 5px;">
+                                    <input type="checkbox" id="cbtest-19" name="free" value="true"
+                                        {% if query_params.free == 'true' %}checked{% endif %} />
+                                    <label for="cbtest-19" class="check-box"></label>
                                 </div>
-                            </button>
-                        </td>
-                        <td style="border: none;">
-                            <p id="recording-status"><i>Click this icon to start voice search</i></p>
-                            <p id="voice-search-result"></p>
-                        </td>
-                    </tr>
-                </table>                
+                                <span style="font-size: 18px; position: relative; top: -2px;">Free</span>
+                            </div>                                                
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="padding: 6px 12px; background-color: #007bff; border: none; border-radius: 4px; font-size: 16px; color: white;">Search</button>
+                    </form>
+                    
+                    <style>
+                        .checkbox-wrapper-19 {
+                            box-sizing: border-box;
+                            --background-color: #fff;
+                            --checkbox-height: 25px;
+                        }
+                    
+                        @-moz-keyframes dothabottomcheck-19 {
+                            0% {
+                                height: 0;
+                            }
+                            100% {
+                                height: calc(var(--checkbox-height) / 2);
+                            }
+                        }
+                    
+                        @-webkit-keyframes dothabottomcheck-19 {
+                            0% {
+                                height: 0;
+                            }
+                            100% {
+                                height: calc(var(--checkbox-height) / 2);
+                            }
+                        }
+                    
+                        @keyframes dothabottomcheck-19 {
+                            0% {
+                                height: 0;
+                            }
+                            100% {
+                                height: calc(var(--checkbox-height) / 2);
+                            }
+                        }
+                    
+                        @keyframes dothatopcheck-19 {
+                            0% {
+                                height: 0;
+                            }
+                            50% {
+                                height: 0;
+                            }
+                            100% {
+                                height: calc(var(--checkbox-height) * 1.2);
+                            }
+                        }
+                    
+                        .checkbox-wrapper-19 input[type=checkbox] {
+                            display: none;
+                        }
+                    
+                        .checkbox-wrapper-19 .check-box {
+                            height: var(--checkbox-height);
+                            width: var(--checkbox-height);
+                            background-color: transparent;
+                            border: calc(var(--checkbox-height) * .1) solid #000;
+                            border-radius: 5px;
+                            position: relative;
+                            display: inline-block;
+                            box-sizing: border-box;
+                            transition: border-color ease 0.2s;
+                            cursor: pointer;
+                        }
+                    
+                        .checkbox-wrapper-19 .check-box::before,
+                        .checkbox-wrapper-19 .check-box::after {
+                            box-sizing: border-box;
+                            position: absolute;
+                            height: 0;
+                            width: calc(var(--checkbox-height) * .2);
+                            background-color: #34b93d;
+                            display: inline-block;
+                            transform-origin: left top;
+                            border-radius: 5px;
+                            content: " ";
+                            transition: opacity ease 0.5;
+                        }
+                    
+                        .checkbox-wrapper-19 .check-box::before {
+                            top: calc(var(--checkbox-height) * .72);
+                            left: calc(var(--checkbox-height) * .41);
+                            box-shadow: 0 0 0 calc(var(--checkbox-height) * .05) var(--background-color);
+                            transform: rotate(-135deg);
+                        }
+                    
+                        .checkbox-wrapper-19 .check-box::after {
+                            top: calc(var(--checkbox-height) * .37);
+                            left: calc(var(--checkbox-height) * .05);
+                            transform: rotate(-45deg);
+                        }
+                    
+                        .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box {
+                            border-color: #34b93d;
+                        }
+                    
+                        .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::after {
+                            height: calc(var(--checkbox-height) / 2);
+                            animation: dothabottomcheck-19 0.2s ease 0s forwards;
+                        }
+                    
+                        .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::before {
+                            height: calc(var(--checkbox-height) * 1.2);
+                            animation: dothatopcheck-19 0.4s ease 0s forwards;
+                        }
+                    </style>                
+                                    
+                </div>
+                <hr>
             </div>
             
+            <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                const startRecordBtn = document.getElementById('start-record-btn');
+                const recordingStatus = document.getElementById('recording-status');
+                const voiceSearchResult = document.getElementById('voice-search-result');
+            
+                if ('webkitSpeechRecognition' in window) {
+                    const recognition = new webkitSpeechRecognition();
+                    recognition.continuous = false;
+                    recognition.interimResults = false;
+            
+                    recognition.onstart = () => {
+                        recordingStatus.textContent = 'Voice recognition activated. Speak now.';
+                    };
+            
+                    recognition.onerror = (event) => {
+                        recordingStatus.textContent = 'Error occurred in recognition: ' + event.error;
+                    };
+            
+                    recognition.onend = () => {
+                        recordingStatus.textContent = 'Voice recognition ended.';
+                    };
+            
+                    recognition.onresult = (event) => {
+                        const transcript = event.results[0][0].transcript;
+                        voiceSearchResult.textContent = 'You said: ' + transcript;
+                        
+                        // Send the transcript to the server for search
+                        fetch('/voice-search/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCookie('csrftoken')
+                            },
+                            body: JSON.stringify({query: transcript})
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            window.location.href = data.redirect_url;
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                    };
+            
+                    startRecordBtn.onclick = () => {
+                        recognition.start();
+                    };
+                } else {
+                    startRecordBtn.style.display = 'none';
+                    recordingStatus.textContent = 'Voice recognition not supported in this browser.';
+                }
+            
+                // Function to get CSRF token
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+            });
+            </script>
+
+
+
+
             <!-- Loading Indicator -->
             <div id="loading" style="display: none; text-align: center; margin-top: 20px;">
                 <div class="spinner" style="display: inline-block; width: 50px; height: 50px; border: 5px solid lightblue; border-top: 5px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
                 <p>Searching...</p>
             </div>
-            
-            
-            <!-- Inline CSS for Animation -->
+
             <style>
-                @keyframes wave {
-                    0% {
-                        transform: scale(0.8);
-                        opacity: 0.8;
-                    }
-                    50% {
-                        transform: scale(1.3);
-                        opacity: 0.5;
-                    }
-                    100% {
-                        transform: scale(1.8);
-                        opacity: 0;
-                    }
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+                #loading {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 9999;
+                    text-align: center;
+                    display: none; /* Hide by default */
+                }
+                .spinner {
+                    width: 300px; /* Increase size */
+                    height: 300px;
+                    border: 25px solid lightblue; /* Thicker border */
+                    border-top: 25px solid #3498db; /* Spinner color */
+                    border-radius: 50%;
+                    animation: spin 0.8s linear infinite; /* Adjust speed */
                 }
             </style>
 
-            <hr>
-            <h5 style="font-family: "Lucida Console", "Courier New", monospace;">SEARCH AND FILTER BY TEXT</h5>
-            <!-- <p><i>Fill in part or whole of the form and click search.. or try <a href="{% url 'google_custom_search' %}" class="text-bold">Custom Search Engine</a></i></p> -->
-            <div class="filter-part">
-                <form id="search-form" method="GET" action="{% url 'search_results' %}">
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <textarea class="form-control textarea" id="ai_name_contains" name="ai_name_contains" placeholder="Explain briefly..." rows="3"></textarea>
-                        </div>
-                        
-                        <div class="form-group col-md-6">
-                            <!-- Half width input fields with the same styling as the textarea -->
-                            <label for="publishDateMin">Launched Before</label>
-                            <input type="date" class="form-control date-input" id="publishDateMin" name="date_min">
-                        </div>
-                        
-                        <div class="form-group col-md-6">
-                            <!-- Half width input fields with the same styling as the textarea -->
-                            <label for="category">AI Type</label>
-                            <select id="category" class="form-control select-input" name="ai_type">
-                                <option class="option" value="">Choose...</option>
-                                <option class="option" value="Video">Video</option>
-                                <option class="option" value="Text">Text</option>
-                                <option class="option" value="Audio">Audio</option>
-                                <option class="option" value="Assistant">Assistant</option>
-                                <option class="option" value="Business">Business</option>
-                                <option class="option" value="Trading">Trading</option>
-                                <option class="option" value="GPT">GPT</option>
-                            </select>
-                        </div>
-                        
-                        <style>
-                            .option {
-                                cursor: pointer;
-                            }
-                            .textarea, .date-input, .select-input {
-                                height: 80px !important;
-                                background-color: #eeeeee;
-                                color: #666666;
-                                border-radius: 8px;
-                                border: 2px solid transparent;
-                                outline: none;
-                                font-size: 17px;
-                                font-weight: 500;
-                                resize: none;
-                                font-family: 'Heebo', sans-serif;
-                                transition: 0.2s;
-                                border: 2px solid #ccc;
-                            }
+            <script>
+                document.getElementById('search-form').addEventListener('submit', function() {
+                    document.getElementById('loading').style.display = 'block';
+                });
 
-                            .textarea, .date-input {
-                                padding: 1rem;
-                            }
-                        
-                            /* Ensuring date and select fields have their own specific heights */
-                            .date-input, .select-input {
-                                height: 40px !important;
-                            }
-                        
-                            .textarea:hover, .date-input:hover, .select-input:hover {
-                                cursor: pointer;
-                                background-color: white;
-                            }
-                        
-                            .textarea:focus, .date-input:focus, .select-input:focus {
-                                cursor: text;
-                                color: black;
-                                border-color: black;
-                            }
-                        </style>
-                        
-                        <div class="form-group col-md-12" style="display: flex; align-items: center;">
-                            <!-- Full width input fields -->
-                            <div class="checkbox-wrapper-19" style="margin-right: 5px;">
-                                <input type="checkbox" id="cbtest-19" name="free" value="true"
-                                    {% if query_params.free == 'true' %}checked{% endif %} />
-                                <label for="cbtest-19" class="check-box"></label>
-                            </div>
-                            <span style="font-size: 18px; position: relative; top: -2px;">Free</span>
-                        </div>                                                
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="padding: 6px 12px; background-color: #007bff; border: none; border-radius: 4px; font-size: 16px; color: white;">Search</button>
-                </form>
-                
-                <style>
-                    .checkbox-wrapper-19 {
-                        box-sizing: border-box;
-                        --background-color: #fff;
-                        --checkbox-height: 25px;
+                // Hide spinner on page load or back navigation
+                window.addEventListener('pageshow', function(event) {
+                    if (event.persisted || window.performance && window.performance.navigation.type == 2) {
+                        document.getElementById('loading').style.display = 'none';
                     }
-                
-                    @-moz-keyframes dothabottomcheck-19 {
-                        0% {
-                            height: 0;
-                        }
-                        100% {
-                            height: calc(var(--checkbox-height) / 2);
-                        }
-                    }
-                
-                    @-webkit-keyframes dothabottomcheck-19 {
-                        0% {
-                            height: 0;
-                        }
-                        100% {
-                            height: calc(var(--checkbox-height) / 2);
-                        }
-                    }
-                
-                    @keyframes dothabottomcheck-19 {
-                        0% {
-                            height: 0;
-                        }
-                        100% {
-                            height: calc(var(--checkbox-height) / 2);
-                        }
-                    }
-                
-                    @keyframes dothatopcheck-19 {
-                        0% {
-                            height: 0;
-                        }
-                        50% {
-                            height: 0;
-                        }
-                        100% {
-                            height: calc(var(--checkbox-height) * 1.2);
-                        }
-                    }
-                
-                    .checkbox-wrapper-19 input[type=checkbox] {
-                        display: none;
-                    }
-                
-                    .checkbox-wrapper-19 .check-box {
-                        height: var(--checkbox-height);
-                        width: var(--checkbox-height);
-                        background-color: transparent;
-                        border: calc(var(--checkbox-height) * .1) solid #000;
-                        border-radius: 5px;
-                        position: relative;
-                        display: inline-block;
-                        box-sizing: border-box;
-                        transition: border-color ease 0.2s;
-                        cursor: pointer;
-                    }
-                
-                    .checkbox-wrapper-19 .check-box::before,
-                    .checkbox-wrapper-19 .check-box::after {
-                        box-sizing: border-box;
-                        position: absolute;
-                        height: 0;
-                        width: calc(var(--checkbox-height) * .2);
-                        background-color: #34b93d;
-                        display: inline-block;
-                        transform-origin: left top;
-                        border-radius: 5px;
-                        content: " ";
-                        transition: opacity ease 0.5;
-                    }
-                
-                    .checkbox-wrapper-19 .check-box::before {
-                        top: calc(var(--checkbox-height) * .72);
-                        left: calc(var(--checkbox-height) * .41);
-                        box-shadow: 0 0 0 calc(var(--checkbox-height) * .05) var(--background-color);
-                        transform: rotate(-135deg);
-                    }
-                
-                    .checkbox-wrapper-19 .check-box::after {
-                        top: calc(var(--checkbox-height) * .37);
-                        left: calc(var(--checkbox-height) * .05);
-                        transform: rotate(-45deg);
-                    }
-                
-                    .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box {
-                        border-color: #34b93d;
-                    }
-                
-                    .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::after {
-                        height: calc(var(--checkbox-height) / 2);
-                        animation: dothabottomcheck-19 0.2s ease 0s forwards;
-                    }
-                
-                    .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box::before {
-                        height: calc(var(--checkbox-height) * 1.2);
-                        animation: dothatopcheck-19 0.4s ease 0s forwards;
-                    }
-                </style>                
-                                  
+                });
+            </script>
+
+
+            <!-- Swiper CSS (include this in the <head>) -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+    <!-- Popular Categories Section -->
+    <div class="col-md-6">
+        <!-- Right Side: Categories and Tags -->
+        <a href="#all-tools">
+            <div class="tools-count-container">
+                <span class="tools-count">{{ all_ai_tools_count }}</span> AI Tools and Counting<span class="dots"></span>
             </div>
-            <hr>
-        </div>
-        
-        <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const startRecordBtn = document.getElementById('start-record-btn');
-            const recordingStatus = document.getElementById('recording-status');
-            const voiceSearchResult = document.getElementById('voice-search-result');
-        
-            if ('webkitSpeechRecognition' in window) {
-                const recognition = new webkitSpeechRecognition();
-                recognition.continuous = false;
-                recognition.interimResults = false;
-        
-                recognition.onstart = () => {
-                    recordingStatus.textContent = 'Voice recognition activated. Speak now.';
-                };
-        
-                recognition.onerror = (event) => {
-                    recordingStatus.textContent = 'Error occurred in recognition: ' + event.error;
-                };
-        
-                recognition.onend = () => {
-                    recordingStatus.textContent = 'Voice recognition ended.';
-                };
-        
-                recognition.onresult = (event) => {
-                    const transcript = event.results[0][0].transcript;
-                    voiceSearchResult.textContent = 'You said: ' + transcript;
-                    
-                    // Send the transcript to the server for search
-                    fetch('/voice-search/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': getCookie('csrftoken')
-                        },
-                        body: JSON.stringify({query: transcript})
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        window.location.href = data.redirect_url;
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-                };
-        
-                startRecordBtn.onclick = () => {
-                    recognition.start();
-                };
-            } else {
-                startRecordBtn.style.display = 'none';
-                recordingStatus.textContent = 'Voice recognition not supported in this browser.';
+            </a>
+            
+            <style>
+            /* Styling the container */
+            .tools-count-container {
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+                color: #333;
+                margin: 20px 0;
+                padding: 15px;
+                background-color: #f8f9fa;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                position: relative;
+                animation: pulse 1s ease-in-out infinite; /* Slight pulsing animation for attention */
             }
-        
-            // Function to get CSRF token
-            function getCookie(name) {
-                let cookieValue = null;
-                if (document.cookie && document.cookie !== '') {
-                    const cookies = document.cookie.split(';');
-                    for (let i = 0; i < cookies.length; i++) {
-                        const cookie = cookies[i].trim();
-                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
-                    }
+            
+            /* Emphasizing the number */
+            .tools-count {
+                color: #d9534f; /* Emphasizing with red color */
+                font-size: 32px;
+                font-weight: 900;
+            }
+            
+            
+            /* Pulse animation for emphasis */
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            
+            /* Responsive design for smaller screens */
+            @media (max-width: 768px) {
+                .tools-count-container {
+                    font-size: 18px; /* Smaller font size for container */
+                    padding: 10px; /* Reduced padding */
                 }
-                return cookieValue;
+            
+                .tools-count {
+                    font-size: 24px; /* Smaller number size */
+                }
             }
+            
+            @media (max-width: 480px) {
+                .tools-count-container {
+                    font-size: 14px; /* Further reduced font size */
+                    padding: 6px; /* Further reduced padding */
+                }
+            
+                .tools-count {
+                    font-size: 28px; /* Smaller number size */
+                }
+            }
+            </style>
+
+
+        <div>
+            <h5 style="font-family: "Lucida Console", "Courier New", monospace;">POPULAR CATEGORIES</h5>
+            <div class="cylindrical-scroll" id="categories-scroll">
+                <div class="scroll-row">
+                    {% for category in categories %}
+                        <a href="{% url 'category_tools' category_slug=category.slug %}" class="frontpage-tags">
+                            <button class="category-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 16 16">
+                                    <g fill="none">
+                                        <g clip-path="url(#gravityUiHandPointRight0)">
+                                            <path fill="blue" fill-rule="evenodd" d="m2.5 6l2.906-3.737a1.978 1.978 0 0 1 3.48 1.694L8.626 5h5.432a1.942 1.942 0 0 1 .421 3.838L11.5 9.5l-.457 2.744a3 3 0 0 1-3.732 2.405L3 13.5zm5.197 7.2l-3.272-.872l-.39-5.858L6.59 3.184a.478.478 0 0 1 .84.41l-.26 1.042L6.704 6.5h7.354a.442.442 0 0 1 .096.874l-2.98.662l-.987.22l-.166.997l-.458 2.744A1.5 1.5 0 0 1 7.697 13.2m-7.195.103a.75.75 0 0 0 1.496-.106l-.5-7a.75.75 0 1 0-1.496.106z" clip-rule="evenodd"/>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="gravityUiHandPointRight0">
+                                                <path fill="red" d="M0 0h16v16H0z"/>
+                                            </clipPath>
+                                        </defs>
+                                    </g>
+                                </svg>
+                                {{ category.name }}
+                            </button>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <a href="{% url 'all_categories_page' %}">
+                <button type="submit" class="btn btn-secondary btn-sm">ALL CATEGORIES</button>
+            </a>
+        </div>
+        <hr>
+        <div>
+            <h5 style="font-family: "Lucida Console", "Courier New", monospace;">POPULAR TAGS</h5>
+            <div class="cylindrical-scroll" id="tags-scroll">
+                <div class="scroll-row">
+                    {% for tag in tags %}
+                        {% with tag_slug=tag|slugify %}
+                            {% if tag_slug %}
+                                <a href="{% url 'tag_list' tag_slug=tag_slug %}" class="frontpage-tags">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 1024 1024">
+                                        <path fill="green" d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3M664.8 561.6l36.1 210.3L512 672.7L323.1 772l36.1-210.3l-152.8-149L417.6 382L512 190.7L606.4 382l211.2 30.7z"/>
+                                    </svg>
+                                    {{ tag }}
+                                </a>
+                            {% endif %}
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+            </div>
+            <a href="{% url 'all_tags_page' %}">
+                <button type="submit" class="btn btn-secondary btn-sm">ALL TAGS</button>
+            </a>
+        </div>
+        <hr>            
+    </div>
+        
+    <style>
+        .cylindrical-scroll {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: 100px;
+        }
+
+        .scroll-row {
+            display: flex;
+            gap: 2px;
+            justify-content: space-between;
+            white-space: nowrap;
+            margin-bottom: 3px;
+        }
+
+        .scroll-row svg {
+            margin-right: 5px;
+        }
+
+        @keyframes scroll-horizontal {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        #categories-scroll .scroll-row, #tags-scroll .scroll-row {
+            animation: scroll-horizontal 20s linear infinite; /* Cylindrical scrolling animation */
+        }
+
+        #categories-scroll:hover .scroll-row, #tags-scroll:hover .scroll-row {
+            animation-play-state: paused;
+        }
+
+        .frontpage-tags {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            color: #000;
+            background-color: #f7e0db;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .category-button {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            padding: 5px;
+        }
+
+        .continuous-row-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function shuffleRow(row) {
+                // Shuffling the items in the row
+                for (let i = row.children.length; i >= 0; i--) {
+                    row.appendChild(row.children[Math.random() * i | 0]);
+                }
+            }
+        
+            function setupScroll(elementId) {
+                const element = document.getElementById(elementId);
+                const row = element.querySelector('.scroll-row');
+                
+                // Clone the row for the infinite scroll effect
+                const clone = row.cloneNode(true);
+        
+                // Shuffle the original and the cloned row so they are different
+                shuffleRow(row);
+                shuffleRow(clone);
+        
+                element.appendChild(clone);  // Append the shuffled clone
+            }
+        
+            setupScroll('categories-scroll');
+            setupScroll('tags-scroll');
         });
         </script>
-
-
-
-
-        <!-- Loading Indicator -->
-        <div id="loading" style="display: none; text-align: center; margin-top: 20px;">
-            <div class="spinner" style="display: inline-block; width: 50px; height: 50px; border: 5px solid lightblue; border-top: 5px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-            <p>Searching...</p>
+        
         </div>
-
-        <style>
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-            #loading {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                z-index: 9999;
-                text-align: center;
-                display: none; /* Hide by default */
-            }
-            .spinner {
-                width: 300px; /* Increase size */
-                height: 300px;
-                border: 25px solid lightblue; /* Thicker border */
-                border-top: 25px solid #3498db; /* Spinner color */
-                border-radius: 50%;
-                animation: spin 0.8s linear infinite; /* Adjust speed */
-            }
-        </style>
-
-        <script>
-            document.getElementById('search-form').addEventListener('submit', function() {
-                document.getElementById('loading').style.display = 'block';
-            });
-
-            // Hide spinner on page load or back navigation
-            window.addEventListener('pageshow', function(event) {
-                if (event.persisted || window.performance && window.performance.navigation.type == 2) {
-                    document.getElementById('loading').style.display = 'none';
-                }
-            });
-        </script>
-
-
-        <!-- Swiper CSS (include this in the <head>) -->
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-
-<!-- Popular Categories Section -->
-<div class="col-md-6">
-    <!-- Right Side: Categories and Tags -->
-    <a href="#all-tools">
-        <div class="tools-count-container">
-            <span class="tools-count">{{ all_ai_tools_count }}</span> AI Tools and Counting<span class="dots"></span>
-        </div>
-        </a>
-        
-        <style>
-        /* Styling the container */
-        .tools-count-container {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            animation: pulse 1s ease-in-out infinite; /* Slight pulsing animation for attention */
-        }
-        
-        /* Emphasizing the number */
-        .tools-count {
-            color: #d9534f; /* Emphasizing with red color */
-            font-size: 32px;
-            font-weight: 900;
-        }
-        
-        
-        /* Pulse animation for emphasis */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        /* Responsive design for smaller screens */
-        @media (max-width: 768px) {
-            .tools-count-container {
-                font-size: 18px; /* Smaller font size for container */
-                padding: 10px; /* Reduced padding */
-            }
-        
-            .tools-count {
-                font-size: 24px; /* Smaller number size */
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .tools-count-container {
-                font-size: 14px; /* Further reduced font size */
-                padding: 6px; /* Further reduced padding */
-            }
-        
-            .tools-count {
-                font-size: 28px; /* Smaller number size */
-            }
-        }
-        </style>
-
-
-    <div>
-        <h5 style="font-family: "Lucida Console", "Courier New", monospace;">POPULAR CATEGORIES</h5>
-        <div class="cylindrical-scroll" id="categories-scroll">
-            <div class="scroll-row">
-                {% for category in categories %}
-                    <a href="{% url 'category_tools' category_slug=category.slug %}" class="frontpage-tags">
-                        <button class="category-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 16 16">
-                                <g fill="none">
-                                    <g clip-path="url(#gravityUiHandPointRight0)">
-                                        <path fill="blue" fill-rule="evenodd" d="m2.5 6l2.906-3.737a1.978 1.978 0 0 1 3.48 1.694L8.626 5h5.432a1.942 1.942 0 0 1 .421 3.838L11.5 9.5l-.457 2.744a3 3 0 0 1-3.732 2.405L3 13.5zm5.197 7.2l-3.272-.872l-.39-5.858L6.59 3.184a.478.478 0 0 1 .84.41l-.26 1.042L6.704 6.5h7.354a.442.442 0 0 1 .096.874l-2.98.662l-.987.22l-.166.997l-.458 2.744A1.5 1.5 0 0 1 7.697 13.2m-7.195.103a.75.75 0 0 0 1.496-.106l-.5-7a.75.75 0 1 0-1.496.106z" clip-rule="evenodd"/>
-                                    </g>
-                                    <defs>
-                                        <clipPath id="gravityUiHandPointRight0">
-                                            <path fill="red" d="M0 0h16v16H0z"/>
-                                        </clipPath>
-                                    </defs>
-                                </g>
-                            </svg>
-                            {{ category.name }}
-                        </button>
-                    </a>
-                {% endfor %}
-            </div>
-        </div>
-        <a href="{% url 'all_categories_page' %}">
-            <button type="submit" class="btn btn-secondary btn-sm">ALL CATEGORIES</button>
-        </a>
     </div>
-    <hr>
-    <div>
-        <h5 style="font-family: "Lucida Console", "Courier New", monospace;">POPULAR TAGS</h5>
-        <div class="cylindrical-scroll" id="tags-scroll">
-            <div class="scroll-row">
-                {% for tag in tags %}
-                    {% with tag_slug=tag|slugify %}
-                        {% if tag_slug %}
-                            <a href="{% url 'tag_list' tag_slug=tag_slug %}" class="frontpage-tags">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 1024 1024">
-                                    <path fill="green" d="m908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5c-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1l-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2c17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9l183.7-179.1c5-4.9 8.3-11.3 9.3-18.3c2.7-17.5-9.5-33.7-27-36.3M664.8 561.6l36.1 210.3L512 672.7L323.1 772l36.1-210.3l-152.8-149L417.6 382L512 190.7L606.4 382l211.2 30.7z"/>
-                                </svg>
-                                {{ tag }}
-                            </a>
-                        {% endif %}
-                    {% endwith %}
-                {% endfor %}
-            </div>
-        </div>
-        <a href="{% url 'all_tags_page' %}">
-            <button type="submit" class="btn btn-secondary btn-sm">ALL TAGS</button>
-        </a>
-    </div>
-    <hr>            
 </div>
-    
+
 <style>
-.cylindrical-scroll {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    height: 100px;
-}
-
-.scroll-row {
-    display: flex;
-    gap: 2px;
-    justify-content: space-between;
-    white-space: nowrap;
-    margin-bottom: 3px;
-}
-
-.scroll-row svg {
-    margin-right: 5px;
-}
-
-@keyframes scroll-horizontal {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-}
-
-#categories-scroll .scroll-row, #tags-scroll .scroll-row {
-    animation: scroll-horizontal 20s linear infinite; /* Cylindrical scrolling animation */
-}
-
-#categories-scroll:hover .scroll-row, #tags-scroll:hover .scroll-row {
-    animation-play-state: paused;
-}
-
-.frontpage-tags {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem;
-    font-size: 0.9rem;
-    color: #000;
-    background-color: #f7e0db;
-    border-radius: 5px;
-    text-decoration: none;
-}
-
-.category-button {
-    background: none;
-    border: none;
-    font-size: 1rem;
-    padding: 5px;
-}
-
-.continuous-row-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
+    .custom-background {
+        background-image: url("{% static 'images/background/background.jpg' %}");
+        background-size: cover; /* Ensures the image covers the entire div */
+        background-position: center; /* Centers the background image */
+        background-repeat: no-repeat; /* Prevents repeating */
+        height: 100%; /* Set the height of the div */
+        width: 100%; /* Set the width of the div */
+        min-height: 500px; /* Set a minimum height if needed */
+        position: relative; /* Ensure correct positioning if necessary */
+        z-index: 1;
+    }
+    
+    /* Disable right-click on the div */
+    .custom-background {
+        pointer-events: none; /* Disable interaction with the background */
+    }
+    
+    .custom-background * {
+        pointer-events: all; /* Enable interaction with other content within the div */
+    }
+    
+    /* Make the colors dull */
+    filter: grayscale(10%); /* Adjust percentage to control how dull */
+    -webkit-filter: grayscale(10%); /* For compatibility */
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function shuffleRow(row) {
-            // Shuffling the items in the row
-            for (let i = row.children.length; i >= 0; i--) {
-                row.appendChild(row.children[Math.random() * i | 0]);
-            }
-        }
-    
-        function setupScroll(elementId) {
-            const element = document.getElementById(elementId);
-            const row = element.querySelector('.scroll-row');
-            
-            // Clone the row for the infinite scroll effect
-            const clone = row.cloneNode(true);
-    
-            // Shuffle the original and the cloned row so they are different
-            shuffleRow(row);
-            shuffleRow(clone);
-    
-            element.appendChild(clone);  // Append the shuffled clone
-        }
-    
-        setupScroll('categories-scroll');
-        setupScroll('tags-scroll');
+    document.querySelector('.custom-background').addEventListener('contextmenu', function(e) {
+        e.preventDefault();
     });
-    </script>
-    
-    </div>
-</div>
-
+</script>
 
     <section class="wrapper">
         <div class="container-fostrap">
@@ -785,5 +818,4 @@
         </div>
     </div>
 
-       
 {% endblock %}

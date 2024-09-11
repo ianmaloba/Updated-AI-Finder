@@ -73,7 +73,7 @@ class CustomPasswordResetView(PasswordResetView):
 
 @login_required
 def user_dashboard(request):
-    user_tools = AITool.objects.filter(user=request.user)
+    user_tools = AITool.objects.filter(user=request.user).order_by('-id')
     context = {
         'user': request.user,
         'user_tools': user_tools,
