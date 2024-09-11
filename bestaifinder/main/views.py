@@ -40,7 +40,7 @@ def custom_elided_page_range(current_page, total_pages, on_each_side=2, on_ends=
 def parse_tags(tag_string):
     return [tag.strip() for tag in tag_string.split(',') if tag.strip() and tag.strip() != "#"]
 
-@cache_page(60 * 15)  # Cache the entire view for 15 minutes
+# @cache_page(60 * 15)  # Cache the entire view for 15 minutes
 def index(request):
     search_query = request.GET.get('search', '').strip()
     

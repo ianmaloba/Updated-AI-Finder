@@ -128,3 +128,33 @@ def users_and_tools(request):
         'user_tools_pagination': user_tools_pagination,
     }
     return render(request, 'userauth/users_and_tools.html', context)
+
+# In views.py
+
+from django.shortcuts import render
+from allauth.account.models import EmailAddress
+from allauth.socialaccount.models import SocialAccount
+from django.contrib.auth.decorators import login_required
+from .models import UserActivity
+
+@login_required
+def user_activity(request):
+    user = request.user
+    
+    # Get email addresses associated with the user
+    email_addresses = EmailAddress.objects.filter(user=user)
+    
+    # Get social accounts associated with the user
+    social_accounts = SocialAccount.objects.filter(user=user)
+    
+    # Get user activities
+    activities = UserActivity.objects.filter(user=user).select_related('tool')[:50]
+    
+    context = {
+        'user': user,
+        'email_addresses': email_addresses,
+        'social_accounts': social_accounts,
+        'activities': activities,
+    }
+    
+    return render(request, 'dashboard/user_activity.html', context)
