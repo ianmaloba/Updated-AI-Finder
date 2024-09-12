@@ -649,7 +649,7 @@
 
 <style>
     .custom-background {
-        background-image: url("{% static 'images/background/background.jpg' %}");
+        background-image: url("{% static 'images/background/backgroun.jpg' %}");
         background-size: cover; /* Ensures the image covers the entire div */
         background-position: center; /* Centers the background image */
         background-repeat: no-repeat; /* Prevents repeating */
@@ -658,6 +658,7 @@
         min-height: 500px; /* Set a minimum height if needed */
         position: relative; /* Ensure correct positioning if necessary */
         z-index: 1;
+        background-color: #E4F6F8;
     }
     
     /* Disable right-click on the div */
@@ -672,6 +673,10 @@
     /* Make the colors dull */
     filter: grayscale(10%); /* Adjust percentage to control how dull */
     -webkit-filter: grayscale(10%); /* For compatibility */
+
+    h5 {
+        font-weight: bold;
+    }
 </style>
 
 <script>
