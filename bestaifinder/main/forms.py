@@ -18,7 +18,7 @@ class AIToolForm(forms.ModelForm):
     )
     ai_name = forms.CharField(
         widget=forms.TextInput(attrs={
-            'placeholder': 'example: ChatGPT',
+            'placeholder': 'example: AI Finder Guru',
             'class': 'form-control'
         }),
         label="ENTER THE AI TOOL NAME",
