@@ -5,185 +5,187 @@
 {% block content %}
 
 {% load static %}
-
-<div class="container">
-    <h1 class="heading">ALL CATEGORIES</h1>
-    <p class="instruction-text">Select a category to view its related tools.</p>
-    <div class="row">
-        <!-- Categories Column -->
-        <div class="col-md-4">
-            <div id="categories-list">
-                <p id="categories-text">
-                    {% for category in categories %}
-                        <button class="category-button" data-slug="{{ category.slug }}">
-                            <svg class="category-icon" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 16 16">
-                                <g fill="none">
-                                    <g clip-path="url(#gravityUiHandPointRight0)">
-                                        <path class="icon-fill" fill="grey" fill-rule="evenodd" d="m2.5 6l2.906-3.737a1.978 1.978 0 0 1 3.48 1.694L8.626 5h5.432a1.942 1.942 0 0 1 .421 3.838L11.5 9.5l-.457 2.744a3 3 0 0 1-3.732 2.405L3 13.5zm5.197 7.2l-3.272-.872l-.39-5.858L6.59 3.184a.478.478 0 0 1 .84.41l-.26 1.042L6.704 6.5h7.354a.442.442 0 0 1 .096.874l-2.98.662l-.987.22l-.166.997l-.458 2.744A1.5 1.5 0 0 1 7.697 13.2m-7.195.103a.75.75 0 0 0 1.496-.106l-.5-7a.75.75 0 1 0-1.496.106z" clip-rule="evenodd"/>
+<div  style="background-color: #E4F6F8;">
+    <div class="container">
+        <h1 class="heading">ALL CATEGORIES</h1>
+        <p class="instruction-text">Select a category to view its related tools.</p>
+        <div class="row">
+            <!-- Categories Column -->
+            <div class="col-md-4">
+                <div id="categories-list">
+                    <p id="categories-text">
+                        {% for category in categories %}
+                            <button class="category-button" data-slug="{{ category.slug }}">
+                                <svg class="category-icon" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 16 16">
+                                    <g fill="none">
+                                        <g clip-path="url(#gravityUiHandPointRight0)">
+                                            <path class="icon-fill" fill="grey" fill-rule="evenodd" d="m2.5 6l2.906-3.737a1.978 1.978 0 0 1 3.48 1.694L8.626 5h5.432a1.942 1.942 0 0 1 .421 3.838L11.5 9.5l-.457 2.744a3 3 0 0 1-3.732 2.405L3 13.5zm5.197 7.2l-3.272-.872l-.39-5.858L6.59 3.184a.478.478 0 0 1 .84.41l-.26 1.042L6.704 6.5h7.354a.442.442 0 0 1 .096.874l-2.98.662l-.987.22l-.166.997l-.458 2.744A1.5 1.5 0 0 1 7.697 13.2m-7.195.103a.75.75 0 0 0 1.496-.106l-.5-7a.75.75 0 1 0-1.496.106z" clip-rule="evenodd"/>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="gravityUiHandPointRight0">
+                                                <path fill="red" d="M0 0h16v16H0z"/>
+                                            </clipPath>
+                                        </defs>
                                     </g>
-                                    <defs>
-                                        <clipPath id="gravityUiHandPointRight0">
-                                            <path fill="red" d="M0 0h16v16H0z"/>
-                                        </clipPath>
-                                    </defs>
-                                </g>
-                            </svg>
-                            {{ category.name }}
-                        </button>{% if not forloop.last %} {% endif %}
-                    {% endfor %}
-                </p>
+                                </svg>
+                                {{ category.name }}
+                            </button>{% if not forloop.last %} {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
             </div>
-        </div>
-        
-        <!-- Tools Column -->
-        <div class="col-md-8">
-            <div class="tools-section">
-                <h3 style="color: red; font-style: italic; text-decoration: underline;" id="category-title">
-                    <a href="/category/{{ category.slug }}">
-                        <span id="category-name">Tools</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 256 256"><g fill="red"><path d="m218.34 119.6l-34.74 34.74a46.58 46.58 0 0 1-44.31 12.26c-.31.34-.62.67-.95 1l-34.74 34.74a46.63 46.63 0 1 1-65.94-65.94l34.74-34.74a46.6 46.6 0 0 1 44.31-12.26c.31-.34.62-.67 1-1l34.69-34.74a46.63 46.63 0 0 1 65.94 65.94" opacity="0.2"/><path d="M240 88.23a54.43 54.43 0 0 1-16 37L189.25 160a54.27 54.27 0 0 1-38.63 16h-.05A54.63 54.63 0 0 1 96 119.84a8 8 0 0 1 16 .45A38.62 38.62 0 0 0 150.58 160a38.4 38.4 0 0 0 27.31-11.31l34.75-34.75a38.63 38.63 0 0 0-54.63-54.63l-11 11A8 8 0 0 1 135.7 59l11-11a54.65 54.65 0 0 1 77.3 0a54.86 54.86 0 0 1 16 40.23m-131 97.43l-11 11A38.4 38.4 0 0 1 70.6 208a38.63 38.63 0 0 1-27.29-65.94L78 107.31a38.63 38.63 0 0 1 66 28.4a8 8 0 0 0 7.78 8.22h.22a8 8 0 0 0 8-7.78A54.86 54.86 0 0 0 144 96a54.65 54.65 0 0 0-77.27 0L32 130.75A54.62 54.62 0 0 0 70.56 224a54.28 54.28 0 0 0 38.64-16l11-11a8 8 0 0 0-11.2-11.34"/></g></svg>
-                    </a>
-                </h3>
-                <div id="tools-list">
-                    <p>Select a category to see its tools.</p>
+            
+            <!-- Tools Column -->
+            <div class="col-md-8">
+                <div class="tools-section">
+                    <h3 style="color: red; font-style: italic; text-decoration: underline;" id="category-title">
+                        <a href="/category/{{ category.slug }}">
+                            <span id="category-name">Tools</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 256 256"><g fill="red"><path d="m218.34 119.6l-34.74 34.74a46.58 46.58 0 0 1-44.31 12.26c-.31.34-.62.67-.95 1l-34.74 34.74a46.63 46.63 0 1 1-65.94-65.94l34.74-34.74a46.6 46.6 0 0 1 44.31-12.26c.31-.34.62-.67 1-1l34.69-34.74a46.63 46.63 0 0 1 65.94 65.94" opacity="0.2"/><path d="M240 88.23a54.43 54.43 0 0 1-16 37L189.25 160a54.27 54.27 0 0 1-38.63 16h-.05A54.63 54.63 0 0 1 96 119.84a8 8 0 0 1 16 .45A38.62 38.62 0 0 0 150.58 160a38.4 38.4 0 0 0 27.31-11.31l34.75-34.75a38.63 38.63 0 0 0-54.63-54.63l-11 11A8 8 0 0 1 135.7 59l11-11a54.65 54.65 0 0 1 77.3 0a54.86 54.86 0 0 1 16 40.23m-131 97.43l-11 11A38.4 38.4 0 0 1 70.6 208a38.63 38.63 0 0 1-27.29-65.94L78 107.31a38.63 38.63 0 0 1 66 28.4a8 8 0 0 0 7.78 8.22h.22a8 8 0 0 0 8-7.78A54.86 54.86 0 0 0 144 96a54.65 54.65 0 0 0-77.27 0L32 130.75A54.62 54.62 0 0 0 70.56 224a54.28 54.28 0 0 0 38.64-16l11-11a8 8 0 0 0-11.2-11.34"/></g></svg>
+                        </a>
+                    </h3>
+                    <div id="tools-list">
+                        <p>Select a category to see its tools.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Tool Info Modal -->
-<div class="modal fade" id="toolInfoModal" tabindex="-1" role="dialog" aria-labelledby="toolInfoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <img src="{% static 'images/app-logo/logo2.png' %}" style="width: 25px; height: auto;" alt="Logo">
-                <h5 class="modal-title" id="toolInfoModalLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="toolInfoContent">
-                    <!-- Tool info content will be inserted here -->
+    <!-- Tool Info Modal -->
+    <div class="modal fade" id="toolInfoModal" tabindex="-1" role="dialog" aria-labelledby="toolInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="{% static 'images/app-logo/logo2.png' %}" style="width: 25px; height: auto;" alt="Logo">
+                    <h5 class="modal-title" id="toolInfoModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <hr>
-                <button type="button" class="btn btn-primary" id="learnMoreBtn">
-                    LEARN MORE
-                </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" style="float: right;">
-                    Close
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20"><path fill="white" d="M2.93 17.07A10 10 0 1 1 17.07 2.93A10 10 0 0 1 2.93 17.07m1.41-1.41A8 8 0 1 0 15.66 4.34A8 8 0 0 0 4.34 15.66m9.9-8.49L11.41 10l2.83 2.83l-1.41 1.41L10 11.41l-2.83 2.83l-1.41-1.41L8.59 10L5.76 7.17l1.41-1.41L10 8.59l2.83-2.83z"/></svg>
-                </button>
+                <div class="modal-body">
+                    <div id="toolInfoContent">
+                        <!-- Tool info content will be inserted here -->
+                    </div>
+                    <hr>
+                    <button type="button" class="btn btn-primary" id="learnMoreBtn">
+                        LEARN MORE
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" style="float: right;">
+                        Close
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20"><path fill="white" d="M2.93 17.07A10 10 0 1 1 17.07 2.93A10 10 0 0 1 2.93 17.07m1.41-1.41A8 8 0 1 0 15.66 4.34A8 8 0 0 0 4.34 15.66m9.9-8.49L11.41 10l2.83 2.83l-1.41 1.41L10 11.41l-2.83 2.83l-1.41-1.41L8.59 10L5.76 7.17l1.41-1.41L10 8.59l2.83-2.83z"/></svg>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const categories = document.querySelectorAll('.category-button');
-        const toolsList = document.getElementById('tools-list');
-        const categoryTitle = document.getElementById('category-title');
-        const categoryName = document.getElementById('category-name');
-        
-        // Function to strip HTML tags
-        function stripHtml(html) {
-            let tmp = document.createElement("DIV");
-            tmp.innerHTML = html;
-            return tmp.textContent || tmp.innerText || "";
-        }
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categories = document.querySelectorAll('.category-button');
+            const toolsList = document.getElementById('tools-list');
+            const categoryTitle = document.getElementById('category-title');
+            const categoryName = document.getElementById('category-name');
+            
+            // Function to strip HTML tags
+            function stripHtml(html) {
+                let tmp = document.createElement("DIV");
+                tmp.innerHTML = html;
+                return tmp.textContent || tmp.innerText || "";
+            }
 
-        // Function to truncate text
-        function truncate(str, n) {
-            return (str.length > n) ? str.substr(0, n-1) + '...' : str;
-        }
-        
-        // Handle category button click
-        categories.forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove bold from all buttons
-                categories.forEach(btn => {
-                    btn.style.fontWeight = 'normal';
-                    btn.style.color = '';
-                    btn.querySelector('.icon-fill').setAttribute('fill', 'grey');
-                });
-                
-                // Add bold to clicked button
-                this.style.fontWeight = 'bold';
-                this.style.color = 'red';
-                this.querySelector('.icon-fill').setAttribute('fill', 'red');
-                
-                // Fetch tools for the selected category
-                fetch(`/category-tools/?category_slug=${this.dataset.slug}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        let toolsHtml = '';
-                        data.tools.forEach((tool, index) => {
-                            const strippedDescription = stripHtml(tool.ai_short_description);
-                            toolsHtml += `${index > 0 ? ' ' : ''}<svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 512 512"><path fill="grey" d="M58.79 439.13A16 16 0 0 1 48 424c0-73.1 14.68-131.56 43.65-173.77c35-51 90.21-78.46 164.35-81.87V88a16 16 0 0 1 27.05-11.57l176 168a16 16 0 0 1 0 23.14l-176 168A16 16 0 0 1 256 424v-79.77c-45 1.36-79 8.65-106.07 22.64c-29.25 15.12-50.46 37.71-73.32 67a16 16 0 0 1-17.82 5.28Z"/></svg> <a href="#" class="tool-link" data-toggle="modal" data-target="#toolInfoModal" data-tool-id="${tool.id}" data-tool-name="${tool.ai_name}" data-tool-slug="${tool.slug}" data-tool-description="${strippedDescription}" data-tool-pricing="${tool.ai_pricing_tag}" data-tool-tags="${tool.ai_tags}" style="font-size: smaller;">${tool.ai_name}</a>`;
-                        });
-                        toolsList.innerHTML = toolsHtml;
-                        
-                        // Update the category title and link
-                        categoryName.textContent = `${this.textContent} Related Tools`;
-                        categoryTitle.querySelector('a').href = `/category/${this.dataset.slug}`;
+            // Function to truncate text
+            function truncate(str, n) {
+                return (str.length > n) ? str.substr(0, n-1) + '...' : str;
+            }
+            
+            // Handle category button click
+            categories.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove bold from all buttons
+                    categories.forEach(btn => {
+                        btn.style.fontWeight = 'normal';
+                        btn.style.color = '';
+                        btn.querySelector('.icon-fill').setAttribute('fill', 'grey');
                     });
+                    
+                    // Add bold to clicked button
+                    this.style.fontWeight = 'bold';
+                    this.style.color = 'red';
+                    this.querySelector('.icon-fill').setAttribute('fill', 'red');
+                    
+                    // Fetch tools for the selected category
+                    fetch(`/category-tools/?category_slug=${this.dataset.slug}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            let toolsHtml = '';
+                            data.tools.forEach((tool, index) => {
+                                const strippedDescription = stripHtml(tool.ai_short_description);
+                                toolsHtml += `${index > 0 ? ' ' : ''}<svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 512 512"><path fill="grey" d="M58.79 439.13A16 16 0 0 1 48 424c0-73.1 14.68-131.56 43.65-173.77c35-51 90.21-78.46 164.35-81.87V88a16 16 0 0 1 27.05-11.57l176 168a16 16 0 0 1 0 23.14l-176 168A16 16 0 0 1 256 424v-79.77c-45 1.36-79 8.65-106.07 22.64c-29.25 15.12-50.46 37.71-73.32 67a16 16 0 0 1-17.82 5.28Z"/></svg> <a href="#" class="tool-link" data-toggle="modal" data-target="#toolInfoModal" data-tool-id="${tool.id}" data-tool-name="${tool.ai_name}" data-tool-slug="${tool.slug}" data-tool-description="${strippedDescription}" data-tool-pricing="${tool.ai_pricing_tag}" data-tool-tags="${tool.ai_tags}" style="font-size: smaller;">${tool.ai_name}</a>`;
+                            });
+                            toolsList.innerHTML = toolsHtml;
+                            
+                            // Update the category title and link
+                            categoryName.textContent = `${this.textContent} Related Tools`;
+                            categoryTitle.querySelector('a').href = `/category/${this.dataset.slug}`;
+                        });
+                });
+            });
+            
+            // Trigger click on the first category by default
+            if (categories.length > 0) {
+                categories[0].click();
+            }
+        
+            // Handle tool link click
+            document.body.addEventListener('click', function(e) {
+                if (e.target && e.target.classList.contains('tool-link')) {
+                    e.preventDefault();
+                    const toolId = e.target.dataset.toolId;
+                    const toolName = e.target.dataset.toolName;
+                    const toolSlug = e.target.dataset.toolSlug;
+                    const toolDescription = e.target.dataset.toolDescription;
+                    const toolPricing = e.target.dataset.toolPricing;
+                    const toolTags = e.target.dataset.toolTags;
+                    
+                    // Update modal content
+                    document.getElementById('toolInfoModalLabel').textContent = toolName;
+                    document.getElementById('toolInfoContent').innerHTML = `
+                        <p>${truncate(toolDescription, 200)}</p>
+                        <p><strong>Pricing:</strong> ${truncate(stripHtml(toolPricing), 50)}</p>
+                        <p><strong>Tags:</strong> ${truncate(stripHtml(toolTags), 100)}</p>
+                    `;
+                    
+                    // Update the Learn More button link
+                    document.getElementById('learnMoreBtn').onclick = function() {
+                        window.location.href = `/ai-tool/${toolSlug}`;
+                    };
+                }
             });
         });
-        
-        // Trigger click on the first category by default
-        if (categories.length > 0) {
-            categories[0].click();
+    </script>
+
+    <style>
+        .tools-section {
+            border: 1px solid black;
+            border-radius: 8px;
+            padding: 15px;
         }
-    
-        // Handle tool link click
-        document.body.addEventListener('click', function(e) {
-            if (e.target && e.target.classList.contains('tool-link')) {
-                e.preventDefault();
-                const toolId = e.target.dataset.toolId;
-                const toolName = e.target.dataset.toolName;
-                const toolSlug = e.target.dataset.toolSlug;
-                const toolDescription = e.target.dataset.toolDescription;
-                const toolPricing = e.target.dataset.toolPricing;
-                const toolTags = e.target.dataset.toolTags;
-                
-                // Update modal content
-                document.getElementById('toolInfoModalLabel').textContent = toolName;
-                document.getElementById('toolInfoContent').innerHTML = `
-                    <p>${truncate(toolDescription, 200)}</p>
-                    <p><strong>Pricing:</strong> ${truncate(stripHtml(toolPricing), 50)}</p>
-                    <p><strong>Tags:</strong> ${truncate(stripHtml(toolTags), 100)}</p>
-                `;
-                
-                // Update the Learn More button link
-                document.getElementById('learnMoreBtn').onclick = function() {
-                    window.location.href = `/ai-tool/${toolSlug}`;
-                };
-            }
-        });
-    });
-</script>
 
-<style>
-    .tools-section {
-        border: 1px solid black;
-        border-radius: 8px;
-        padding: 15px;
-    }
+        .instruction-text {
+            color: blue;
+            margin-bottom: 15px;
+        }
 
-    .instruction-text {
-        color: blue;
-        margin-bottom: 15px;
-    }
-
-    .category-button {
-        display: inline;
-        margin-right: 5px;
-    }
-    
-</style>
-<div class="container py-4">
-    <a href="/" class="btn btn-primary btn-sm">HOME</a>
-  </div>
-{% endblock %}     
+        .category-button {
+            display: inline;
+            margin-right: 5px;
+        }
+        
+    </style>
+    <div class="container py-4">
+        <a href="/" class="btn btn-primary btn-sm">HOME</a>
+    </div>
+</div>
+{% endblock %}  
+   

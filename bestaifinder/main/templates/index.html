@@ -9,30 +9,32 @@
 {% block content %}
 
 <div class="custom-background">
+
     <br>
     <div class="container">
         <p class="auto-typed-text"><span class="auto-type"></span></p>
     </div>
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     <script>
-        var totalCount = {{ all_ai_tools_count }};
-
         var typed = new Typed(".auto-type", {
             strings: [
-                totalCount + "+ AI Tools As at Now",
-                "Database Updated Automatically"
+                "FindðŸ”Ž The AI Tool You Need",
+                "Add Your AI tools To Our Collection ðŸ“Œ",
             ],
-            typeSpeed: 50,
-            backSpeed: 35,
-            loop: true
+            typeSpeed: 50, 
+            backSpeed: 25, 
+            backDelay: 1000, 
+            startDelay: 500, 
+            loop: true,
+            showCursor: true
         });
     </script>
-
+    
     <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <!-- Left Side: Search and Filter -->
-                <h5 style="font-family: 'Lucida Console', 'Courier New', monospace;">SEARCH BY VOICE</h5>
+                <h5 style="font-family: "Lucida Console", "Courier New", monospace;">SEARCH BY VOICE</h5>
                 <div class="filter-part">
                     <table style="width:100%; border: none; border-collapse: collapse;">
                         <tr style="border: none;">
@@ -97,14 +99,7 @@
                         </tr>
                     </table>                
                 </div>
-                
-                <!-- Loading Indicator -->
-                <div id="loading" style="display: none; text-align: center; margin-top: 20px;">
-                    <div class="spinner" style="display: inline-block; width: 50px; height: 50px; border: 5px solid lightblue; border-top: 5px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                    <p>Searching...</p>
-                </div>
-                
-                
+                            
                 <!-- Inline CSS for Animation -->
                 <style>
                     @keyframes wave {
@@ -122,9 +117,9 @@
                         }
                     }
                 </style>
-
+                
                 <hr>
-                <h5 style="font-family: "Lucida Console", "Courier New", monospace;">SEARCH AND FILTER BY TEXT</h5>
+                            <h5 style="font-family: "Lucida Console", "Courier New", monospace;">SEARCH AND FILTER BY TEXT</h5>
                 <!-- <p><i>Fill in part or whole of the form and click search.. or try <a href="{% url 'google_custom_search' %}" class="text-bold">Custom Search Engine</a></i></p> -->
                 <div class="filter-part">
                     <form id="search-form" method="GET" action="{% url 'search_results' %}">
@@ -143,21 +138,18 @@
                                 <!-- Half width input fields with the same styling as the textarea -->
                                 <label for="category">AI Type</label>
                                 <select id="category" class="form-control select-input" name="ai_type">
-                                    <option class="option" value="">Choose...</option>
-                                    <option class="option" value="Video">Video</option>
-                                    <option class="option" value="Text">Text</option>
-                                    <option class="option" value="Audio">Audio</option>
-                                    <option class="option" value="Assistant">Assistant</option>
-                                    <option class="option" value="Business">Business</option>
-                                    <option class="option" value="Trading">Trading</option>
-                                    <option class="option" value="GPT">GPT</option>
+                                    <option value="">Choose...</option>
+                                    <option value="Video">Video</option>
+                                    <option value="Text">Text</option>
+                                    <option value="Audio">Audio</option>
+                                    <option value="Assistant">Assistant</option>
+                                    <option value="Business">Business</option>
+                                    <option value="Trading">Trading</option>
+                                    <option value="GPT">GPT</option>
                                 </select>
                             </div>
                             
                             <style>
-                                .option {
-                                    cursor: pointer;
-                                }
                                 .textarea, .date-input, .select-input {
                                     height: 80px !important;
                                     background-color: #eeeeee;
@@ -172,7 +164,7 @@
                                     transition: 0.2s;
                                     border: 2px solid #ccc;
                                 }
-
+    
                                 .textarea, .date-input {
                                     padding: 1rem;
                                 }
@@ -311,9 +303,8 @@
                             animation: dothatopcheck-19 0.4s ease 0s forwards;
                         }
                     </style>                
-                                    
+                                      
                 </div>
-                <hr>
             </div>
             
             <script>
@@ -321,6 +312,7 @@
                 const startRecordBtn = document.getElementById('start-record-btn');
                 const recordingStatus = document.getElementById('recording-status');
                 const voiceSearchResult = document.getElementById('voice-search-result');
+                const loadingIndicator = document.getElementById('loading');
             
                 if ('webkitSpeechRecognition' in window) {
                     const recognition = new webkitSpeechRecognition();
@@ -329,19 +321,25 @@
             
                     recognition.onstart = () => {
                         recordingStatus.textContent = 'Voice recognition activated. Speak now.';
+                        startRecordBtn.style.backgroundColor = '#ff0000'; // Change button color when recording
                     };
             
                     recognition.onerror = (event) => {
                         recordingStatus.textContent = 'Error occurred in recognition: ' + event.error;
+                        startRecordBtn.style.backgroundColor = '#007bff'; // Reset button color
                     };
             
                     recognition.onend = () => {
                         recordingStatus.textContent = 'Voice recognition ended.';
+                        startRecordBtn.style.backgroundColor = '#007bff'; // Reset button color
                     };
             
                     recognition.onresult = (event) => {
                         const transcript = event.results[0][0].transcript;
                         voiceSearchResult.textContent = 'You said: ' + transcript;
+                        
+                        // Show loading indicator
+                        loadingIndicator.style.display = 'block';
                         
                         // Send the transcript to the server for search
                         fetch('/voice-search/', {
@@ -354,10 +352,16 @@
                         })
                         .then(response => response.json())
                         .then(data => {
+                            // Hide loading indicator
+                            loadingIndicator.style.display = 'none';
+                            // Redirect to search results
                             window.location.href = data.redirect_url;
                         })
                         .catch((error) => {
                             console.error('Error:', error);
+                            // Hide loading indicator
+                            loadingIndicator.style.display = 'none';
+                            recordingStatus.textContent = 'An error occurred while searching. Please try again.';
                         });
                     };
             
@@ -386,16 +390,14 @@
                 }
             });
             </script>
-
-
-
-
+    
+    
             <!-- Loading Indicator -->
             <div id="loading" style="display: none; text-align: center; margin-top: 20px;">
                 <div class="spinner" style="display: inline-block; width: 50px; height: 50px; border: 5px solid lightblue; border-top: 5px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
                 <p>Searching...</p>
             </div>
-
+    
             <style>
                 @keyframes spin {
                     0% { transform: rotate(0deg); }
@@ -419,12 +421,16 @@
                     animation: spin 0.8s linear infinite; /* Adjust speed */
                 }
             </style>
-
+    
+            <div id="loading">
+                <div class="spinner"></div>
+            </div>
+    
             <script>
                 document.getElementById('search-form').addEventListener('submit', function() {
                     document.getElementById('loading').style.display = 'block';
                 });
-
+    
                 // Hide spinner on page load or back navigation
                 window.addEventListener('pageshow', function(event) {
                     if (event.persisted || window.performance && window.performance.navigation.type == 2) {
@@ -432,76 +438,78 @@
                     }
                 });
             </script>
-
-
-            <!-- Swiper CSS (include this in the <head>) -->
+    
+    
+                    <!-- Swiper CSS (include this in the <head>) -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-
+    
     <!-- Popular Categories Section -->
     <div class="col-md-6">
         <!-- Right Side: Categories and Tags -->
+    
+        <!-- Container for the total tools count -->
         <a href="#all-tools">
-            <div class="tools-count-container">
-                <span class="tools-count">{{ all_ai_tools_count }}</span> AI Tools and Counting<span class="dots"></span>
-            </div>
-            </a>
-            
-            <style>
-            /* Styling the container */
+        <div class="tools-count-container">
+            <span class="tools-count">{{ all_ai_tools_count }}</span> AI Tools and Counting<span class="dots"></span>
+        </div>
+        </a>
+        
+        <style>
+        /* Styling the container */
+        .tools-count-container {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            animation: pulse 1s ease-in-out infinite; /* Slight pulsing animation for attention */
+        }
+        
+        /* Emphasizing the number */
+        .tools-count {
+            color: #d9534f; /* Emphasizing with red color */
+            font-size: 32px;
+            font-weight: 900;
+        }
+        
+        /* Pulse animation for emphasis */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
             .tools-count-container {
-                text-align: center;
-                font-size: 24px;
-                font-weight: bold;
-                color: #333;
-                margin: 20px 0;
-                padding: 15px;
-                background-color: #f8f9fa;
-                border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                position: relative;
-                animation: pulse 1s ease-in-out infinite; /* Slight pulsing animation for attention */
+                font-size: 18px; /* Smaller font size for container */
+                padding: 10px; /* Reduced padding */
             }
-            
-            /* Emphasizing the number */
+        
             .tools-count {
-                color: #d9534f; /* Emphasizing with red color */
-                font-size: 32px;
-                font-weight: 900;
+                font-size: 24px; /* Smaller number size */
             }
-            
-            
-            /* Pulse animation for emphasis */
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-                100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 480px) {
+            .tools-count-container {
+                font-size: 14px; /* Further reduced font size */
+                padding: 6px; /* Further reduced padding */
             }
-            
-            /* Responsive design for smaller screens */
-            @media (max-width: 768px) {
-                .tools-count-container {
-                    font-size: 18px; /* Smaller font size for container */
-                    padding: 10px; /* Reduced padding */
-                }
-            
-                .tools-count {
-                    font-size: 24px; /* Smaller number size */
-                }
+        
+            .tools-count {
+                font-size: 28px; /* Smaller number size */
             }
-            
-            @media (max-width: 480px) {
-                .tools-count-container {
-                    font-size: 14px; /* Further reduced font size */
-                    padding: 6px; /* Further reduced padding */
-                }
-            
-                .tools-count {
-                    font-size: 28px; /* Smaller number size */
-                }
-            }
-            </style>
-
-
+        }
+        </style>
+    
+    
+    
         <div>
             <h5 style="font-family: "Lucida Console", "Courier New", monospace;">POPULAR CATEGORIES</h5>
             <div class="cylindrical-scroll" id="categories-scroll">
@@ -554,67 +562,67 @@
                 <button type="submit" class="btn btn-secondary btn-sm">ALL TAGS</button>
             </a>
         </div>
-        <hr>            
     </div>
         
     <style>
-        .cylindrical-scroll {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            height: 100px;
-        }
-
-        .scroll-row {
-            display: flex;
-            gap: 2px;
-            justify-content: space-between;
-            white-space: nowrap;
-            margin-bottom: 3px;
-        }
-
-        .scroll-row svg {
-            margin-right: 5px;
-        }
-
-        @keyframes scroll-horizontal {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
-
-        #categories-scroll .scroll-row, #tags-scroll .scroll-row {
-            animation: scroll-horizontal 20s linear infinite; /* Cylindrical scrolling animation */
-        }
-
-        #categories-scroll:hover .scroll-row, #tags-scroll:hover .scroll-row {
-            animation-play-state: paused;
-        }
-
-        .frontpage-tags {
-            display: flex;
-            align-items: center;
-            padding: 0.5rem;
-            font-size: 0.9rem;
-            color: #000;
-            background-color: #f7e0db;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-
-        .category-button {
-            background: none;
-            border: none;
-            font-size: 1rem;
-            padding: 5px;
-        }
-
-        .continuous-row-wrap {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
+    .cylindrical-scroll {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        height: 100px;
+    }
+    
+    .scroll-row {
+        display: flex;
+        gap: 2px;
+        justify-content: space-between;
+        white-space: nowrap;
+        margin-bottom: 3px;
+    }
+    
+    .scroll-row svg {
+        margin-right: 5px;
+    }
+    
+    @keyframes scroll-horizontal {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+    
+    #categories-scroll .scroll-row, #tags-scroll .scroll-row {
+        animation: scroll-horizontal 20s linear infinite; /* Cylindrical scrolling animation */
+    }
+    
+    #categories-scroll:hover .scroll-row, #tags-scroll:hover .scroll-row {
+        animation-play-state: paused;
+    }
+    
+    .frontpage-tags {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+        color: #000;
+        background-color: #f7e0db;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+    
+    .category-button {
+        background: none;
+        border: none;
+        font-size: 1rem;
+        padding: 5px;
+    }
+    
+    .continuous-row-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    
     </style>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             function shuffleRow(row) {
@@ -643,56 +651,34 @@
         });
         </script>
         
+    
         </div>
     </div>
 </div>
 
 <style>
     .custom-background {
-        background-image: url("{% static 'images/background/backgroun.jpg' %}");
-        background-size: cover; /* Ensures the image covers the entire div */
-        background-position: center; /* Centers the background image */
-        background-repeat: no-repeat; /* Prevents repeating */
-        height: 100%; /* Set the height of the div */
-        width: 100%; /* Set the width of the div */
-        min-height: 500px; /* Set a minimum height if needed */
-        position: relative; /* Ensure correct positioning if necessary */
+        background-size: cover; 
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 100%;
         z-index: 1;
         background-color: #E4F6F8;
     }
-    
-    /* Disable right-click on the div */
-    .custom-background {
-        pointer-events: none; /* Disable interaction with the background */
-    }
-    
-    .custom-background * {
-        pointer-events: all; /* Enable interaction with other content within the div */
-    }
-    
-    /* Make the colors dull */
-    filter: grayscale(10%); /* Adjust percentage to control how dull */
-    -webkit-filter: grayscale(10%); /* For compatibility */
-
     h5 {
         font-weight: bold;
     }
 </style>
 
-<script>
-    document.querySelector('.custom-background').addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-    });
-</script>
+<div style="background-color: #E4F6F8;">
 
     <section class="wrapper">
         <div class="container-fostrap">
             <div>
                 <h1 class="heading" id="all-tools">
-                    All AI Tools
+                    ALL AI TOOLS
                 </h1>
             </div>
-            
             <div class="content">
                 <div class="container">
                     <div class="row">
@@ -755,72 +741,80 @@
                         </div>
                         {% endfor %}
                     </div>
+  
                     <br>
                     <br>
-                    <!-- Pagination -->
-                    <div class="pagination-container">
-                        <style>
-                            /* CSS for pagination */
-                            .pagination .page-item .page-link.no-click {
-                                pointer-events: none;
-                                color: #6c757d;
-                                cursor: default;
-                            }
-                        </style>
-                        {% if page_obj.has_other_pages %}
-                        <nav>
-                            <ul class="pagination">
-                                {% if page_obj.has_previous %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}#all-tools" aria-label="Previous">
-                                            <span aria-hidden="true">PREV</span>
-                                        </a>
-                                    </li>
-                                {% endif %}
-                                {% for num in elided_page_range %}
-                                    {% if num == page_obj.paginator.ELLIPSIS %}
-                                        <!-- Ensure the ellipsis is not a link -->
-                                        <li class="page-item disabled">
-                                            <span class="page-link no-click">…</span>
-                                        </li>
-                                    {% elif num %}
-                                        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                                            <a class="page-link" href="?page={{ num }}#all-tools">{{ num }}</a>
+                        <!-- Pagination -->
+                        <div class="pagination-container">
+                            {% if page_obj.has_other_pages %}
+                            <nav>
+                                <ul class="pagination">
+                                    {% if page_obj.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}#all-tools" aria-label="Previous">
+                                                <span aria-hidden="true">PREV</span>
+                                            </a>
                                         </li>
                                     {% endif %}
-                                {% endfor %}
-                                {% if page_obj.has_next %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}#all-tools" aria-label="Next">
-                                            <span aria-hidden="true">NEXT</span>
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            </ul>
-                        </nav>
-                        {% endif %}
-                    </div>
-
-                                             
+                                    {% for num in elided_page_range %}
+                                        {% if num == page_obj.paginator.ELLIPSIS %}
+                                            <li class="page-item disabled"><span class="page-link">Ã¢â‚¬Â¦</span></li>
+                                        {% elif num %}
+                                            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                                <a class="page-link" href="?page={{ num }}#all-tools">{{ num }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if page_obj.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ page_obj.next_page_number }}#all-tools" aria-label="Next">
+                                                <span aria-hidden="true">NEXT</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                            {% endif %}
+                        </div>                                              
                 </div>
             </div>
         </div>
     </section>
     
     
-    <!-- Form to jump to a specific page -->
-    <div class="container">
-        <p><i>OR GO TO A SPECIFIC PAGE</i></p>
-        <div class="jump-to-page">
-            <form id="jump-to-page-form" method="GET" action="" class="d-flex flex-column align-items" data-max-pages="{{ page_obj.paginator.num_pages }}">
-                <div class="form-group">
-                    <input class="form-control" type="number" id="page-number-input" name="page" min="1" max="{{ page_obj.paginator.num_pages }}" value="{{ request.GET.page }}" placeholder="Enter number between 1 and {{ page_obj.paginator.num_pages }}" required style="width: 300px; border: 1px solid #ced4da; border-radius: .25rem;">
-                </div>
-                <div class="form-group mt-2">
-                    <button type="submit" class="btn btn-primary">Go</button>
-                </div>
-            </form>
-        </div>
+<!-- Form to jump to a specific page -->
+<div class="container" style="text-align: left;"> <!-- Ensures the form is aligned to the left -->
+    <p><i>OR GO TO A SPECIFIC PAGE</i></p>
+    <div class="jump-to-page">
+        <form id="jump-to-page-form" method="GET" action="" class="d-flex flex-row align-items-center" data-max-pages="{{ page_obj.paginator.num_pages }}" style="gap: 10px; flex-wrap: nowrap;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <input class="form-control" type="number" id="page-number-input" name="page" min="1" max="{{ page_obj.paginator.num_pages }}" value="{{ request.GET.page }}" placeholder="Enter number between 1 and {{ page_obj.paginator.num_pages }}" required style="width: 300px; border: 1px solid #ced4da; border-radius: .25rem;">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <button type="submit" class="btn btn-primary" style="height:30px; text-align: center; width:40px;" style="white-space: nowrap;">Go</button>
+            </div>
+        </form>
     </div>
+</div>
 
+<!-- Add this inline CSS inside your HTML head or style block -->
+<style>
+    /* Media query to reduce input size on smaller screens */
+    @media (max-width: 768px) {
+        #page-number-input {
+            width: 200px; /* Reduce input width on smaller screens */
+        }
+    }
+
+    @media (max-width: 576px) {
+        #page-number-input {
+            width: 150px; /* Further reduce input width on very small screens */
+        }
+    }  
+</style>
+
+
+</div>
+
+        
 {% endblock %}

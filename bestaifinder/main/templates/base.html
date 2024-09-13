@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -310,23 +311,130 @@
       </div>
     </div>
   </nav>
+
+  <div style="background-color: #E4F6F8;" id="content-div">
+    <!-- Icons for changing background color -->
+        <span style="cursor: pointer; margin-right: 10px;" onclick="setColor('default')" id="default-icon">✊ Default</span>
+        <span style="cursor: pointer; margin-right: 10px;" onclick="setColor('white')" id="white-icon">⚪ White</span>
+        <span style="cursor: pointer;" onclick="setColor('black')" id="black-icon">⚫ Black</span>
+
+        <script>
+          // Function to obfuscate links
+          function obfuscateLinks() {
+              // Select all anchor tags
+              const links = document.querySelectorAll('a');
+              
+              links.forEach(link => {
+                  const href = link.getAttribute('href');
+                  
+                  // Check if the link is one we want to obfuscate
+                  if (href && (href.includes('ai_body') || 
+                              link.classList.contains('btn-link') || 
+                              link.classList.contains('img-card') ||
+                              link.classList.contains('tool-link') ||
+                              link.closest('.card-title'))) {
+                      // Store the original href
+                      link.dataset.originalHref = href;
+                      
+                      // Remove the href attribute
+                      link.removeAttribute('href');
+                      
+                      // Add a custom attribute for our click handler
+                      link.setAttribute('data-obfuscated', 'true');
+
+                      // Set cursor style to pointer
+                      link.style.cursor = 'pointer';
+                      
+                      // Add click event listener
+                      link.addEventListener('click', handleObfuscatedClick);
+                  }
+              });
+          }
+
+          // Function to handle clicks on obfuscated links
+          function handleObfuscatedClick(event) {
+              event.preventDefault();
+              const link = event.currentTarget;
+              const originalHref = link.dataset.originalHref;
+              
+              if (originalHref) {
+                  if (link.target === '_blank') {
+                      window.open(originalHref, '_blank');
+                  } else {
+                      window.location.href = originalHref;
+                  }
+              }
+          }
+
+          // Run the obfuscation when the DOM is fully loaded
+          document.addEventListener('DOMContentLoaded', obfuscateLinks);
+
+          // Reapply obfuscation after any dynamic content updates
+          // You'll need to call this function after updating the DOM with new content
+          function reapplyObfuscation() {
+              obfuscateLinks();
+          }
+        </script>
+
+      {% block content %}
+      {% endblock %}
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="container" style="text-align: center;">
+        <a class="nav-link" data-toggle="modal" data-target="#askAiModal">
+          <button type="button" class="btn btn-outline-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><g fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="white"><path d="M17.5 17.5L22 22m-2-11a9 9 0 1 0-18 0a9 9 0 0 0 18 0"/><path d="m6.5 14l1.842-5.526a.694.694 0 0 1 1.316 0L11.5 14m3-6v6m-7-2h3"/></g></svg>
+            ASK AI
+          </button>
+        </a>
+      </div>
+      <br>
+    <script>
+      // Function to set background color and save choice in localStorage
+      function setColor(choice) {
+          var contentDiv = document.getElementById("content-div");
+          var textColor = "";  // Text color based on background color
   
-    {% block content %}
-    {% endblock %}
-    <br>
-    <br>
-    <br>
-    <br>
-    <div class="container" style="text-align: center;">
-      <a class="nav-link" data-toggle="modal" data-target="#askAiModal">
-        <button type="button" class="btn btn-outline-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><g fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="white"><path d="M17.5 17.5L22 22m-2-11a9 9 0 1 0-18 0a9 9 0 0 0 18 0"/><path d="m6.5 14l1.842-5.526a.694.694 0 0 1 1.316 0L11.5 14m3-6v6m-7-2h3"/></g></svg>
-          ASK AI
-        </button>
-      </a>
-    </div>
-    <br>
+          if (choice === 'black') {
+              contentDiv.style.backgroundColor = '#000';
+              contentDiv.style.color = '#FFF';
+              textColor = '#FFF';  // White text for black background
+          } else if (choice === 'white') {
+              contentDiv.style.backgroundColor = '#FFF';
+              contentDiv.style.color = '#000';
+              textColor = '#000';  // Black text for white background
+          } else {
+              contentDiv.style.backgroundColor = '#E4F6F8';
+              contentDiv.style.color = '#000';  // Default text color
+              textColor = '#000';
+          }
   
+          // Save user's choice in localStorage
+          localStorage.setItem('backgroundColor', contentDiv.style.backgroundColor);
+          localStorage.setItem('textColor', textColor);
+      }
+  
+      // Function to apply the saved color choice on page load
+      function applySavedColor() {
+          var savedBackgroundColor = localStorage.getItem('backgroundColor');
+          var savedTextColor = localStorage.getItem('textColor');
+          var contentDiv = document.getElementById("content-div");
+  
+          if (savedBackgroundColor) {
+              contentDiv.style.backgroundColor = savedBackgroundColor;
+          }
+          if (savedTextColor) {
+              contentDiv.style.color = savedTextColor;
+          }
+      }
+  
+      // Apply the saved color choice when the page loads
+      window.onload = applySavedColor;
+  </script>
+  
+  </div>
     <footer class="bg-dark text-light py-6">
       <div class="container">
           <div class="row d-flex flex-wrap">

@@ -7,504 +7,553 @@
 {% block title %}{{ ai_tool.ai_name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col-md-12 d-flex justify-content-center align-items-center text-uppercase font-weight-bold position-relative">
-      <div style="display: flex; align-items: center; border-bottom: 2px solid red; padding-bottom: 5px;">
-        {% if ai_tool.ai_tool_logo %}
-            <img 
-                style="border-radius: 50%; width: 60px; height: 60px; margin-right: 20px;" 
-                src="{{ ai_tool.ai_tool_logo.url }}" 
-                alt="{{ ai_tool.ai_name }} Logo">
-        {% else %}
-            <img 
-                style="border-radius: 50%; width: 60px; height: 60px; margin-right: 20px;" 
-                src="/media/images/default_logo.jpg" 
-                alt="{{ ai_tool.ai_name }} Logo">
-        {% endif %}
-        <h1 style="color: red; font-size: 2rem; font-weight: bold; margin-bottom: 0;" id="tool-name">{{ ai_tool.ai_name }}</h1>
+<div style="background-color: #E4F6F8;">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-center align-items-center text-uppercase font-weight-bold position-relative">
+        <div style="display: flex; align-items: center; border-bottom: 2px solid red; padding-bottom: 5px;">
+              {% if ai_tool.ai_tool_logo %}
+                  <img 
+                      style="border-radius: 50%; width: 60px; height: 60px; margin-right: 20px;" 
+                      src="{{ ai_tool.ai_tool_logo.url }}" 
+                      alt="{{ ai_tool.ai_name }} Logo">
+              {% else %}
+                  <img 
+                      style="border-radius: 50%; width: 60px; height: 60px; margin-right: 20px;" 
+                      src="/media/images/default_logo.jpg" 
+                      alt="{{ ai_tool.ai_name }} Logo">
+              {% endif %}
+          <h1 style="color: red; font-size: 2rem; font-weight: bold; margin-bottom: 0;" id="tool-name">{{ ai_tool.ai_name }}</h1>
+          <br>
+          <br>
+          <br>
+        </div>
         <br>
-        <br>
-        <br>
+      </div>
+      <br>
+      <div  class="col-md-12 d-flex justify-content-center align-items-center text-uppercase font-weight-bold position-relative">
+        <!-- <p style="text-align: center;"><h5>(Tool ID: {{ ai_tool.id }})</h5></p> -->
       </div>
       <br>
     </div>
     <br>
-    <div  class="col-md-12 d-flex justify-content-center align-items-center text-uppercase font-weight-bold position-relative">
-      <p style="text-align: center;"><h5>(Tool ID: {{ ai_tool.id }})</h5></p>
-    </div>
-    <br>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-md-6">
-      {% if ai_tool.ai_image %}
-          <img 
-              onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', '{{ ai_tool.slug }}', '{{ ai_tool.ai_tool_link }}')" 
-              style="width: 100%; height: 300px; object-fit: cover; border: 1px solid black; border-radius: 5%; cursor: pointer;" 
-              src="{{ ai_tool.ai_image.url }}" 
-              alt="{{ ai_tool.ai_name }}">
-      {% else %}
-          <img 
-              onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', '{{ ai_tool.slug }}', '{{ ai_tool.ai_tool_link }}')" 
-              style="width: 100%; height: 300px; object-fit: cover; border: 1px solid black; border-radius: 5%; cursor: pointer;" 
-              src="/media/images/default.jpg" 
-              alt="{{ ai_tool.ai_name }}">
-      {% endif %}
-    </div>    
-    <div class="col-md-6">
-      <br>
-      <p class="lead font-weight-bold" style="color:#59255F;">PRICING TAG:
-        <i class="font-italic font-weight-bold"  style="color:blue;">{{ ai_tool.ai_pricing_tag }}</i>
-      </p>
-      <p>
-        <a href="{{ ai_tool.ai_tool_link }}" target="_blank">
-          <button type="button" class="btn btn-success">
-            VISIT
-            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 512 512"><path fill="white" d="M48 399.26C48 335.19 62.44 284 90.91 247c34.38-44.67 88.68-68.77 161.56-71.75V72L464 252L252.47 432V329.35c-44.25 1.19-77.66 7.58-104.27 19.84c-28.75 13.25-49.6 33.05-72.08 58.7L48 440Z"/></svg>
-          </button>
-        </a>
-      </p>
-      <p>
-        <button type="button" class="btn btn-secondary" onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', null, '{{ ai_tool.ai_tool_link }}')">
-          PREVIEW TOOL
-          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"><path fill="white" d="M21.773 14.768c-.029.414-.186.81-.45 1.13a1.892 1.892 0 0 1-.998.63l-3.157.521l-.09.09a.381.381 0 0 0-.09.15l-.5 2.902a1.922 1.922 0 0 1-1.778 1.471h-.09c-.374 0-.74-.111-1.05-.32a1.911 1.911 0 0 1-.739-.92l-2.787-7.906a1.904 1.904 0 0 1 .45-2.001c.253-.263.58-.44.939-.51a1.866 1.866 0 0 1 1.069.07l7.992 2.781c.404.135.754.394 1 .74c.215.351.313.761.28 1.172"/><path fill="white" d="M9.305 22.243a.834.834 0 0 1-.22 0a10.469 10.469 0 0 1-4.5-2.83a10.491 10.491 0 0 1-2.448-10A10.49 10.49 0 0 1 4.82 4.819a10.467 10.467 0 0 1 9.902-2.765a10.466 10.466 0 0 1 4.669 2.54a10.49 10.49 0 0 1 2.822 4.51a.743.743 0 0 1-1.059.886a.76.76 0 0 1-.37-.436a9.008 9.008 0 0 0-2.41-3.894a8.988 8.988 0 0 0-8.585-2.143a8.989 8.989 0 0 0-3.953 2.306a9.01 9.01 0 0 0-2.377 8.536a8.99 8.99 0 0 0 6.075 6.443a.77.77 0 0 1 .49 1a.75.75 0 0 1-.72.44"/></svg>
-        </button> 
-      </p>
-      <p>
-        <button type="button" class="btn btn-secondary" onclick="showQRCodeModal('{{ ai_tool.ai_tool_link }}')">
-          QR CODE
-          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
-            <g fill="none" fill-rule="evenodd">
-              <path fill="white" d="M13 14h1v1h-1zm1 1h1v1h-1zm0 1h1v1h-1zm2 0h1v1h-1zm0 1h1v1h-1zm-3-1h1v1h-1zm2 0h1v1h-1zm0 1h1v1h-1zm3-1h1v1h-1zm0-1h1v1h-1zm1-1h1v1h-1zm-2 2h1v1h-1zm-6 1h1v1h-1zm-1 0h1v1h-1zm0 1h1v1h-1zm2 0h1v1h-1zm-3 0h1v1h-1zm2 0h1v1h-1zm-2 1h1v1h-1zm-2 0h1v1h-1zm1 0h1v1h-1zM1 11h1v1H1zm1 1h1v1H2zm2-1h1v1H4zm0 1h1v1H4zm1-1h1v1H5zm1 1h1v1H6zm1-1h1v1H7zm1 1h1v1H8zm0-1h1v1H8zm1 0h1v1H9zm1 0h1v1h-1zm1 1h1v1h-1zm2 0h1v1h-1zm1-1h1v1h-1zm1 0h1v1h-1zm1 0h1v1h-1zm-1 2h1v1h-1zm-2 9h1v1h-1zm-1 0h1v1h-1zm0-9h1v1h-1zm-1 0h1v1h-1zm0 1h1v1h-1zm0 1h1v1h-1zm11-1h1v1h-1zm-1 1h1v1h-1zm1 2h1v1h-1zm-5-4h1v1h-1zm1-1h1v1h-1zm4 0h1v1h-1zm0 1h1v1h-1zm-1 0h1v1h-1zm1 0h1v1h-1zm1 0h1v1h-1zm-1 2h1v1h-1zm-2 0h1v1h-1zm3 0h1v1h-1z"/>
-              <path stroke="white" stroke-width="2" d="M15 2h7v7h-7zM2 2h7v7H2zm0 13h7v7H2zM18 5h1v1h-1zM5 5h1v1H5zm0 13h1v1H5z"/>
-            </g>
-          </svg>
-        </button>
-      </p>
-      <p>
-        {% if user.is_authenticated %}
-            <form method="POST" id="bookmark-form">
-                {% csrf_token %}
-                {% if is_bookmarked %}
-                    <button type="submit" name="bookmark" value="remove" class="btn btn-danger">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><g fill="white"><path fill-rule="evenodd" d="m6.245 17.667l3.755-4.2l3.755 4.2c.611.684 1.745.251 1.745-.667V3a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1v14c0 .918 1.134 1.35 1.745.666M6.5 14.38V4h7v10.381l-2.754-3.08a1 1 0 0 0-1.491 0z" clip-rule="evenodd"/><path d="M1.293 2.707a1 1 0 0 1 1.414-1.414l16 16a1 1 0 0 1-1.414 1.414z"/></g></svg>
-                        Remove Bookmark
-                    </button>
-                {% else %}
-                    <button type="submit" name="bookmark" value="add" class="btn btn-success">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path stroke-linecap="round" d="M34 10V4H8V38L14 35"/><path fill="#2f88ff" d="M14 44V10H40V44L27 37.7273L14 44Z"/></g></svg>
-                        Bookmark
-                    </button>
-                {% endif %}
-            </form>
+    <div class="row">
+      <div class="col-md-6">
+        {% if ai_tool.ai_image %}
+            <img 
+                onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', '{{ ai_tool.slug }}', '{{ ai_tool.ai_tool_link }}')" 
+                style="width: 100%; height: 300px; object-fit: cover; border: px solid black; border-radius: 5%; cursor: pointer; 
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease; 
+                transform: translateY(-10px);"
+                onmouseover="this.style.transform='translateY(-15px)'; this.style.boxShadow='0 15px 25px rgba(0, 0, 0, 0.3)';" 
+                onmouseout="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 10px 15px rgba(0, 0, 0, 0.2)';" 
+                src="{{ ai_tool.ai_image.url }}" 
+                alt="{{ ai_tool.ai_name }}">
         {% else %}
-            <a href="{% url 'account_login' %}?next={{ request.path }}%3Faction%3Dbookmark" class="btn btn-success">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path stroke-linecap="round" d="M34 10V4H8V38L14 35"/><path fill="#2f88ff" d="M14 44V10H40V44L27 37.7273L14 44Z"/></g></svg>
-                Bookmark
-            </a>
+            <img 
+                onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', '{{ ai_tool.slug }}', '{{ ai_tool.ai_tool_link }}')" 
+                style="width: 100%; height: 300px; object-fit: cover; border: 1px solid black; border-radius: 5%; cursor: pointer; 
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease; 
+                transform: translateY(-10px);"
+                onmouseover="this.style.transform='translateY(-15px)'; this.style.boxShadow='0 15px 25px rgba(0, 0, 0, 0.3)';" 
+                onmouseout="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 10px 15px rgba(0, 0, 0, 0.2)';" 
+                src="/media/images/default.jpg" 
+                alt="{{ ai_tool.ai_name }}">
         {% endif %}
-      </p>
-      
-        <script>
-        // LOGIC TO REDIRECT AND AUTOMATICALLY BOOKMARK TOOLS FOR UNAUTH USERS
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if the user just logged in and the action is to bookmark
-            if (new URLSearchParams(window.location.search).get('action') === 'bookmark') {
-                // Remove the query parameter
-                var newUrl = window.location.pathname;
-                window.history.replaceState({}, document.title, newUrl);
+    </div>        
+      <div class="col-md-6">
+        <br>
+        <p class="lead font-weight-bold" style="color:#59255F;">PRICING TAG:
+          <i class="font-italic font-weight-bold"  style="color:blue;">{{ ai_tool.ai_pricing_tag }}</i>
+        </p>
+        <p>
+          <a href="{{ ai_tool.ai_tool_link }}" class="tool-link" target="_blank">
+            <button type="button" class="btn btn-success">
+              VISIT
+              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 512 512"><path fill="white" d="M48 399.26C48 335.19 62.44 284 90.91 247c34.38-44.67 88.68-68.77 161.56-71.75V72L464 252L252.47 432V329.35c-44.25 1.19-77.66 7.58-104.27 19.84c-28.75 13.25-49.6 33.05-72.08 58.7L48 440Z"/></svg>
+            </button>
+          </a>
+        </p>
+        <p>
+          <button type="button" class="btn btn-secondary" onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', null, '{{ ai_tool.ai_tool_link }}')">
+            PREVIEW TOOL
+            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"><path fill="white" d="M21.773 14.768c-.029.414-.186.81-.45 1.13a1.892 1.892 0 0 1-.998.63l-3.157.521l-.09.09a.381.381 0 0 0-.09.15l-.5 2.902a1.922 1.922 0 0 1-1.778 1.471h-.09c-.374 0-.74-.111-1.05-.32a1.911 1.911 0 0 1-.739-.92l-2.787-7.906a1.904 1.904 0 0 1 .45-2.001c.253-.263.58-.44.939-.51a1.866 1.866 0 0 1 1.069.07l7.992 2.781c.404.135.754.394 1 .74c.215.351.313.761.28 1.172"/><path fill="white" d="M9.305 22.243a.834.834 0 0 1-.22 0a10.469 10.469 0 0 1-4.5-2.83a10.491 10.491 0 0 1-2.448-10A10.49 10.49 0 0 1 4.82 4.819a10.467 10.467 0 0 1 9.902-2.765a10.466 10.466 0 0 1 4.669 2.54a10.49 10.49 0 0 1 2.822 4.51a.743.743 0 0 1-1.059.886a.76.76 0 0 1-.37-.436a9.008 9.008 0 0 0-2.41-3.894a8.988 8.988 0 0 0-8.585-2.143a8.989 8.989 0 0 0-3.953 2.306a9.01 9.01 0 0 0-2.377 8.536a8.99 8.99 0 0 0 6.075 6.443a.77.77 0 0 1 .49 1a.75.75 0 0 1-.72.44"/></svg>
+          </button> 
+        </p>
+        <p>
+          <button type="button" class="btn btn-secondary" onclick="showQRCodeModal('{{ ai_tool.ai_tool_link }}')">
+            QR CODE
+            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+              <g fill="none" fill-rule="evenodd">
+                <path fill="white" d="M13 14h1v1h-1zm1 1h1v1h-1zm0 1h1v1h-1zm2 0h1v1h-1zm0 1h1v1h-1zm-3-1h1v1h-1zm2 0h1v1h-1zm0 1h1v1h-1zm3-1h1v1h-1zm0-1h1v1h-1zm1-1h1v1h-1zm-2 2h1v1h-1zm-6 1h1v1h-1zm-1 0h1v1h-1zm0 1h1v1h-1zm2 0h1v1h-1zm-3 0h1v1h-1zm2 0h1v1h-1zm-2 1h1v1h-1zm-2 0h1v1h-1zm1 0h1v1h-1zM1 11h1v1H1zm1 1h1v1H2zm2-1h1v1H4zm0 1h1v1H4zm1-1h1v1H5zm1 1h1v1H6zm1-1h1v1H7zm1 1h1v1H8zm0-1h1v1H8zm1 0h1v1H9zm1 0h1v1h-1zm1 1h1v1h-1zm2 0h1v1h-1zm1-1h1v1h-1zm1 0h1v1h-1zm1 0h1v1h-1zm-1 2h1v1h-1zm-2 9h1v1h-1zm-1 0h1v1h-1zm0-9h1v1h-1zm-1 0h1v1h-1zm0 1h1v1h-1zm0 1h1v1h-1zm11-1h1v1h-1zm-1 1h1v1h-1zm1 2h1v1h-1zm-5-4h1v1h-1zm1-1h1v1h-1zm4 0h1v1h-1zm0 1h1v1h-1zm-1 0h1v1h-1zm1 0h1v1h-1zm1 0h1v1h-1zm-1 2h1v1h-1zm-2 0h1v1h-1zm3 0h1v1h-1z"/>
+                <path stroke="white" stroke-width="2" d="M15 2h7v7h-7zM2 2h7v7H2zm0 13h7v7H2zM18 5h1v1h-1zM5 5h1v1H5zm0 13h1v1H5z"/>
+              </g>
+            </svg>
+          </button>
+        </p>
+        <p>
+          {% if user.is_authenticated %}
+              <form method="POST" id="bookmark-form">
+                  {% csrf_token %}
+                  {% if is_bookmarked %}
+                      <button type="submit" name="bookmark" value="remove" class="btn btn-danger">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><g fill="white"><path fill-rule="evenodd" d="m6.245 17.667l3.755-4.2l3.755 4.2c.611.684 1.745.251 1.745-.667V3a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1v14c0 .918 1.134 1.35 1.745.666M6.5 14.38V4h7v10.381l-2.754-3.08a1 1 0 0 0-1.491 0z" clip-rule="evenodd"/><path d="M1.293 2.707a1 1 0 0 1 1.414-1.414l16 16a1 1 0 0 1-1.414 1.414z"/></g></svg>
+                          Remove Bookmark
+                      </button>
+                  {% else %}
+                      <button type="submit" name="bookmark" value="add" class="btn btn-success">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path stroke-linecap="round" d="M34 10V4H8V38L14 35"/><path fill="#2f88ff" d="M14 44V10H40V44L27 37.7273L14 44Z"/></g></svg>
+                          Bookmark
+                      </button>
+                  {% endif %}
+              </form>
+          {% else %}
+              <a href="{% url 'account_login' %}?next={{ request.path }}%3Faction%3Dbookmark" class="btn btn-success">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4"><path stroke-linecap="round" d="M34 10V4H8V38L14 35"/><path fill="#2f88ff" d="M14 44V10H40V44L27 37.7273L14 44Z"/></g></svg>
+                  Bookmark
+              </a>
+          {% endif %}
+        </p>
         
-                // Submit the bookmark form
-                var form = document.getElementById('bookmark-form');
-                if (form) {
-                    var input = form.querySelector('input[name="bookmark"]');
-                    if (!input) {
-                        input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = 'bookmark';
-                        form.appendChild(input);
-                    }
-                    input.value = 'add';
-                    form.submit();
-                }
-            }
-        });
-        </script>
-        
-      <p class="lead">
-        <span class="font-weight-bold" style="color:#59255F;">TAGS:</span>
-        {% for tag in ai_tool.ai_tags|split_tags %}
-          <a href="/tags/{{ tag|slugify }}" style="font-weight: 400; font-size: 16px; color:;">{{ tag }}</a>{% if not forloop.last %}, {% endif %}
-        {% endfor %}
-      </p>
+          <script>
+          // LOGIC TO REDIRECT AND AUTOMATICALLY BOOKMARK TOOLS FOR UNAUTH USERS
+          document.addEventListener('DOMContentLoaded', function() {
+              // Check if the user just logged in and the action is to bookmark
+              if (new URLSearchParams(window.location.search).get('action') === 'bookmark') {
+                  // Remove the query parameter
+                  var newUrl = window.location.pathname;
+                  window.history.replaceState({}, document.title, newUrl);
           
-
-    </div>
-  </div>
-  
-  <!-- QR Code Popup Modal -->
-    <div class="modal fade" id="qrCodeModal" tabindex="-1" role="dialog" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <img src="{% static 'images/app-logo/logo2.png' %}" style="width: 25px; height: auto;" alt="Logo">
-            <h5 class="modal-title" id="qrCodeModalLabel">{{ ai_tool.ai_name }} {QR Code}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body text-center">
-            <div class="spinner-border text-primary" role="status" style="display: none;">
-              <span class="sr-only">Loading...</span>
-            </div>
-            <div id="qrCodeContent">
-              <!-- QR code content will be inserted here -->
-            </div>
-            <hr>
-            <p class="text-muted" style="font-size: 12px;">Scan this code to access {{ ai_tool.ai_name }}</p>
-            <button type="button" class="btn btn-danger" data-dismiss="modal" style="float: right;">
-              Close QR Code
-              <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20"><path fill="white" d="M2.93 17.07A10 10 0 1 1 17.07 2.93A10 10 0 0 1 2.93 17.07m1.41-1.41A8 8 0 1 0 15.66 4.34A8 8 0 0 0 4.34 15.66m9.9-8.49L11.41 10l2.83 2.83l-1.41 1.41L10 11.41l-2.83 2.83l-1.41-1.41L8.59 10L5.76 7.17l1.41-1.41L10 8.59l2.83-2.83z"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  <div class="content py-4">
-      <p class="lead font-weight-bold" style="color:#59255F; font-size: 26px;">DESCRIPTION:</p>
-      {{ ai_tool.ai_short_description|safe }}
-      <p>
-        <br>
-      </p>
-      <div class="d-flex align-items-center">
-          <button onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', null, '{{ ai_tool.ai_tool_link }}')" style="font-size: 13px;" class="btn btn-primary me-3">
-            Preview
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="white" d="M21.773 14.768c-.029.414-.186.81-.45 1.13a1.892 1.892 0 0 1-.998.63l-3.157.521l-.09.09a.381.381 0 0 0-.09.15l-.5 2.902a1.922 1.922 0 0 1-1.778 1.471h-.09c-.374 0-.74-.111-1.05-.32a1.911 1.911 0 0 1-.739-.92l-2.787-7.906a1.904 1.904 0 0 1 .45-2.001c.253-.263.58-.44.939-.51a1.866 1.866 0 0 1 1.069.07l7.992 2.781c.404.135.754.394 1 .74c.215.351.313.761.28 1.172"/><path fill="white" d="M9.305 22.243a.834.834 0 0 1-.22 0a10.469 10.469 0 0 1-4.5-2.83a10.491 10.491 0 0 1-2.448-10A10.49 10.49 0 0 1 4.82 4.819a10.467 10.467 0 0 1 9.902-2.765a10.466 10.466 0 0 1 4.669 2.54a10.49 10.49 0 0 1 2.822 4.51a.743.743 0 0 1-1.059.886a.76.76 0 0 1-.37-.436a9.008 9.008 0 0 0-2.41-3.894a8.988 8.988 0 0 0-8.585-2.143a8.989 8.989 0 0 0-3.953 2.306a9.01 9.01 0 0 0-2.377 8.536a8.99 8.99 0 0 0 6.075 6.443a.77.77 0 0 1 .49 1a.75.75 0 0 1-.72.44"/></svg>
-          </button>
-          <button onclick="copyPageLink()" class="btn btn-outline-secondary me-3" style="font-size: 13px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256"><path fill="blue" d="M216 32H88a8 8 0 0 0-8 8v40H40a8 8 0 0 0-8 8v128a8 8 0 0 0 8 8h128a8 8 0 0 0 8-8v-40h40a8 8 0 0 0 8-8V40a8 8 0 0 0-8-8m-8 128h-32V88a8 8 0 0 0-8-8H96V48h112Z"/></svg>
-            Copy Link
-          </button>
-         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" style="font-size: 13px;" type="button" id="dropdownMenuButton" onclick="toggleDropdown()">
-              Share
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="white" d="m13.576 17.271l-5.11-2.787a3.5 3.5 0 1 1 0-4.968l5.11-2.787a3.5 3.5 0 1 1 .958 1.755l-5.11 2.787a3.5 3.5 0 0 1 0 1.457l5.11 2.788a3.5 3.5 0 1 1-.958 1.755"/></svg>
-          </button>
-          <div class="dropdown-menu" id="dropdownMenu">
-              <a class="dropdown-item" href="#" onclick="shareTo('whatsapp')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18.86" height="19" viewBox="0 0 256 258"><defs><linearGradient id="logosWhatsappIcon0" x1="50%" x2="50%" y1="100%" y2="0%"><stop offset="0%" stop-color="#1faf38"/><stop offset="100%" stop-color="#60d669"/></linearGradient><linearGradient id="logosWhatsappIcon1" x1="50%" x2="50%" y1="100%" y2="0%"><stop offset="0%" stop-color="#f9f9f9"/><stop offset="100%" stop-color="#fff"/></linearGradient></defs><path fill="url(#logosWhatsappIcon0)" d="M5.463 127.456c-.006 21.677 5.658 42.843 16.428 61.499L4.433 252.697l65.232-17.104a123 123 0 0 0 58.8 14.97h.054c67.815 0 123.018-55.183 123.047-123.01c.013-32.867-12.775-63.773-36.009-87.025c-23.23-23.25-54.125-36.061-87.043-36.076c-67.823 0-123.022 55.18-123.05 123.004"/><path fill="url(#logosWhatsappIcon1)" d="M1.07 127.416c-.007 22.457 5.86 44.38 17.014 63.704L0 257.147l67.571-17.717c18.618 10.151 39.58 15.503 60.91 15.511h.055c70.248 0 127.434-57.168 127.464-127.423c.012-34.048-13.236-66.065-37.3-90.15C194.633 13.286 162.633.014 128.536 0C58.276 0 1.099 57.16 1.071 127.416m40.24 60.376l-2.523-4.005c-10.606-16.864-16.204-36.352-16.196-56.363C22.614 69.029 70.138 21.52 128.576 21.52c28.3.012 54.896 11.044 74.9 31.06c20.003 20.018 31.01 46.628 31.003 74.93c-.026 58.395-47.551 105.91-105.943 105.91h-.042c-19.013-.01-37.66-5.116-53.922-14.765l-3.87-2.295l-40.098 10.513z"/><path fill="#fff" d="M96.678 74.148c-2.386-5.303-4.897-5.41-7.166-5.503c-1.858-.08-3.982-.074-6.104-.074c-2.124 0-5.575.799-8.492 3.984c-2.92 3.188-11.148 10.892-11.148 26.561s11.413 30.813 13.004 32.94c1.593 2.123 22.033 35.307 54.405 48.073c26.904 10.609 32.379 8.499 38.218 7.967c5.84-.53 18.844-7.702 21.497-15.139c2.655-7.436 2.655-13.81 1.859-15.142c-.796-1.327-2.92-2.124-6.105-3.716s-18.844-9.298-21.763-10.361c-2.92-1.062-5.043-1.592-7.167 1.597c-2.124 3.184-8.223 10.356-10.082 12.48c-1.857 2.129-3.716 2.394-6.9.801c-3.187-1.598-13.444-4.957-25.613-15.806c-9.468-8.442-15.86-18.867-17.718-22.056c-1.858-3.184-.199-4.91 1.398-6.497c1.431-1.427 3.186-3.719 4.78-5.578c1.588-1.86 2.118-3.187 3.18-5.311c1.063-2.126.531-3.986-.264-5.579c-.798-1.593-6.987-17.343-9.819-23.64"/></svg>
-                WhatsApp
-              </a>
-              <a class="dropdown-item" href="#" onclick="shareTo('facebook')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 256 256"><path fill="#1877f2" d="M256 128C256 57.308 198.692 0 128 0S0 57.308 0 128c0 63.888 46.808 116.843 108 126.445V165H75.5v-37H108V99.8c0-32.08 19.11-49.8 48.348-49.8C170.352 50 185 52.5 185 52.5V84h-16.14C152.959 84 148 93.867 148 103.99V128h35.5l-5.675 37H148v89.445c61.192-9.602 108-62.556 108-126.445"/><path fill="#fff" d="m177.825 165l5.675-37H148v-24.01C148 93.866 152.959 84 168.86 84H185V52.5S170.352 50 156.347 50C127.11 50 108 67.72 108 99.8V128H75.5v37H108v89.445A129 129 0 0 0 128 256a129 129 0 0 0 20-1.555V165z"/></svg>
-                Facebook
-              </a>
-              <a class="dropdown-item" href="#" onclick="shareTo('x')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 512 512"><path fill="black" d="M389.2 48h70.6L305.6 224.2L487 464H345L233.7 318.6L106.5 464H35.8l164.9-188.5L26.8 48h145.6l100.5 132.9zm-24.8 373.8h39.1L151.1 88h-42z"/></svg>
-                X.com
-              </a>
-              <a class="dropdown-item" href="#" onclick="shareTo('linkedin')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 256 256"><g fill="none"><rect width="256" height="256" fill="#fff" rx="60"/><rect width="256" height="256" fill="#0a66c2" rx="60"/><path fill="#fff" d="M184.715 217.685h29.27a4 4 0 0 0 4-3.999l.015-61.842c0-32.323-6.965-57.168-44.738-57.168c-14.359-.534-27.9 6.868-35.207 19.228a.32.32 0 0 1-.595-.161V101.66a4 4 0 0 0-4-4h-27.777a4 4 0 0 0-4 4v112.02a4 4 0 0 0 4 4h29.268a4 4 0 0 0 4-4v-55.373c0-15.657 2.97-30.82 22.381-30.82c19.135 0 19.383 17.916 19.383 31.834v54.364a4 4 0 0 0 4 4M38 59.628c0 11.864 9.767 21.626 21.632 21.626c11.862-.001 21.623-9.769 21.623-21.631C81.253 47.761 71.491 38 59.628 38C47.762 38 38 47.763 38 59.627m6.959 158.058h29.307a4 4 0 0 0 4-4V101.66a4 4 0 0 0-4-4H44.959a4 4 0 0 0-4 4v112.025a4 4 0 0 0 4 4"/></g></svg>
-                LinkedIn
-              </a>
-            </div>
-          </div>
-      </div>
-   </div>
-    
-   <script>
-       // Function to copy and share link
-        function copyPageLink() {
-            const pageUrl = window.location.href;
-            navigator.clipboard.writeText(pageUrl).then(() => {
-                alert('Link copied to clipboard!');
-            });
-        }
-        
-        function shareTo(platform) {
-            const pageUrl = encodeURIComponent(window.location.href);
-            let shareUrl = '';
-            switch (platform) {
-                case 'whatsapp':
-                    shareUrl = `https://wa.me/?text=${pageUrl}`;
-                    break;
-                case 'facebook':
-                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
-                    break;
-                case 'x':
-                    shareUrl = `https://twitter.com/intent/tweet?url=${pageUrl}`;
-                    break;
-                case 'linkedin':
-                    shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${pageUrl}`;
-                    break;
-            }
-            window.open(shareUrl, '_blank');
-        }
-        
-        function toggleDropdown() {
-            const dropdownMenu = document.getElementById('dropdownMenu');
-            const buttonRect = document.getElementById('dropdownMenuButton').getBoundingClientRect();
-            const viewportHeight = window.innerHeight;
-        
-            if (buttonRect.bottom + dropdownMenu.offsetHeight > viewportHeight) {
-                dropdownMenu.style.top = `${-dropdownMenu.offsetHeight}px`;
-            } else {
-                dropdownMenu.style.top = `${buttonRect.height}px`;
-            }
-        
-            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-        }
-        
-        // Close the dropdown if the user clicks outside of it
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropdown-toggle')) {
-                const dropdowns = document.getElementsByClassName('dropdown-menu');
-                for (let i = 0; i < dropdowns.length; i++) {
-                    const openDropdown = dropdowns[i];
-                    if (openDropdown.style.display === 'block') {
-                        openDropdown.style.display = 'none';
-                    }
-                }
-            }
-        }
-   </script>
-   
-   <style>
-       /* CSS for dropdowns for tool sharing */
-        .dropdown-menu {
-          display: none;
-          position: absolute;
-          background-color: lightgrey;
-          color: white;
-          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-          border: 1px solid #ddd;
-          z-index: 1000;
-          padding: 10px 5px;
-        
-        }
-        
-        .dropdown-menu .dropdown-item {
-          padding: 10px 5px;
-          cursor: pointer;
-          text-decoration: none;
-          display: block;
-          color: #333;
-        }
-        
-        .dropdown-menu .dropdown-item:hover {
-          background-color: #f8f9fa;
-        }
-        
-        .me-3 {
-          margin-right: 1rem;
-        }
-        
-        /* Ensure dropdown position */
-        .dropdown-menu {
-          top: 100%;
-          bottom: auto;
-        }
-   </style>
-  <hr>
-
-<!-- COMMENTS -->
-<div class="container">
-  <div class="row mt-5">
-    <div class="col-md-12">
-      <h2>Comments</h2>
-      <div id="comments-container">
-        {% include 'includes/comments.html' with all_comments=all_comments %}
-      </div>
-
-      {% if request.user.is_authenticated %}
-      <div class="mt-3">
-        <h5><i>Add a Comment</i></h5>
-        <form id="comment-form">
-          {% csrf_token %}
-          {{ comment_form.as_p }}
-          <button class="btn btn-primary mt-2" type="submit">Submit</button>
-        </form>
-      </div>
-      {% else %}
-      <div class="mt-3">
-        <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-primary">Login to Comment</a>
-      </div>
-      {% endif %}
-    </div>
-  </div>
-
-  <div class="row mt-5">
-    <div class="col-md-12">
-      <h2>Ratings</h2>
-      {% if request.user.is_authenticated %}
-        <p>Click on the star to rate, between 1 - 5.</p>
-        <!-- <p class="text-mute" style="font-size: 12px; color:blue;">Note: <i>You can't rate your own tool.</i>!</p> -->
-      {% endif %}
-      <div class="d-flex align-items-center">
-        <div class="rating-stars">
-          {% for i in "12345"|make_list %}
-          <span class="star {% if user_rating and user_rating >= forloop.counter %}active{% endif %}" data-rating="{{ forloop.counter }}">&#9733;</span>
+                  // Submit the bookmark form
+                  var form = document.getElementById('bookmark-form');
+                  if (form) {
+                      var input = form.querySelector('input[name="bookmark"]');
+                      if (!input) {
+                          input = document.createElement('input');
+                          input.type = 'hidden';
+                          input.name = 'bookmark';
+                          form.appendChild(input);
+                      }
+                      input.value = 'add';
+                      form.submit();
+                  }
+              }
+          });
+          </script>
+          
+        <p class="lead">
+          <span class="font-weight-bold" style="color:#59255F;">TAGS:</span>
+          {% for tag in ai_tool.ai_tags|split_tags %}
+            <a href="/tags/{{ tag|slugify }}" style="font-weight: 400; font-size: 16px; color:;">{{ tag }}</a>{% if not forloop.last %}, {% endif %}
           {% endfor %}
+        </p>
+            
+
+      </div>
+    </div>
+    
+    <!-- QR Code Popup Modal -->
+      <div class="modal fade" id="qrCodeModal" tabindex="-1" role="dialog" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <img src="{% static 'images/app-logo/logo2.png' %}" style="width: 25px; height: auto;" alt="Logo">
+              <h5 class="modal-title" id="qrCodeModalLabel">{{ ai_tool.ai_name }} {QR Code}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-center">
+              <div class="spinner-border text-primary" role="status" style="display: none;">
+                <span class="sr-only">Loading...</span>
+              </div>
+              <div id="qrCodeContent">
+                <!-- QR code content will be inserted here -->
+              </div>
+              <hr>
+              <p class="text-muted" style="font-size: 12px;">Scan this code to access {{ ai_tool.ai_name }}</p>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" style="float: right;">
+                Close QR Code
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20"><path fill="white" d="M2.93 17.07A10 10 0 1 1 17.07 2.93A10 10 0 0 1 2.93 17.07m1.41-1.41A8 8 0 1 0 15.66 4.34A8 8 0 0 0 4.34 15.66m9.9-8.49L11.41 10l2.83 2.83l-1.41 1.41L10 11.41l-2.83 2.83l-1.41-1.41L8.59 10L5.76 7.17l1.41-1.41L10 8.59l2.83-2.83z"/></svg>
+              </button>
+            </div>
+          </div>
         </div>
-        <span class="ml-2" id="rating-info">{{ tool_avg_rating|default_if_none:0|floatformat:1 }} ({{ tool_num_ratings }} rating{% if tool_num_ratings != 1 %}s{% endif %})</span>
       </div>
+    <div class="content py-4">
+        <p class="lead font-weight-bold" style="color:#59255F; font-size: 26px;">DESCRIPTION:</p>
+        {{ ai_tool.ai_short_description|safe }}
+        <p>
+          <br>
+        </p>
+        <div class="d-flex align-items-center">
+            <button onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', null, '{{ ai_tool.ai_tool_link }}')" style="font-size: 13px;" class="btn btn-primary me-3">
+              Preview
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="white" d="M21.773 14.768c-.029.414-.186.81-.45 1.13a1.892 1.892 0 0 1-.998.63l-3.157.521l-.09.09a.381.381 0 0 0-.09.15l-.5 2.902a1.922 1.922 0 0 1-1.778 1.471h-.09c-.374 0-.74-.111-1.05-.32a1.911 1.911 0 0 1-.739-.92l-2.787-7.906a1.904 1.904 0 0 1 .45-2.001c.253-.263.58-.44.939-.51a1.866 1.866 0 0 1 1.069.07l7.992 2.781c.404.135.754.394 1 .74c.215.351.313.761.28 1.172"/><path fill="white" d="M9.305 22.243a.834.834 0 0 1-.22 0a10.469 10.469 0 0 1-4.5-2.83a10.491 10.491 0 0 1-2.448-10A10.49 10.49 0 0 1 4.82 4.819a10.467 10.467 0 0 1 9.902-2.765a10.466 10.466 0 0 1 4.669 2.54a10.49 10.49 0 0 1 2.822 4.51a.743.743 0 0 1-1.059.886a.76.76 0 0 1-.37-.436a9.008 9.008 0 0 0-2.41-3.894a8.988 8.988 0 0 0-8.585-2.143a8.989 8.989 0 0 0-3.953 2.306a9.01 9.01 0 0 0-2.377 8.536a8.99 8.99 0 0 0 6.075 6.443a.77.77 0 0 1 .49 1a.75.75 0 0 1-.72.44"/></svg>
+            </button>
+            <button onclick="copyPageLink()" class="btn btn-outline-secondary me-3" style="font-size: 13px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256"><path fill="blue" d="M216 32H88a8 8 0 0 0-8 8v40H40a8 8 0 0 0-8 8v128a8 8 0 0 0 8 8h128a8 8 0 0 0 8-8v-40h40a8 8 0 0 0 8-8V40a8 8 0 0 0-8-8m-8 128h-32V88a8 8 0 0 0-8-8H96V48h112Z"/></svg>
+              Copy Link
+            </button>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" style="font-size: 13px;" type="button" id="dropdownMenuButton" onclick="toggleDropdown()">
+                Share
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="white" d="m13.576 17.271l-5.11-2.787a3.5 3.5 0 1 1 0-4.968l5.11-2.787a3.5 3.5 0 1 1 .958 1.755l-5.11 2.787a3.5 3.5 0 0 1 0 1.457l5.11 2.788a3.5 3.5 0 1 1-.958 1.755"/></svg>
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a class="dropdown-item" href="#" onclick="shareTo('whatsapp')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18.86" height="19" viewBox="0 0 256 258"><defs><linearGradient id="logosWhatsappIcon0" x1="50%" x2="50%" y1="100%" y2="0%"><stop offset="0%" stop-color="#1faf38"/><stop offset="100%" stop-color="#60d669"/></linearGradient><linearGradient id="logosWhatsappIcon1" x1="50%" x2="50%" y1="100%" y2="0%"><stop offset="0%" stop-color="#f9f9f9"/><stop offset="100%" stop-color="#fff"/></linearGradient></defs><path fill="url(#logosWhatsappIcon0)" d="M5.463 127.456c-.006 21.677 5.658 42.843 16.428 61.499L4.433 252.697l65.232-17.104a123 123 0 0 0 58.8 14.97h.054c67.815 0 123.018-55.183 123.047-123.01c.013-32.867-12.775-63.773-36.009-87.025c-23.23-23.25-54.125-36.061-87.043-36.076c-67.823 0-123.022 55.18-123.05 123.004"/><path fill="url(#logosWhatsappIcon1)" d="M1.07 127.416c-.007 22.457 5.86 44.38 17.014 63.704L0 257.147l67.571-17.717c18.618 10.151 39.58 15.503 60.91 15.511h.055c70.248 0 127.434-57.168 127.464-127.423c.012-34.048-13.236-66.065-37.3-90.15C194.633 13.286 162.633.014 128.536 0C58.276 0 1.099 57.16 1.071 127.416m40.24 60.376l-2.523-4.005c-10.606-16.864-16.204-36.352-16.196-56.363C22.614 69.029 70.138 21.52 128.576 21.52c28.3.012 54.896 11.044 74.9 31.06c20.003 20.018 31.01 46.628 31.003 74.93c-.026 58.395-47.551 105.91-105.943 105.91h-.042c-19.013-.01-37.66-5.116-53.922-14.765l-3.87-2.295l-40.098 10.513z"/><path fill="#fff" d="M96.678 74.148c-2.386-5.303-4.897-5.41-7.166-5.503c-1.858-.08-3.982-.074-6.104-.074c-2.124 0-5.575.799-8.492 3.984c-2.92 3.188-11.148 10.892-11.148 26.561s11.413 30.813 13.004 32.94c1.593 2.123 22.033 35.307 54.405 48.073c26.904 10.609 32.379 8.499 38.218 7.967c5.84-.53 18.844-7.702 21.497-15.139c2.655-7.436 2.655-13.81 1.859-15.142c-.796-1.327-2.92-2.124-6.105-3.716s-18.844-9.298-21.763-10.361c-2.92-1.062-5.043-1.592-7.167 1.597c-2.124 3.184-8.223 10.356-10.082 12.48c-1.857 2.129-3.716 2.394-6.9.801c-3.187-1.598-13.444-4.957-25.613-15.806c-9.468-8.442-15.86-18.867-17.718-22.056c-1.858-3.184-.199-4.91 1.398-6.497c1.431-1.427 3.186-3.719 4.78-5.578c1.588-1.86 2.118-3.187 3.18-5.311c1.063-2.126.531-3.986-.264-5.579c-.798-1.593-6.987-17.343-9.819-23.64"/></svg>
+                  WhatsApp
+                </a>
+                <a class="dropdown-item" href="#" onclick="shareTo('facebook')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 256 256"><path fill="#1877f2" d="M256 128C256 57.308 198.692 0 128 0S0 57.308 0 128c0 63.888 46.808 116.843 108 126.445V165H75.5v-37H108V99.8c0-32.08 19.11-49.8 48.348-49.8C170.352 50 185 52.5 185 52.5V84h-16.14C152.959 84 148 93.867 148 103.99V128h35.5l-5.675 37H148v89.445c61.192-9.602 108-62.556 108-126.445"/><path fill="#fff" d="m177.825 165l5.675-37H148v-24.01C148 93.866 152.959 84 168.86 84H185V52.5S170.352 50 156.347 50C127.11 50 108 67.72 108 99.8V128H75.5v37H108v89.445A129 129 0 0 0 128 256a129 129 0 0 0 20-1.555V165z"/></svg>
+                  Facebook
+                </a>
+                <a class="dropdown-item" href="#" onclick="shareTo('x')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 512 512"><path fill="black" d="M389.2 48h70.6L305.6 224.2L487 464H345L233.7 318.6L106.5 464H35.8l164.9-188.5L26.8 48h145.6l100.5 132.9zm-24.8 373.8h39.1L151.1 88h-42z"/></svg>
+                  X.com
+                </a>
+                <a class="dropdown-item" href="#" onclick="shareTo('linkedin')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 256 256"><g fill="none"><rect width="256" height="256" fill="#fff" rx="60"/><rect width="256" height="256" fill="#0a66c2" rx="60"/><path fill="#fff" d="M184.715 217.685h29.27a4 4 0 0 0 4-3.999l.015-61.842c0-32.323-6.965-57.168-44.738-57.168c-14.359-.534-27.9 6.868-35.207 19.228a.32.32 0 0 1-.595-.161V101.66a4 4 0 0 0-4-4h-27.777a4 4 0 0 0-4 4v112.02a4 4 0 0 0 4 4h29.268a4 4 0 0 0 4-4v-55.373c0-15.657 2.97-30.82 22.381-30.82c19.135 0 19.383 17.916 19.383 31.834v54.364a4 4 0 0 0 4 4M38 59.628c0 11.864 9.767 21.626 21.632 21.626c11.862-.001 21.623-9.769 21.623-21.631C81.253 47.761 71.491 38 59.628 38C47.762 38 38 47.763 38 59.627m6.959 158.058h29.307a4 4 0 0 0 4-4V101.66a4 4 0 0 0-4-4H44.959a4 4 0 0 0-4 4v112.025a4 4 0 0 0 4 4"/></g></svg>
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+        </div>
+    </div>
+      
+    <script>
+        // Function to copy and share link
+          function copyPageLink() {
+              const pageUrl = window.location.href;
+              navigator.clipboard.writeText(pageUrl).then(() => {
+                  alert('Link copied to clipboard!');
+              });
+          }
+          
+          function shareTo(platform) {
+              const pageUrl = encodeURIComponent(window.location.href);
+              let shareUrl = '';
+              switch (platform) {
+                  case 'whatsapp':
+                      shareUrl = `https://wa.me/?text=${pageUrl}`;
+                      break;
+                  case 'facebook':
+                      shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+                      break;
+                  case 'x':
+                      shareUrl = `https://twitter.com/intent/tweet?url=${pageUrl}`;
+                      break;
+                  case 'linkedin':
+                      shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${pageUrl}`;
+                      break;
+              }
+              window.open(shareUrl, '_blank');
+          }
+          
+          function toggleDropdown() {
+              const dropdownMenu = document.getElementById('dropdownMenu');
+              const buttonRect = document.getElementById('dropdownMenuButton').getBoundingClientRect();
+              const viewportHeight = window.innerHeight;
+          
+              if (buttonRect.bottom + dropdownMenu.offsetHeight > viewportHeight) {
+                  dropdownMenu.style.top = `${-dropdownMenu.offsetHeight}px`;
+              } else {
+                  dropdownMenu.style.top = `${buttonRect.height}px`;
+              }
+          
+              dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+          }
+          
+          // Close the dropdown if the user clicks outside of it
+          window.onclick = function(event) {
+              if (!event.target.matches('.dropdown-toggle')) {
+                  const dropdowns = document.getElementsByClassName('dropdown-menu');
+                  for (let i = 0; i < dropdowns.length; i++) {
+                      const openDropdown = dropdowns[i];
+                      if (openDropdown.style.display === 'block') {
+                          openDropdown.style.display = 'none';
+                      }
+                  }
+              }
+          }
+    </script>
+    
+    <style>
+        /* CSS for dropdowns for tool sharing */
+          .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: lightgrey;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+            z-index: 1000;
+            padding: 10px 5px;
+          
+          }
+          
+          .dropdown-menu .dropdown-item {
+            padding: 10px 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            color: #333;
+          }
+          
+          .dropdown-menu .dropdown-item:hover {
+            background-color: #f8f9fa;
+          }
+          
+          .me-3 {
+            margin-right: 1rem;
+          }
+          
+          /* Ensure dropdown position */
+          .dropdown-menu {
+            top: 100%;
+            bottom: auto;
+          }
+    </style>
+    <hr>
 
-      {% if request.user.is_authenticated %}
-      {% else %}
-      <div class="mt-3">
-        <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-primary">Login to Rate</a>
+  <!-- ai_body.html -->
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <h2>Comments</h2>
+        <div id="comments-container">
+          {% include 'includes/comments.html' with all_comments=all_comments %}
+        </div>
+
+        {% if request.user.is_authenticated %}
+        <div class="mt-3">
+          <h5><i>Add a Comment</i></h5>
+          <form id="comment-form">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button class="btn btn-primary mt-2" type="submit">Submit</button>
+          </form>
+        </div>
+        {% else %}
+        <div class="mt-3">
+          <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-primary">Login to Comment</a>
+        </div>
+        {% endif %}
       </div>
-      {% endif %}
     </div>
-  </div>
-</div>
 
-<script>
-  /// Add comment functionality
-document.getElementById('comment-form').addEventListener('submit', function(event) {
-  event.preventDefault();
-  var formData = new FormData(this);
-  fetch('{% url "add_comment" ai_tool.slug %}', {
-    method: 'POST',
-    headers: {
-      'X-CSRFToken': '{{ csrf_token }}'
-    },
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      this.reset();
-      addNewComment(data.comment);
-    } else {
-      alert(data.message);
-    }
-  })
-  .catch(error => console.error('Error:', error));
-});
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <h2>Ratings</h2>
+        {% if request.user.is_authenticated %}
+          <p>Click on the star to rate, between 1 - 5.</p>
+          <!-- <p class="text-mute" style="font-size: 12px; color:blue;">Note: <i>You can't rate your own tool.</i>!</p> -->
+        {% endif %}
+        <div class="d-flex align-items-center">
+          <div class="rating-stars">
+            {% for i in "12345"|make_list %}
+            <span class="star {% if user_rating and user_rating >= forloop.counter %}active{% endif %}" data-rating="{{ forloop.counter }}">&#9733;</span>
+            {% endfor %}
+          </div>
+          <span class="ml-2" id="rating-info">{{ tool_avg_rating|default_if_none:0|floatformat:1 }} ({{ tool_num_ratings }} rating{% if tool_num_ratings != 1 %}s{% endif %})</span>
+        </div>
 
-function addNewComment(comment) {
-  const commentsContainer = document.getElementById('comments-container');
-  const newCommentHTML = `
-    <div class="comment" id="comment-${comment.id}">
-      <p>${comment.text}</p>
-      <small>Posted by ${comment.user} on ${comment.created_at}</small>
-      <a href="#" class="edit-comment" data-comment-id="${comment.id}">Edit</a>
-      <a href="#" class="delete-comment" data-comment-id="${comment.id}">Delete</a>
+        {% if request.user.is_authenticated %}
+        {% else %}
+        <div class="mt-3">
+          <a href="{% url 'account_login' %}?next={{ request.path }}" class="btn btn-primary">Login to Rate</a>
+        </div>
+        {% endif %}
+      </div>
     </div>
-  `;
-  commentsContainer.insertAdjacentHTML('afterbegin', newCommentHTML);
-  addCommentActions(document.getElementById(`comment-${comment.id}`));
-}
 
-function addCommentActions(container = document) {
-
-  container.querySelectorAll('.delete-comment').forEach(link => {
-    link.addEventListener('click', function(event) {
-      event.preventDefault();
-      var commentId = this.dataset.commentId;
-      if (confirm('Are you sure you want to delete this comment?')) {
-        deleteComment(commentId);
+    <script>
+      // Add comment functionality
+      document.getElementById('comment-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        fetch('{% url "add_comment" ai_tool.slug %}', {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+          },
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            this.reset();
+            refreshComments();
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      });
+    
+      function refreshComments() {
+        fetch('{% url "get_comments" ai_tool.slug %}')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('comments-container').innerHTML = data.html;
+          addCommentActions();
+        })
+        .catch(error => console.error('Error:', error));
       }
-    });
-  });
-}
+    
+      function addCommentActions() {
+        document.querySelectorAll('.edit-comment').forEach(link => {
+          link.addEventListener('click', function(event) {
+            event.preventDefault();
+            var commentId = this.dataset.commentId;
+            editComment(commentId);
+          });
+        });
+    
+        document.querySelectorAll('.delete-comment').forEach(link => {
+          link.addEventListener('click', function(event) {
+            event.preventDefault();
+            var commentId = this.dataset.commentId;
+            if (confirm('Are you sure you want to delete this comment?')) {
+              deleteComment(commentId);
+            }
+          });
+        });
+      }
+    
+      function editComment(commentId) {
+        fetch(`{% url "edit_comment" ai_tool.slug 0 %}`.replace('0', commentId), {
+          method: 'GET',
+        })
+        .then(response => response.json())
+        .then(data => {
+          var commentForm = document.getElementById('comment-form');
+          commentForm.querySelector('textarea').value = data.comment;
+          commentForm.dataset.commentId = data.id;
+          commentForm.querySelector('button[type="submit"]').textContent = 'Update Comment';
+          commentForm.onsubmit = function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch(`{% url "edit_comment" ai_tool.slug 0 %}`.replace('0', data.id), {
+              method: 'POST',
+              headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+              },
+              body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                refreshComments();
+                this.reset();
+                this.querySelector('button[type="submit"]').textContent = 'Submit';
+                this.onsubmit = null;
+              } else {
+                alert(data.message);
+              }
+            })
+            .catch(error => console.error('Error:', error));
+          };
+        })
+        .catch(error => console.error('Error:', error));
+      }
+      
+      function deleteComment(commentId) {
+        fetch(`{% url "delete_comment" ai_tool.slug 0 %}`.replace('0', commentId), {
+          method: 'DELETE',
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            refreshComments();
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      }
+    
+    // Add rating functionality
+    document.querySelectorAll('.rating-stars .star').forEach(star => {
+      star.addEventListener('click', function(event) {
+        var rating = this.dataset.rating;
+        submitRating(rating);
+      });
+    
+      // Add hover effect
+      star.addEventListener('mouseover', function(event) {
+        const rating = this.dataset.rating;
+        updateStarsDisplay(rating);
+      });
+    
+      // Remove hover effect if not clicked
+      star.addEventListener('mouseout', function(event) {
+        const currentRating = document.querySelector('.rating-stars').dataset.userRating || 0;
+        updateStarsDisplay(currentRating);
+        });
+      });
+    
+      function submitRating(rating) {
+        fetch('{% url "add_rating" ai_tool.slug %}', {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ rating: rating })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            updateRatingDisplay(data);
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      }
+    
+      function updateRatingDisplay(data) {
+        updateStarsDisplay(data.user_rating);
+        document.querySelector('.rating-stars').dataset.userRating = data.user_rating;
+        document.getElementById('rating-info').textContent = `${data.avg_rating.toFixed(1)} (${data.num_ratings} rating${data.num_ratings !== 1 ? 's' : ''})`;
+      }
+    
+      function updateStarsDisplay(rating) {
+        const stars = document.querySelectorAll('.rating-stars .star');
+        stars.forEach((star, index) => {
+          if (index < rating) {
+            star.classList.add('active');
+          } else {
+            star.classList.remove('active');
+          }
+        });
+      }
+    
+        addCommentActions();
+    </script>
+    
+    <style>
+      .rating-stars {
+        font-size: 2.4rem; /* This makes the stars 3 times bigger. Adjust as needed */
+        line-height: 1;
+      }
+      .rating-stars .star {
+        color: #007bff; /* Blue color for unrated stars */
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+      .rating-stars .star.active {
+        color: #dc3545; /* Red color for rated stars */
+      }
+    </style>
+  </div>
 
-function deleteComment(commentId) {
-  fetch(`{% url "delete_comment" ai_tool.slug 0 %}`.replace('0', commentId), {
-    method: 'DELETE',
-    headers: {
-      'X-CSRFToken': '{{ csrf_token }}'
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      document.getElementById(`comment-${commentId}`).remove();
-    } else {
-      alert(data.message);
-    }
-  })
-  .catch(error => console.error('Error:', error));
-}
-
-
-// Add rating functionality
-document.querySelectorAll('.rating-stars .star').forEach(star => {
-  star.addEventListener('click', function(event) {
-    var rating = this.dataset.rating;
-    submitRating(rating);
-  });
-
-  // Add hover effect
-  star.addEventListener('mouseover', function(event) {
-    const rating = this.dataset.rating;
-    updateStarsDisplay(rating);
-  });
-
-  // Remove hover effect if not clicked
-  star.addEventListener('mouseout', function(event) {
-    const currentRating = document.querySelector('.rating-stars').dataset.userRating || 0;
-    updateStarsDisplay(currentRating);
-  });
-});
-
-function submitRating(rating) {
-  fetch('{% url "add_rating" ai_tool.slug %}', {
-    method: 'POST',
-    headers: {
-      'X-CSRFToken': '{{ csrf_token }}',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ rating: rating })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      updateRatingDisplay(data);
-    } else {
-      alert(data.message);
-    }
-  })
-  .catch(error => console.error('Error:', error));
-}
-
-function updateRatingDisplay(data) {
-  updateStarsDisplay(data.user_rating);
-  document.querySelector('.rating-stars').dataset.userRating = data.user_rating;
-  document.getElementById('rating-info').textContent = `${data.avg_rating.toFixed(1)} (${data.num_ratings} rating${data.num_ratings !== 1 ? 's' : ''})`;
-}
-
-function updateStarsDisplay(rating) {
-  const stars = document.querySelectorAll('.rating-stars .star');
-  stars.forEach((star, index) => {
-    if (index < rating) {
-      star.classList.add('active');
-    } else {
-      star.classList.remove('active');
-    }
-  });
-}
-
-addCommentActions();
-
-</script>
-
-<style>
-  .rating-stars {
-    font-size: 2.4rem; /* This makes the stars 3 times bigger. Adjust as needed */
-    line-height: 1;
-  }
-  .rating-stars .star {
-    color: #007bff; /* Blue color for unrated stars */
-    cursor: pointer;
-    transition: color 0.2s ease;
-  }
-  .rating-stars .star.active {
-    color: #dc3545; /* Red color for rated stars */
-  }
-</style>
   <br>
   <br>
   <br>
