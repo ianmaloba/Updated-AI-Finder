@@ -8,8 +8,6 @@
 
 {% block content %}
 
-<div class="custom-background">
-
     <br>
     <div class="container">
         <p class="auto-typed-text"><span class="auto-type"></span></p>
@@ -654,23 +652,20 @@
     
         </div>
     </div>
-</div>
 
-<style>
-    .custom-background {
-        background-size: cover; 
-        background-repeat: no-repeat;
-        height: 100%;
-        width: 100%;
-        z-index: 1;
-        background-color: #E4F6F8;
-    }
-    h5 {
-        font-weight: bold;
-    }
-</style>
-
-<div style="background-color: #E4F6F8;">
+    <style>
+        .custom-background {
+            background-size: cover; 
+            background-repeat: no-repeat;
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+            background-color: #E4F6F8;
+        }
+        h5 {
+            font-weight: bold;
+        }
+    </style>
 
     <section class="wrapper">
         <div class="container-fostrap">
@@ -681,7 +676,7 @@
             </div>
             <div class="content">
                 <div class="container">
-                    <div class="row">
+                    <div id="tools-list" class="row">
                         {% for tool in page_obj %}
                         <div class="col-xs-12 col-sm-4">
                             <div class="card">
@@ -744,77 +739,97 @@
   
                     <br>
                     <br>
-                        <!-- Pagination -->
-                        <div class="pagination-container">
-                            {% if page_obj.has_other_pages %}
-                            <nav>
-                                <ul class="pagination">
-                                    {% if page_obj.has_previous %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}#all-tools" aria-label="Previous">
-                                                <span aria-hidden="true">PREV</span>
-                                            </a>
+                    <!-- Pagination -->
+                    <div class="pagination-container" style="font-weight: bold;">
+                        {% if page_obj.has_other_pages %}
+                        <nav>
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}#all-tools" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo; PREV</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% for num in elided_page_range %}
+                                    {% if num == page_obj.paginator.ELLIPSIS %}
+                                        <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
+                                    {% elif num %}
+                                        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                            <a class="page-link" href="?page={{ num }}#all-tools">{{ num }}</a>
                                         </li>
                                     {% endif %}
-                                    {% for num in elided_page_range %}
-                                        {% if num == page_obj.paginator.ELLIPSIS %}
-                                            <li class="page-item disabled"><span class="page-link">Ã¢â‚¬Â¦</span></li>
-                                        {% elif num %}
-                                            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                                                <a class="page-link" href="?page={{ num }}#all-tools">{{ num }}</a>
-                                            </li>
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% if page_obj.has_next %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page={{ page_obj.next_page_number }}#all-tools" aria-label="Next">
-                                                <span aria-hidden="true">NEXT</span>
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </nav>
-                            {% endif %}
-                        </div>                                              
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}#all-tools" aria-label="Next">
+                                            <span aria-hidden="true">NEXT &raquo;</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        {% endif %}
+
+                    <!-- Ensure to include jQuery if not already loaded -->
+                    <script src="{% static 'js/jquery.min.js' %}"></script>
+                    <script>
+                        $(document).ready(function() {
+                            $('.pagination').on('click', 'a', function(e) {
+                                e.preventDefault();
+                                
+                                var url = $(this).attr('href');
+                                
+                                $.ajax({
+                                    url: url,
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        $('#tools-container').html(data.html);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('AJAX error:', status, error);
+                                    }
+                                });
+                            });
+                        });
+                    </script>                                       
+                                             
                 </div>
             </div>
         </div>
     </section>
     
     
-<!-- Form to jump to a specific page -->
-<div class="container" style="text-align: left;"> <!-- Ensures the form is aligned to the left -->
-    <p><i>OR GO TO A SPECIFIC PAGE</i></p>
-    <div class="jump-to-page">
-        <form id="jump-to-page-form" method="GET" action="" class="d-flex flex-row align-items-center" data-max-pages="{{ page_obj.paginator.num_pages }}" style="gap: 10px; flex-wrap: nowrap;">
-            <div class="form-group" style="margin-bottom: 0;">
-                <input class="form-control" type="number" id="page-number-input" name="page" min="1" max="{{ page_obj.paginator.num_pages }}" value="{{ request.GET.page }}" placeholder="Enter number between 1 and {{ page_obj.paginator.num_pages }}" required style="width: 300px; border: 1px solid #ced4da; border-radius: .25rem;">
-            </div>
-            <div class="form-group" style="margin-bottom: 0;">
-                <button type="submit" class="btn btn-primary" style="height:30px; text-align: center; width:40px;" style="white-space: nowrap;">Go</button>
-            </div>
-        </form>
+    <!-- Form to jump to a specific page -->
+    <div class="container" style="text-align: left;"> <!-- Ensures the form is aligned to the left -->
+        <p><i>OR GO TO A SPECIFIC PAGE</i></p>
+        <div class="jump-to-page">
+            <form id="jump-to-page-form" method="GET" action="" class="d-flex flex-row align-items-center" data-max-pages="{{ page_obj.paginator.num_pages }}" style="gap: 10px; flex-wrap: nowrap;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <input class="form-control" type="number" id="page-number-input" name="page" min="1" max="{{ page_obj.paginator.num_pages }}" value="{{ request.GET.page }}" placeholder="Enter number between 1 and {{ page_obj.paginator.num_pages }}" required style="width: 300px; border: 1px solid #ced4da; border-radius: .25rem;">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <button type="submit" class="btn btn-primary" style="height:30px; text-align: center; width:40px;" style="white-space: nowrap;">Go</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<!-- Add this inline CSS inside your HTML head or style block -->
-<style>
-    /* Media query to reduce input size on smaller screens */
-    @media (max-width: 768px) {
-        #page-number-input {
-            width: 200px; /* Reduce input width on smaller screens */
+    <!-- Add this inline CSS inside your HTML head or style block -->
+    <style>
+        /* Media query to reduce input size on smaller screens */
+        @media (max-width: 768px) {
+            #page-number-input {
+                width: 200px; /* Reduce input width on smaller screens */
+            }
         }
-    }
 
-    @media (max-width: 576px) {
-        #page-number-input {
-            width: 150px; /* Further reduce input width on very small screens */
-        }
-    }  
-</style>
-
-
-</div>
-
+        @media (max-width: 576px) {
+            #page-number-input {
+                width: 150px; /* Further reduce input width on very small screens */
+            }
+        }  
+    </style>
         
 {% endblock %}

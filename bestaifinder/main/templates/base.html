@@ -150,6 +150,75 @@
         }
       }      
     </style>
+
+    <script>
+      function setColor(choice) {
+          // Save color preference to localStorage
+          localStorage.setItem('colorPreference', choice);
+          
+          // Apply color immediately
+          applyColor(choice);
+      }
+
+      function applyColor(choice) {
+          var body = document.body;
+          var contentDiv = document.getElementById("container");
+
+          if (choice === 'black') {
+              body.style.backgroundColor = '#000';
+              body.style.color = '#FFF';
+          } else if (choice === 'white') {
+              body.style.backgroundColor = '#FFF';
+              body.style.color = '#000';
+          } else {
+              body.style.backgroundColor = '#E4F6F8';
+              body.style.color = '#000';
+          }
+
+          // Apply styles to specific elements or classes
+          var cards = document.querySelectorAll('.cad');
+          cards.forEach(function(card) {
+              if (choice === 'black') {
+                  card.style.backgroundColor = '#333';
+                  card.style.color = '#FFF';
+              } else {
+                  card.style.backgroundColor = '';
+                  card.style.color = '';
+              }
+          });
+
+          // Add more selectors here for other elements you want to style differently
+      }
+
+      // Check if there's a saved color preference and apply it if the page just loaded
+      document.addEventListener('DOMContentLoaded', function() {
+          const savedColor = localStorage.getItem('colorPreference');
+          if (savedColor && performance.navigation.type === performance.navigation.TYPE_NAVIGATE) {
+              applyColor(savedColor);
+          }
+      });
+
+      // Reapply color when navigating back to the page
+      window.addEventListener('pageshow', function(event) {
+          if (event.persisted) {
+              const savedColor = localStorage.getItem('colorPreference');
+              if (savedColor) {
+                  applyColor(savedColor);
+              }
+          }
+      });
+  </script>
+
+  <style>
+    body {
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .color-icon {
+        cursor: pointer;
+        margin-right: 10px;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -312,7 +381,7 @@
     </div>
   </nav>
 
-  <div style="background-color: #E4F6F8;" id="content-div">
+  <div style="background-color: #E4F6F8;" id="content-di">
     <!-- Icons for changing background color -->
         <span style="cursor: pointer; margin-right: 10px;" onclick="setColor('default')" id="default-icon">✊ Default</span>
         <span style="cursor: pointer; margin-right: 10px;" onclick="setColor('white')" id="white-icon">⚪ White</span>
@@ -391,49 +460,7 @@
         </a>
       </div>
       <br>
-    <script>
-      // Function to set background color and save choice in localStorage
-      function setColor(choice) {
-          var contentDiv = document.getElementById("content-div");
-          var textColor = "";  // Text color based on background color
-  
-          if (choice === 'black') {
-              contentDiv.style.backgroundColor = '#000';
-              contentDiv.style.color = '#FFF';
-              textColor = '#FFF';  // White text for black background
-          } else if (choice === 'white') {
-              contentDiv.style.backgroundColor = '#FFF';
-              contentDiv.style.color = '#000';
-              textColor = '#000';  // Black text for white background
-          } else {
-              contentDiv.style.backgroundColor = '#E4F6F8';
-              contentDiv.style.color = '#000';  // Default text color
-              textColor = '#000';
-          }
-  
-          // Save user's choice in localStorage
-          localStorage.setItem('backgroundColor', contentDiv.style.backgroundColor);
-          localStorage.setItem('textColor', textColor);
-      }
-  
-      // Function to apply the saved color choice on page load
-      function applySavedColor() {
-          var savedBackgroundColor = localStorage.getItem('backgroundColor');
-          var savedTextColor = localStorage.getItem('textColor');
-          var contentDiv = document.getElementById("content-div");
-  
-          if (savedBackgroundColor) {
-              contentDiv.style.backgroundColor = savedBackgroundColor;
-          }
-          if (savedTextColor) {
-              contentDiv.style.color = savedTextColor;
-          }
-      }
-  
-      // Apply the saved color choice when the page loads
-      window.onload = applySavedColor;
-  </script>
-  
+    
   </div>
     <footer class="bg-dark text-light py-6">
       <div class="container">
@@ -504,7 +531,7 @@
           <br>
           <br>
       </div>
-  </footer>
+    </footer>
   
           
     <!-- Back to top button -->

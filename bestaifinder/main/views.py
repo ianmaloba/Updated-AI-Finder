@@ -40,33 +40,33 @@ def custom_elided_page_range(current_page, total_pages, on_each_side=2, on_ends=
 def parse_tags(tag_string):
     return [tag.strip() for tag in tag_string.split(',') if tag.strip() and tag.strip() != "#"]
 
-from django.template.defaultfilters import register
-from .templatetags.custom_filters import obfuscate_url
 
-# @cache_page(60 * 15)  # Cache the entire view for 15 minutes
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+
 def index(request):
     search_query = request.GET.get('search', '').strip()
-    
+
     # Use select_related to fetch related fields in a single query
     tools_queryset = AITool.objects.select_related('user').prefetch_related(
         Prefetch('ratings', queryset=ToolRating.objects.only('rating'))
     )
-    
+
     if search_query:
         tools = tools_queryset.annotate(
             search_rank=SearchRank(F('search_vector'), search_query)
         ).filter(search_rank__gte=0.1).order_by('-search_rank', '-id')
     else:
         tools = tools_queryset.order_by(F('is_featured').desc(), '-featured_order', '-id')
-    
+
     # Paginate results
     paginator = Paginator(tools, per_page=9)
-    page_number = int(request.GET.get('page', 1))
+    page_number = request.GET.get('page', '1')
     page_obj = paginator.get_page(page_number)
-    
+
     # Use custom elided page range
     elided_page_range = custom_elided_page_range(page_obj.number, paginator.num_pages)
-    
+
     # Cache random tools
     cache_key = f'randomtools_{page_number}'
     randomtools = cache.get(cache_key)
@@ -75,7 +75,7 @@ def index(request):
         sample_size = min(len(all_tools), 9)
         randomtools = random.sample(all_tools, sample_size)
         cache.set(cache_key, randomtools, timeout=300)
-    
+
     # Cache unique tags
     unique_tags = cache.get('unique_tags')
     if not unique_tags:
@@ -84,13 +84,13 @@ def index(request):
         for tags in all_tags:
             unique_tags.update(parse_tags(tags))
         cache.set('unique_tags', unique_tags, timeout=3600)  # Cache for 1 hour
-    
+
     # Cache categories and counts
     categories = cache.get('categories')
     if not categories:
         categories = Category.objects.annotate(tool_count=Count('name')).order_by('-tool_count')[:16]
         cache.set('categories', categories, timeout=3600)
-    
+
     # Cache popular tags
     popular_tags = cache.get('popular_tags')
     if not popular_tags:
@@ -100,7 +100,12 @@ def index(request):
                 tag_counts[tag] = tag_counts.get(tag, 0) + 1
         popular_tags = sorted(tag_counts.items(), key=lambda x: x[1], reverse=True)[:35]
         cache.set('popular_tags', popular_tags, timeout=3600)
-    
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        # Render only the paginated part
+        html = render_to_string('partials/tools_list.html', {'page_obj': page_obj})
+        return JsonResponse({'html': html})
+
     context = {
         "randomtools": randomtools,
         "page_obj": page_obj,
@@ -109,9 +114,9 @@ def index(request):
         "categories": categories,
         'all_ai_tools_count': tools.count(),
         "popular_tags": popular_tags,
-        'obfuscate_url': obfuscate_url,
     }
     return render(request, 'index.html', context)
+    
 
 from django.shortcuts import redirect
 from django.contrib import messages
