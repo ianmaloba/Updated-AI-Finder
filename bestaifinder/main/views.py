@@ -40,7 +40,34 @@ def custom_elided_page_range(current_page, total_pages, on_each_side=2, on_ends=
 def parse_tags(tag_string):
     return [tag.strip() for tag in tag_string.split(',') if tag.strip() and tag.strip() != "#"]
 
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+from django.views.decorators.http import require_GET
+from django.core.paginator import Paginator
 
+@require_GET
+def fast_pagination(request):
+    page_number = request.GET.get('page', '1')
+    
+    # Fetch only the necessary data for pagination
+    tools_queryset = AITool.objects.only('id', 'ai_name', 'ai_short_description', 'ai_pricing_tag', 'ai_tags', 'slug').order_by(F('is_featured').desc(), '-featured_order', '-id')
+    
+    paginator = Paginator(tools_queryset, per_page=9)
+    page_obj = paginator.get_page(page_number)
+    
+    elided_page_range = custom_elided_page_range(page_obj.number, paginator.num_pages)
+    
+    tools_html = render_to_string('partials/tools_list.html', {'page_obj': page_obj})
+    pagination_html = render_to_string('partials/pagination.html', {
+        'page_obj': page_obj,
+        'elided_page_range': elided_page_range
+    })
+    
+    return JsonResponse({
+        'tools_html': tools_html,
+        'pagination_html': pagination_html
+    })
+    
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
@@ -102,9 +129,7 @@ def index(request):
         cache.set('popular_tags', popular_tags, timeout=3600)
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        # Render only the paginated part
-        html = render_to_string('partials/tools_list.html', {'page_obj': page_obj})
-        return JsonResponse({'html': html})
+        return fast_pagination(request)
 
     context = {
         "randomtools": randomtools,

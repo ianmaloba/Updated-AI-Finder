@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('fast-pagination/', views.fast_pagination, name='fast_pagination'),
     path('ai-tool/<slug:slug>/', views.ai_body, name='ai_body'),
     path('search/', views.search_results, name='search_results'),
     path('about/', views.about, name='about'),

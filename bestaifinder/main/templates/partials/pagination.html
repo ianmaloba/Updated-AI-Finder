@@ -1,0 +1,33 @@
+{% load custom_filters %}
+<!-- Include pagination controls -->
+<div class="pagination-container" style="font-weight: bold;">
+    {% if page_obj.has_other_pages %}
+    <nav>
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}#all-tools" aria-label="Previous">
+                        <span aria-hidden="true">&laquo; PREV</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% for num in elided_page_range %}
+                {% if num == page_obj.paginator.ELLIPSIS %}
+                    <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
+                {% elif num %}
+                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}#all-tools">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}#all-tools" aria-label="Next">
+                        <span aria-hidden="true">NEXT &raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>

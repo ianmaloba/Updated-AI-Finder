@@ -1,12 +1,14 @@
+{% load custom_filters %}
+
 <div id="tools-list" class="row">
     {% for tool in page_obj %}
     <div class="col-xs-12 col-sm-4">
         <div class="card">
             <a class="img-card" href="{% url 'ai_body' slug=tool.slug %}">
                 {% if tool.ai_image %}
-                    <img src="{{ tool.ai_image.url }}" alt="{{ tool.ai_name }}" />
+                    <img data-src="{{ tool.ai_image.url }}" alt="{{ tool.ai_name }}" />
                 {% else %}
-                    <img src="/media/images/default.jpg" alt="{{ tool.ai_name }}" />
+                    <img data-src="/media/images/default.jpg" alt="{{ tool.ai_name }}" />
                 {% endif %}
             </a>
             <div class="card-content">
@@ -14,13 +16,13 @@
                     <a href="{% url 'ai_body' slug=tool.slug %}">
                         {% if tool.ai_tool_logo %}
                             <img 
-                                src="{{ tool.ai_tool_logo.url }}" 
-                                alt="{{ tool.ai_name }} Logo" 
+                                data-src="{{ tool.ai_tool_logo.url }}" 
+                                alt="" 
                                 class="logo-img {% if tool.needs_black_bg %}logo-bg-black{% endif %}" />
                         {% else %}
                             <img 
-                                src="/media/images/default_logo.jpg" 
-                                alt="{{ tool.ai_name }} Logo" 
+                                data-src="/media/images/default_logo.jpg" 
+                                alt="" 
                                 class="logo-img {% if tool.needs_black_bg %}logo-bg-black{% endif %}" />
                         {% endif %}
                         {{ tool.ai_name }}
@@ -57,37 +59,5 @@
         </div>                            
     </div>
     {% endfor %}
-</div>
 
-<!-- Include pagination controls -->
-<div class="pagination-container" style="font-weight: bold;">
-    {% if page_obj.has_other_pages %}
-    <nav>
-        <ul class="pagination">
-            {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}#all-tools" aria-label="Previous">
-                        <span aria-hidden="true">&laquo; PREV</span>
-                    </a>
-                </li>
-            {% endif %}
-            {% for num in elided_page_range %}
-                {% if num == page_obj.paginator.ELLIPSIS %}
-                    <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
-                {% elif num %}
-                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                        <a class="page-link" href="?page={{ num }}#all-tools">{{ num }}</a>
-                    </li>
-                {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}#all-tools" aria-label="Next">
-                        <span aria-hidden="true">NEXT &raquo;</span>
-                    </a>
-                </li>
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
 </div>
