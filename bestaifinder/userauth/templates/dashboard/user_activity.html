@@ -3,7 +3,7 @@
 {% block userauthcontent %}
 <div class="card shadow-lg border-0 rounded-lg">
     <div class="card-header text-center">
-        <h3 class="font-weight-light my-4">MY ACTIVIY</h3>
+        <h3 class="font-weight-light my-4">MY ACTIVITY</h3>
     </div>
     <div class="card-body">
         <h4>Account Activity for {{ user.username }}</h4>
@@ -13,52 +13,26 @@
                 <li class="list-group-item" style="background-color: #ffffff; margin-bottom: 10px; border-radius: 5px;">
                     {% if activity.activity_type == 'add_tool' %}
                         <strong>Added tool:</strong>
-                        {% if activity.tool %}
-                            <a href="{% url 'ai_body' activity.tool.slug %}" style="font-weight: bold; color: blue;">{{ activity.tool.ai_name }}</a>
-                        {% else %}
-                            <span style="font-weight: bold; color: blue;">{{ activity.tool.ai_name }}</span>
-                        {% endif %}
-                        <span style="font-weight: 500;">at {{ activity.timestamp|date:"Y-m-d H:i:s" }}</span>
                     {% elif activity.activity_type == 'edit_tool' %}
                         <strong>Edited tool:</strong>
-                        {% if activity.tool %}
-                            <a href="{% url 'ai_body' activity.tool.slug %}" style="font-weight: bold; color: blue;">{{ activity.tool.ai_name }}</a>
-                        {% else %}
-                            <span style="font-weight: bold; color: blue;">{{ activity.tool.ai_name }}</span>
-                        {% endif %}
-                        <span style="font-weight: 500;">at {{ activity.timestamp|date:"Y-m-d H:i:s" }}</span>
                     {% elif activity.activity_type == 'bookmark_tool' %}
                         <strong>Bookmarked tool:</strong>
-                        {% if activity.tool %}
-                            <a href="{% url 'ai_body' activity.tool.slug %}" style="font-weight: bold; color: blue;">{{ activity.tool.ai_name }}</a>
-                        {% else %}
-                            <span style="font-weight: bold; color: blue;">{{ activity.tool.ai_name }}</span>
-                        {% endif %}
-                        <span style="font-weight: 500;">at {{ activity.timestamp|date:"Y-m-d H:i:s" }}</span>
                     {% elif activity.activity_type == 'remove_bookmark' %}
                         <strong>Removed bookmark for tool:</strong>
-                        <span style="font-weight: bold; color: blue;">{{ activity.tool.ai_name }}</span>
-                        <span style="font-weight: 500;">at {{ activity.timestamp|date:"Y-m-d H:i:s" }}</span>
                     {% elif activity.activity_type == 'rate_tool' %}
                         <strong>Rated tool:</strong>
-                        {% if activity.tool %}
-                            <a href="{% url 'ai_body' activity.tool.slug %}" style="font-weight: bold; color: blue;">{{ activity.tool.ai_name }}</a>
-                        {% else %}
-                            <span style="font-weight: bold; color: blue;">{{ activity.tool.ai_name }}</span>
-                        {% endif %}
-                        <span style="font-weight: 500;">at {{ activity.timestamp|date:"Y-m-d H:i:s" }}</span>
                     {% elif activity.activity_type == 'comment_tool' %}
                         <strong>Commented on tool:</strong>
-                        {% if activity.tool %}
-                            <a href="{% url 'ai_body' activity.tool.slug %}" style="font-weight: bold; color: blue;">{{ activity.tool.ai_name }}</a>
-                        {% else %}
-                            <span style="font-weight: bold; color: blue;">{{ activity.tool.ai_name }}</span>
-                        {% endif %}
-                        <span style="font-weight: 500;">at {{ activity.timestamp|date:"Y-m-d H:i:s" }}</span>
+                    {% else %}
+                        <strong>{{ activity.activity_type|title }}:</strong>
+                    {% endif %}
+                    
+                    {% if activity.tool %}
+                        <a href="{% url 'ai_body' activity.tool.slug %}" style="font-weight: bold; color: blue;">{{ activity.tool.ai_name }}</a>
                     {% else %}
                         <span style="font-weight: bold; color: blue;">{{ activity.description }}</span>
-                        <span style="font-weight: 500;">at {{ activity.timestamp|date:"Y-m-d H:i:s" }}</span>
                     {% endif %}
+                    <span style="font-weight: 500;">at {{ activity.timestamp|date:"Y-m-d H:i:s" }}</span>
                 </li>
             {% empty %}
                 <li class="list-group-item" style="background-color: #ffffff; margin-bottom: 10px; border-radius: 5px;">
@@ -66,7 +40,6 @@
                 </li>
             {% endfor %}
         </ul>
-                   
     </div>
 </div>
 <br>
