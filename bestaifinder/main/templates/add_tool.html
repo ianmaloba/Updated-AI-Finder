@@ -66,6 +66,22 @@
         background-color: #0056b3;
         border-color: #0056b3;
     }
+
+    .spinner {
+        display: none;
+        margin: 20px auto;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-top: 4px solid #007bff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 </style>
 
 {% endblock %}
@@ -92,6 +108,7 @@
                     </div>
                 {% endfor %}
                 <button type="submit" class="btn btn-primary">Submit AI Tool</button>
+                <div id="spinner" class="spinner"></div>
             </form>
         </div>
     </div>

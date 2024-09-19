@@ -1,12 +1,10 @@
-<!-- charts/templates/charts/base.html -->
 {% extends "base.html" %}
 
 {% block title %}Charts{% endblock %}
 
+{% block extra_head %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <style>
-    /* charts/static/charts/style.css */
     .chart-container {
         padding: 20px;
         background-color: #f9f9f9;
@@ -30,6 +28,7 @@
         height: auto !important;
     }
 </style>
+{% endblock %}
 
 {% block content %}
 <br>
@@ -44,16 +43,7 @@
                         <a class="nav-link" href="{% url 'charts:dashboard' %}">Charts Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'charts:tools_chart' %}">AI Tools Chart</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'charts:categories_chart' %}">Categories Chart</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'charts:tags_chart' %}">Tags Chart</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'charts:date_added_chart' %}">Tools Added by Date</a>
+                        <a class="nav-link" href="{% url 'charts:tools_chart_view' %}">AI Tools Chart</a>
                     </li>
                 </ul>
             </div>
@@ -67,6 +57,13 @@
     </div>
 </div>
 
-<!-- Script for Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% if request.user.is_authenticated %}
+<script>
+    // Transfer session visits to the database when the user logs in
+    fetch('{% url "charts:transfer_visits" %}')
+        .then(response => response.json())
+        .then(data => console.log('Session visits transferred:', data))
+        .catch(error => console.error('Error transferring session visits:', error));
+</script>
+{% endif %}
 {% endblock %}

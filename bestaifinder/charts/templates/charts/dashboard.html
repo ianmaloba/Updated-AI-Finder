@@ -1,9 +1,13 @@
-<!-- charts/templates/charts/dashboard.html -->
 {% extends "charts/base.html" %}
 
 {% block chart_content %}
 <div class="dashboard">
     <h1>Charts Dashboard</h1>
     <p>Select a chart from the sidebar to view interactive data visualizations.</p>
+    {% if not request.user.is_authenticated %}
+    <div class="alert alert-info">
+        <p>To save your tool visits and see personalized charts, please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a>.</p>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -1,13 +1,11 @@
-{% extends "charts/base.html" %}
+{% extends "base.html" %}
 
-{% block chart_content %}
+{% block content %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div class="container">
-
-<div class="chart-container container" style="position: relative; height: 500px; width: 100%;">
-    <h2>AI Tools Distribution Overview</h2>
-
+<div class="chart-container">
+    <h2>AI Tools Usage Overview</h2>
+    
     <div class="filter-container">
         <label for="chartFilter">Select Chart Type:</label>
         <select id="chartFilter" onchange="updateChartType(this.value)">
@@ -16,107 +14,80 @@
             <option value="line">Line Chart</option>
         </select>
 
-        <label for="filterCriteria">Filter By:</label>
-        <select id="filterCriteria" onchange="updateChartData(this.value)">
-            <option value="most_popular">Most Popular Tools</option>
-            <option value="highest_rated">Highest Rated Tools</option>
-            <option value="recently_added">Recently Added Tools</option>
-        </select>
+        <label for="startDate">Select Start Date:</label>
+        <input type="date" id="startDate">
+
+        <label for="endDate">Select End Date:</label>
+        <input type="date" id="endDate">
+
+        <button onclick="updateChartData()">Update Chart</button>
     </div>
 
-    <div id="loading" style="display: none;">Loading...</div>
     <canvas id="toolsChart" width="400" height="400"></canvas>
 </div>
 
-</div>
-
 <script>
-    let ctx = document.getElementById('toolsChart').getContext('2d');
     let chartType = 'pie';
     let toolsChart = null;
 
+    function updateChartType(selectedType) {
+        chartType = selectedType;
+        updateChartData();
+    }
+
+    function updateChartData() {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+
+        fetch(`/charts/tools-data/?start_date=${startDate}&end_date=${endDate}`)
+            .then(response => response.json())
+            .then(data => {
+                initChart(Object.keys(data), Object.values(data));
+            })
+            .catch(error => console.error('Error fetching chart data:', error));
+    }
+
     function initChart(labels, data) {
-        const chartConfig = {
+        const ctx = document.getElementById('toolsChart').getContext('2d');
+
+        if (toolsChart) {
+            toolsChart.destroy();
+        }
+
+        toolsChart = new Chart(ctx, {
             type: chartType,
             data: {
                 labels: labels,
                 datasets: [{
+                    label: 'Number of Visits',
                     data: data,
-                    backgroundColor: generateColors(data.length),
-                    borderWidth: 1
+                    backgroundColor: generateRandomColors(data.length),
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true,  // Ensure the chart maintains its aspect ratio
                 plugins: {
                     legend: {
-                        position: 'bottom',
+                        position: 'top',
                     },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed !== null) {
-                                    label += context.parsed.toFixed(2);
-                                }
-                                return label;
-                            }
-                        }
-                    }
-                },
-                layout: {
-                    padding: {
-                        bottom: 20  // Add padding to prevent overflowing to the bottom
+                    title: {
+                        display: true,
+                        text: 'AI Tools Usage'
                     }
                 }
             }
-        };
-
-        if (toolsChart) {
-            toolsChart.destroy();  // Destroy the previous chart to avoid memory leaks
-        }
-        toolsChart = new Chart(ctx, chartConfig);
+        });
     }
 
-    function updateChartType(selectedType) {
-        chartType = selectedType;
-        updateChartData(document.getElementById('filterCriteria').value);
-    }
-
-    function updateChartData(filter) {
-        document.getElementById('loading').style.display = 'block';
-        fetch(`/charts/tools-data/?filter=${filter}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                initChart(data.tool_names, data.tool_counts);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while fetching data. Please try again.');
-            })
-            .finally(() => {
-                document.getElementById('loading').style.display = 'none';
-            });
-    }
-
-    function generateColors(count) {
-        let colors = [];
+    function generateRandomColors(count) {
+        const colors = [];
         for (let i = 0; i < count; i++) {
-            colors.push(`hsl(${(i * 360 / count) % 360}, 70%, 60%)`);
+            colors.push(`rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.6)`);
         }
         return colors;
     }
 
-    // Initial chart load
-    updateChartData('most_popular');
+    // Load chart data initially
+    updateChartData();
 </script>
 {% endblock %}

@@ -5,9 +5,8 @@ app_name = 'charts'
 
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
-    path('tools/', views.tools_chart, name='tools_chart'),
-    path('categories/', views.categories_chart, name='categories_chart'),
-    path('tags/', views.tags_chart, name='tags_chart'),
-    path('date_added/', views.date_added_chart, name='date_added_chart'),
-    path('tools-data/', views.tools_data, name='tools_data'),
+    path('track-tool/<slug:slug>/', views.track_tool_visit, name='track_tool'),
+    path('tools/', views.tools_chart_view, name='tools_chart_view'),
+    path('tools-data/', views.tools_chart_data, name='tools_chart_data'),
+    path('transfer-visits/', views.transfer_session_visits, name='transfer_visits'),
 ]

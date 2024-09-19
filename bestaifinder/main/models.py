@@ -8,13 +8,12 @@ from django.dispatch import receiver
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
-from mptt.models import MPTTModel, TreeForeignKey
 
 from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys, os
-from django.core.files.storage import default_storage 
+from django.core.files.storage import default_storage
 from django.conf import settings
 
 class AITool(models.Model):
@@ -32,46 +31,26 @@ class AITool(models.Model):
     featured_order = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        # Only process images if they are new or have been changed
-        if self.pk:
-            # Fetch the existing instance to compare images
-            existing_instance = AITool.objects.get(pk=self.pk)
+        # Fetch the existing instance to compare images, if the object exists
+        existing_instance = AITool.objects.filter(pk=self.pk).first()
 
-            # Check if the image or logo has been changed
-            if self.ai_image and self.ai_image != existing_instance.ai_image:
-                old_image_path = existing_instance.ai_image.path if existing_instance.ai_image else None
+        # Handle ai_image
+        if self.ai_image and (not existing_instance or self.ai_image != existing_instance.ai_image):
+            # If the current image is not default, compress and rename it
+            if self.ai_image.name != 'images/default.jpg':
                 self.ai_image = self.compress_and_rename_image(self.ai_image, max_size=(575, 300), quality=90, img_type="image")
-                if old_image_path and os.path.isfile(old_image_path):
-                    try:
-                        os.remove(old_image_path)
-                    except PermissionError:
-                        print(f"Permission error deleting old image: {old_image_path}")
+            # If the old image is not default and is being replaced, delete the old image
+            if existing_instance and existing_instance.ai_image.name != 'images/default.jpg' and existing_instance.ai_image != self.ai_image:
+                self.delete_old_image(existing_instance.ai_image)
 
-            else:
-                # If the image is not changed, retain the existing image
-                self.ai_image = existing_instance.ai_image
-
-            if self.ai_tool_logo and self.ai_tool_logo != existing_instance.ai_tool_logo:
-                old_logo_path = existing_instance.ai_tool_logo.path if existing_instance.ai_tool_logo else None
+        # Handle ai_tool_logo
+        if self.ai_tool_logo and (not existing_instance or self.ai_tool_logo != existing_instance.ai_tool_logo):
+            if self.ai_tool_logo.name != 'images/default_logo.jpg':
                 self.ai_tool_logo = self.compress_and_rename_image(self.ai_tool_logo, max_size=(250, 250), quality=85, img_type="logo")
-                if old_logo_path and os.path.isfile(old_logo_path):
-                    try:
-                        os.remove(old_logo_path)
-                    except PermissionError:
-                        print(f"Permission error deleting old logo: {old_logo_path}")
+            if existing_instance and existing_instance.ai_tool_logo.name != 'images/default_logo.jpg' and existing_instance.ai_tool_logo != self.ai_tool_logo:
+                self.delete_old_image(existing_instance.ai_tool_logo)
 
-            else:
-                # If the logo is not changed, retain the existing logo
-                self.ai_tool_logo = existing_instance.ai_tool_logo
-
-        else:
-            # For new instances, compress and rename the image
-            if self.ai_image:
-                self.ai_image = self.compress_and_rename_image(self.ai_image, max_size=(575, 300), quality=90, img_type="image")
-
-            if self.ai_tool_logo:
-                self.ai_tool_logo = self.compress_and_rename_image(self.ai_tool_logo, max_size=(250, 250), quality=85, img_type="logo")
-
+        # Generate slug if not present
         if not self.slug:
             self.slug = self._generate_unique_slug()
 
@@ -83,31 +62,22 @@ class AITool(models.Model):
         """
         img = Image.open(image_field)
 
-        # Convert to RGB if the image is in a different mode (PNG with transparency, etc.)
+        # Convert to RGB if necessary (for PNG with transparency, etc.)
         if img.mode in ("RGBA", "P"):
             img = img.convert("RGB")
 
-        # Resize image if it's larger than max_size
-        img.thumbnail(max_size, Image.Resampling.LANCZOS)  # High-quality downsampling
+        # Resize image if larger than max_size
+        img.thumbnail(max_size, Image.Resampling.LANCZOS)
 
-        # Create a BytesIO buffer to save the new image
+        # Create a BytesIO buffer for the new image
         output_io = BytesIO()
-        img.save(output_io, format='JPEG', quality=quality)  # Adjust 'quality' to optimize compression
+        img.save(output_io, format='JPEG', quality=quality)
 
         output_io.seek(0)
 
-        # Generate the new file name using the slug and the image type
-        if img_type == "image":
-            new_file_name = f"{self.slug}-image.jpg"
-        else:
-            new_file_name = f"{self.slug}-logo.jpg"
+        # Set the new file name
+        new_file_name = f"{self.slug}-{img_type}.jpg"
 
-        # Remove the old image file if it exists
-        old_file_path = os.path.join(settings.MEDIA_ROOT, image_field.name)
-        if os.path.isfile(old_file_path):
-            os.remove(old_file_path)
-
-        # Return the compressed image as an InMemoryUploadedFile with the new file name
         return InMemoryUploadedFile(
             output_io,
             'ImageField',
@@ -117,26 +87,32 @@ class AITool(models.Model):
             None
         )
 
+    def delete_old_image(self, image_field):
+        """
+        Delete the old image if it exists and is not the default.
+        """
+        if image_field and image_field.name != 'images/default.jpg' and default_storage.exists(image_field.path):
+            try:
+                default_storage.delete(image_field.path)
+            except PermissionError:
+                print(f"Permission error deleting image: {image_field.path}")
+
     def clean(self):
+        """
+        If the image/logo is cleared, set it back to the default.
+        """
         super().clean()
-        
         if self.pk:
             old_instance = AITool.objects.get(pk=self.pk)
-            
-            # Handle ai_image deletion
-            if old_instance.ai_image and not self.ai_image:
-                # 'clear' checkbox was checked
-                if default_storage.exists(old_instance.ai_image.path):
-                    default_storage.delete(old_instance.ai_image.path)
-                self.ai_image = None
-            
-            # Handle ai_tool_logo deletion
-            if old_instance.ai_tool_logo and not self.ai_tool_logo:
-                # 'clear' checkbox was checked
-                if default_storage.exists(old_instance.ai_tool_logo.path):
-                    default_storage.delete(old_instance.ai_tool_logo.path)
-                self.ai_tool_logo = None
-                            
+
+            # Handle image clearing
+            if not self.ai_image and old_instance.ai_image and old_instance.ai_image.name != 'images/default.jpg':
+                self.ai_image = 'images/default.jpg'
+
+            # Handle logo clearing
+            if not self.ai_tool_logo and old_instance.ai_tool_logo and old_instance.ai_tool_logo.name != 'images/default_logo.jpg':
+                self.ai_tool_logo = 'images/default_logo.jpg'
+
     def _generate_unique_slug(self):
         slug = slugify(self.ai_name)
         unique_slug = slug
