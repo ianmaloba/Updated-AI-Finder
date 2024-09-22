@@ -421,24 +421,69 @@ def data_deletion_instructions(request):
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import AIToolForm
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.utils.decorators import method_decorator
+from django.views import View
+from threading import Thread
 import logging
 
 logger = logging.getLogger(__name__)
 
-@login_required
-def add_tool(request):
-    if request.method == 'POST':
+def send_email_async(subject, body, from_email, recipient_list, html_message):
+    email = EmailMultiAlternatives(subject, body, from_email, recipient_list)
+    email.attach_alternative(html_message, "text/html")
+    email.send()
+
+class AddToolView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        form = AIToolForm()
+        return render(request, 'add_tool.html', {'form': form})
+
+    @method_decorator(login_required)
+    def post(self, request):
         form = AIToolForm(request.POST, request.FILES)
         if form.is_valid():
             tool = form.save(commit=False)
-            # Set the search vector (this will be handled by the signal we already have)
             tool.user = request.user
             tool.save()
+            
+            # Prepare email content
+            current_site = get_current_site(request)
+            subject = f'New AI Tool Added: {tool.ai_name}'
+            context = {
+                'user': request.user,
+                'tool': tool,
+                'domain': current_site.domain,
+                'protocol': 'https' if request.is_secure() else 'http',
+                'view_url': reverse('ai_body', args=[tool.slug]),
+                'edit_url': reverse('edit_tool', args=[tool.id]),
+                'delete_url': reverse('delete_tool', args=[tool.id]),
+            }
+            html_message = render_to_string('emails/tool_added_email.html', context)
+            plain_message = strip_tags(html_message)
+            
+            # Send email asynchronously
+            if request.user.email:
+                Thread(target=send_email_async, args=(
+                    subject,
+                    plain_message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [request.user.email],
+                    html_message
+                )).start()
+            
             logger.debug(f"Tool '{tool.ai_name}' added by user {request.user.username}")
-            return redirect('home')  # or wherever you want to redirect after successful submission
-    else:
-        form = AIToolForm()
-    return render(request, 'add_tool.html', {'form': form})
+            return redirect('home')
+        return render(request, 'add_tool.html', {'form': form})
+
+add_tool = AddToolView.as_view()
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required

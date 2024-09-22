@@ -1,5 +1,5 @@
 from django.contrib.auth.views import PasswordResetView
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -12,52 +12,48 @@ from django.conf import settings
 from django.templatetags.static import static
 from django.contrib.auth import get_user_model
 from django.db.models import Count
-from main.models import AITool, Bookmark
+from main.models import AITool
 from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth.views import PasswordResetView
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from django.templatetags.static import static
+from django.urls import reverse_lazy
 
 class CustomPasswordResetView(PasswordResetView):
     template_name = 'password-reset/password_reset_form.html'
     email_template_name = 'password-reset/password_reset_email.html'
     subject_template_name = 'password-reset/password_reset_subject.txt'
+    html_email_template_name = 'password-reset/password_reset_email.html'
     success_url = reverse_lazy('password_reset_done')
-    
-    def send_mail(self, subject_template_name, email_template_name,
-                  context, from_email, to_email, html_email_template_name=None):
-        """
-        Override the send_mail method to use our custom email sending logic.
-        """
+
+    def send_mail(self, subject_template_name, email_template_name, context, from_email, to_email, html_email_template_name=None):
         current_site = get_current_site(self.request)
         site_name = current_site.name
         domain = current_site.domain
-        
         context.update({
             'domain': domain,
             'site_name': site_name,
             'protocol': 'https' if self.request.is_secure() else 'http',
             'static_url': static('images/app-logo/logo2.png'),
         })
-        
-        subject = render_to_string(subject_template_name, context)
-        subject = ''.join(subject.splitlines())
-        
-        html_message = render_to_string(email_template_name, context)
-        plain_message = strip_tags(html_message)
-        
-        send_mail(
-            subject,
-            plain_message,
-            from_email,
-            [to_email],
-            html_message=html_message,
-            fail_silently=False,
-        )
 
-    def form_valid(self, form):
-        """
-        Override form_valid to use the default password reset flow.
-        """
-        return super().form_valid(form)
-    
+        subject = render_to_string(subject_template_name, context).strip()
+        html_content = render_to_string(email_template_name, context)
+        plain_content = strip_tags(html_content)
+
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=plain_content,
+            from_email=from_email,
+            to=[to_email]
+        )
+        email.attach_alternative(html_content, "text/html")
+        email.send(fail_silently=False)
+
 @login_required
 def user_dashboard(request):
     user_tools = AITool.objects.filter(user=request.user).order_by('-id')
@@ -145,3 +141,4 @@ def user_activity(request):
     }
     
     return render(request, 'dashboard/user_activity.html', context)
+

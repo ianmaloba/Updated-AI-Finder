@@ -31,6 +31,10 @@ class AITool(models.Model):
     featured_order = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
+        # Generate slug if not present
+        if not self.slug:
+            self.slug = self._generate_unique_slug()
+
         # Fetch the existing instance to compare images, if the object exists
         existing_instance = AITool.objects.filter(pk=self.pk).first()
 
@@ -50,12 +54,8 @@ class AITool(models.Model):
             if existing_instance and existing_instance.ai_tool_logo.name != 'images/default_logo.jpg' and existing_instance.ai_tool_logo != self.ai_tool_logo:
                 self.delete_old_image(existing_instance.ai_tool_logo)
 
-        # Generate slug if not present
-        if not self.slug:
-            self.slug = self._generate_unique_slug()
-
         super().save(*args, **kwargs)
-
+        
     def compress_and_rename_image(self, image_field, max_size, quality, img_type):
         """
         Compress and rename the image by reducing its size and setting a custom file name.

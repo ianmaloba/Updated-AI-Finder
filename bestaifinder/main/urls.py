@@ -1,6 +1,7 @@
 # bestaifinder/main/urls.py
 from django.urls import path
 from . import views
+from .views import AddToolView
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -16,7 +17,7 @@ urlpatterns = [
     path('tag-tools/', views.tag_tools_ajax, name='tag_tools_ajax'),
     path('google-custom-search', views.google_custom_search, name='google_custom_search'),
     path('data-deletion-instructions', views.data_deletion_instructions, name='data_deletion_instructions'),
-    path('add-tool/', views.add_tool, name='add_tool'),
+    # path('add-tool/', views.add_tool, name='add_tool'),
     path('edit-tool/<int:tool_id>/', views.edit_tool, name='edit_tool'),
     path('delete-tool/<int:tool_id>/', views.delete_tool, name='delete_tool'),
     path('terms-of-service/', views.terms_of_service, name='terms_of_service'),
@@ -32,4 +33,6 @@ urlpatterns = [
     path('bookmarks/remove/<int:bookmark_id>/', views.remove_bookmark, name='remove_bookmark'),
     path('voice-search/', views.voice_search, name='voice_search'),
     path('voice-search-page/', views.voice_search_page, name='voice_search_page'),
+    path('add-tool/', AddToolView.as_view(), name='add_tool'),
+
 ]

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}New AI Tool Added{% endblock %}</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 150px;
+            height: auto;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Email Logo -->
+        <div class="logo">
+            <img src="https://aifinderguru.com{% static 'images/app-logo/logo2.png' %}" alt="Logo">
+        </div>
+
+        <!-- Email Body Content -->
+        <h1>New AI Tool Added: {{ tool.ai_name }}</h1>
+
+        <p>Hello {{ user.get_full_name|default:user.username }},</p>
+
+        <p>You have successfully added a new AI tool to AI Finder Guru. Here are the details:</p>
+
+        <ul>
+            <li><strong>Tool Name:</strong> {{ tool.ai_name }}</li>
+            <li><strong>Description:</strong> {{ tool.ai_short_description|safe|truncatewords:50 }}</li>
+            <li><strong>Pricing:</strong> {{ tool.ai_pricing_tag }}</li>
+            <li><strong>Tags:</strong> {{ tool.ai_tags }}</li>
+            <li><strong>Tool Link:</strong> <a href="{{ tool.ai_tool_link }}">{{ tool.ai_tool_link }}</a></li>
+            <li><strong>Logo:</strong> {% if tool.ai_tool_logo.name != 'images/default_logo.jpg' %}Uploaded{% else %}Not uploaded (using default){% endif %}</li>
+            <li><strong>Showcase Image:</strong> {% if tool.ai_image.name != 'images/default.jpg' %}Uploaded{% else %}Not uploaded (using default){% endif %}</li>
+        </ul>
+
+        <p>You can manage your tool from your <a class="dropdown-item" href="https://aifinderguru.com/auth/account/">
+            Dashboard
+          </a> by clicking
+          <a class="dropdown-item" href="https://aifinderguru.com/auth/account/">
+            here
+          </a>
+            or directly by using the following links:
+        </p>
+
+        <p style="text-align: center;">
+            <a href="{{ protocol }}://{{ domain }}{{ view_url }}" style="display: inline-block; padding: 10px 20px; background-color: #3498db; color: white; text-decoration: none; border-radius: 5px; margin-right: 10px;">View Tool</a>
+            <a href="{{ protocol }}://{{ domain }}{{ edit_url }}" style="display: inline-block; padding: 10px 20px; background-color: #2ecc71; color: white; text-decoration: none; border-radius: 5px; margin-right: 10px;">Edit Tool</a>
+            <a href="{{ protocol }}://{{ domain }}{{ delete_url }}" style="display: inline-block; padding: 10px 20px; background-color: #e74c3c; color: white; text-decoration: none; border-radius: 5px;">Delete Tool</a>
+        </p>
+
+        <p>Thank you for contributing to AI Finder Guru!</p>
+
+        <!-- Email Footer -->
+        <div class="footer">
+            <p>This is an automated message, please do not reply to this email.</p>
+            <p>© {% now "Y" %} AI Finder Guru. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
