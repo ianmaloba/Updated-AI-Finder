@@ -376,137 +376,150 @@
         fetch('{% url "add_comment" ai_tool.slug %}', {
           method: 'POST',
           headers: {
-            'X-CSRFToken': '{{ csrf_token }}'
+            'X-CSRFToken': getCookie('csrftoken')
           },
           body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
         .then(data => {
           if (data.success) {
-            this.reset();
-            insertNewComment(data.comment); // Ensure data structure is correct
+            alert('Comment added successfully!');
+            window.location.reload(); // Refresh the page
           } else {
-            alert(data.message);
+            alert(data.message || 'An error occurred while adding the comment.');
           }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while adding the comment. Please try again.');
+        });
       });
-
-      function insertNewComment(comment) {
-        const commentsContainer = document.getElementById('comments-container');
-        const currentUser = '{{ request.user.username }}';
-        const deleteButton = comment.user.username === currentUser ? 
-          `<button type="button" class="delete-comment btn btn-danger" style="width:100px; height:20px; font-size: 10px; padding: 0; line-height: 1;" data-comment-id="${comment.id}">DELETE COMMENT</button>` : '';
-
-        const newCommentHtml = `
-          <div class="comment-item border-bottom pb-2 mb-2" data-comment-id="${comment.id}">
-            <div class="d-flex justify-content-between">
-              <div>
-                <strong>${comment.user.username || 'Unknown User'}</strong>
-                <small class="text-muted">${new Date(comment.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</small>
-              </div>
-              <div>
-                ${deleteButton}
-              </div>
-            </div>
-            <p>${comment.comment || 'No comment provided'}</p>
-          </div>
-        `;
-        commentsContainer.insertAdjacentHTML('afterbegin', newCommentHtml);
-        addCommentActions(); // Bind actions to the new delete button
-      }
-
+    
+      // Delete comment functionality
       function addCommentActions() {
         document.querySelectorAll('.delete-comment').forEach(button => {
-          button.addEventListener('click', function(event) {
-            event.preventDefault();
-            var commentId = this.dataset.commentId;
-            if (confirm('Are you sure you want to delete this comment?')) {
-              deleteComment(commentId);
-            }
-          });
+          button.removeEventListener('click', deleteCommentHandler);
+          button.addEventListener('click', deleteCommentHandler);
         });
       }
-
+    
+      function deleteCommentHandler(event) {
+        event.preventDefault();
+        var commentId = this.dataset.commentId;
+        if (confirm('Are you sure you want to delete this comment?')) {
+          deleteComment(commentId);
+        }
+      }
+    
       function deleteComment(commentId) {
         fetch(`{% url "delete_comment" ai_tool.slug 0 %}`.replace('0', commentId), {
           method: 'DELETE',
           headers: {
-            'X-CSRFToken': '{{ csrf_token }}'
+            'X-CSRFToken': getCookie('csrftoken')
           }
         })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
         .then(data => {
           if (data.success) {
             const commentElement = document.querySelector(`.comment-item[data-comment-id="${commentId}"]`);
             if (commentElement) {
               commentElement.remove();
             }
+            alert('Comment deleted successfully!');
           } else {
-            alert(data.message);
+            alert(data.message || 'An error occurred while deleting the comment.');
           }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while deleting the comment. Please try again.');
+        });
       }
-
-
+    
       // Add rating functionality
       document.querySelectorAll('.rating-stars .star').forEach(star => {
         star.addEventListener('click', function(event) {
           var rating = this.dataset.rating;
           submitRating(rating);
         });
-      
+        
         // Add hover effect
         star.addEventListener('mouseover', function(event) {
           const rating = this.dataset.rating;
           updateStarsDisplay(rating);
         });
-      
+        
         // Remove hover effect if not clicked
         star.addEventListener('mouseout', function(event) {
           const currentRating = document.querySelector('.rating-stars').dataset.userRating || 0;
           updateStarsDisplay(currentRating);
-          });
         });
-      
-        function submitRating(rating) {
-          fetch('{% url "add_rating" ai_tool.slug %}', {
-            method: 'POST',
-            headers: {
-              'X-CSRFToken': '{{ csrf_token }}',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ rating: rating })
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              updateRatingDisplay(data);
-            } else {
-              alert(data.message);
+      });
+        
+      function submitRating(rating) {
+        fetch('{% url "add_rating" ai_tool.slug %}', {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ rating: rating })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            updateRatingDisplay(data);
+            alert('Rating submitted successfully!'); // Added popup for rating submission
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      }
+        
+      function updateRatingDisplay(data) {
+        updateStarsDisplay(data.user_rating);
+        document.querySelector('.rating-stars').dataset.userRating = data.user_rating;
+        document.getElementById('rating-info').textContent = `${data.avg_rating.toFixed(1)} (${data.num_ratings} rating${data.num_ratings !== 1 ? 's' : ''})`;
+      }
+        
+      function updateStarsDisplay(rating) {
+        const stars = document.querySelectorAll('.rating-stars .star');
+        stars.forEach((star, index) => {
+          if (index < rating) {
+            star.classList.add('active');
+          } else {
+            star.classList.remove('active');
+          }
+        });
+      }
+    
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
             }
-          })
-          .catch(error => console.error('Error:', error));
+          }
         }
-      
-        function updateRatingDisplay(data) {
-          updateStarsDisplay(data.user_rating);
-          document.querySelector('.rating-stars').dataset.userRating = data.user_rating;
-          document.getElementById('rating-info').textContent = `${data.avg_rating.toFixed(1)} (${data.num_ratings} rating${data.num_ratings !== 1 ? 's' : ''})`;
-        }
-      
-        function updateStarsDisplay(rating) {
-          const stars = document.querySelectorAll('.rating-stars .star');
-          stars.forEach((star, index) => {
-            if (index < rating) {
-              star.classList.add('active');
-            } else {
-              star.classList.remove('active');
-            }
-          });
-        }
-      
+        return cookieValue;
+      }
+    
+      // Initialize comment actions
       addCommentActions();
     </script>
     

@@ -23,25 +23,32 @@
         flex-wrap: wrap;
         gap: 5px;
         margin-bottom: 15px;
+        /* Don't need cursor: pointer here */
     }
+
     .inline-checkbox {
         display: inline-flex;
         align-items: center;
         margin-right: 5px;
-        font-size: 0.8rem;  /* Smaller font size */
+        font-size: 0.8rem;
+        cursor: pointer; /* Only here for the checkbox label */
     }
+
     .inline-checkbox input {
         margin-right: 3px;
-        transform: scale(0.8);  /* Slightly smaller checkboxes */
+        transform: scale(0.8);
     }
+
     label {
         font-weight: bold;
     }
+
     .help-text {
         font-size: 0.85rem;
         color: #007bff;
         margin-top: 5px;
     }
+
     .form-container {
         max-width: 600px;
         margin: 0 auto;
@@ -51,17 +58,21 @@
         background-color: #f9f9f9;
         border: 2px solid #007bff;
     }
+
     .form-container h2 {
         text-align: center;
         margin-bottom: 20px;
         color: #007bff;
     }
+
     .btn-primary {
         background-color: #007bff;
         border-color: #007bff;
         width: 100%;
         margin-top: 20px;
+        cursor: pointer; /* Add cursor pointer to the button */
     }
+
     .btn-primary:hover {
         background-color: #0056b3;
         border-color: #0056b3;
@@ -82,6 +93,14 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+
+    /* Add pointer cursor only for interactive form elements */
+    input[type="text"],
+    input[type="file"],
+    select,
+    textarea {
+        cursor: pointer;
+    }
 </style>
 
 {% endblock %}
@@ -96,7 +115,7 @@
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% for field in form %}
-                    <div class="form-group" style=" margin-bottom: 40px;">
+                    <div class="form-group" style="margin-bottom: 40px;">
                         {{ field.label_tag }}
                         {{ field }}
                         {% if field.help_text %}

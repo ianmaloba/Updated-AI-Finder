@@ -7,7 +7,6 @@
     </div>
     {% if request.user == comment.user %}
     <div>
-      <!-- <a href="#" class="edit-comment" data-comment-id="{{ comment.id }}">Edit</a> -->
       <button type="button" class="delete-comment btn btn-danger" style="width:100px; height:20px; font-size: 10px; padding: 0; line-height: 1;" data-comment-id="{{ comment.id }}">DELETE COMMENT</button>
     </div>
     {% endif %}
