@@ -38,6 +38,24 @@
             font-size: 0.9em;
             color: #7f8c8d;
         }
+        .dashboard-link {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+    
+        .dashboard-link:hover {
+            background-color: #2980b9;
+        }
+    
+        .dashboard-link svg {
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
@@ -48,11 +66,11 @@
         </div>
 
         <!-- Email Body Content -->
-        <h1>New AI Tool Added: {{ tool.ai_name }}</h1>
+        <h1>SUCCESSFULLY ADDED A NEW AI TOOL: "{{ tool.ai_name }}"</h1>
 
         <p>Hello {{ user.get_full_name|default:user.username }},</p>
 
-        <p>You have successfully added a new AI tool to AI Finder Guru. Here are the details:</p>
+        <p>You have successfully added a new AI tool to AI Finder Guru. Here are the tool's details:</p>
 
         <ul>
             <li><strong>Tool Name:</strong> {{ tool.ai_name }}</li>
@@ -64,11 +82,18 @@
             <li><strong>Showcase Image:</strong> {% if tool.ai_image.name != 'images/default.jpg' %}Uploaded{% else %}Not uploaded (using default){% endif %}</li>
         </ul>
 
-        <p>You can manage your tool from your <a class="dropdown-item" href="https://aifinderguru.com/auth/account/">Dashboard</a> by clicking
-          <a class="dropdown-item" href="https://aifinderguru.com/auth/account/">
-            here
-          </a>
-            or directly by using the following links:
+        <div class="card shadow-lg border-0 rounded-lg">
+            <div class="card-header text-center">
+                <a class="dashboard-link" href="{% url 'home' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 14 14" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13.5 10.5v2a1 1 0 0 1-1 1h-2m0-13h2a1 1 0 0 1 1 1v2m-13 0v-2a1 1 0 0 1 1-1h2m0 13h-2a1 1 0 0 1-1-1v-2m6.5-4a2 2 0 1 0 0-4a2 2 0 0 0 0 4m3.803 4.5a3.994 3.994 0 0 0-7.606 0z"/>
+                    </svg>
+                    Go to Your Dashboard
+                </a>
+            </div>
+        </div>        
+
+        <p>You can manage your tool from your <a class="dropdown-item" href="https://aifinderguru.com/auth/account/">Dashboard</a> by clicking the button above; Or directly through the following buttons:
         </p>
 
         <p style="text-align: center;">
@@ -77,6 +102,8 @@
             <a href="{{ protocol }}://{{ domain }}{{ delete_url }}" style="display: inline-block; padding: 10px 20px; background-color: #e74c3c; color: white; text-decoration: none; border-radius: 5px;">Delete Tool</a>
         </p>
 
+        <br>
+        <br>
         <p>Thank you for contributing to AI Finder Guru!</p>
 
         <!-- Email Footer -->

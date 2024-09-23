@@ -7,6 +7,7 @@
 {% block title %}{{ ai_tool.ai_name }}{% endblock %}
 
 {% block content %}
+<div>
 
   <div class="container">
     <div class="row">
@@ -38,29 +39,29 @@
     </div>
     <br>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-6 tool-image-body">
         {% if ai_tool.ai_image %}
             <img 
                 onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', '{{ ai_tool.slug }}', '{{ ai_tool.ai_tool_link }}')" 
                 style="width: 100%; height: 300px; object-fit: cover; border: px solid black; border-radius: 5%; cursor: pointer; 
-                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease; 
-                transform: translateY(-10px);"
+                box-shadow: 0 25px 40px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease, box-shadow 0.3s ease; 
+                transform: translateY(-25px);"
                 onmouseover="this.style.transform='translateY(-15px)'; this.style.boxShadow='0 15px 25px rgba(0, 0, 0, 0.3)';" 
-                onmouseout="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 10px 15px rgba(0, 0, 0, 0.2)';" 
+                onmouseout="this.style.transform='translateY(-25px)'; this.style.boxShadow='0 25px 40px rgba(0, 0, 0, 0.5)';" 
                 src="{{ ai_tool.ai_image.url }}" 
                 alt="{{ ai_tool.ai_name }}">
         {% else %}
             <img 
                 onclick="openTool('{{ ai_tool.ai_tool_link }}', '{{ ai_tool.ai_name }}', '{{ ai_tool.slug }}', '{{ ai_tool.ai_tool_link }}')" 
                 style="width: 100%; height: 300px; object-fit: cover; border: 1px solid black; border-radius: 5%; cursor: pointer; 
-                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease; 
-                transform: translateY(-10px);"
+                box-shadow: 0 25px 40px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease, box-shadow 0.3s ease; 
+                transform: translateY(-25px);"
                 onmouseover="this.style.transform='translateY(-15px)'; this.style.boxShadow='0 15px 25px rgba(0, 0, 0, 0.3)';" 
-                onmouseout="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 10px 15px rgba(0, 0, 0, 0.2)';" 
+                onmouseout="this.style.transform='translateY(-25px)'; this.style.boxShadow='0 25px 40px rgba(0, 0, 0, 0.5)';" 
                 src="/media/images/default.jpg" 
                 alt="{{ ai_tool.ai_name }}">
         {% endif %}
-    </div>        
+      </div>        
       <div class="col-md-6">
         <br>
         <p class="lead font-weight-bold" style="color:#59255F;">PRICING TAG:
@@ -523,6 +524,7 @@
       addCommentActions();
     </script>
     
+        
     <style>
       .rating-stars {
         font-size: 2.4rem; /* This makes the stars 3 times bigger. Adjust as needed */
@@ -537,8 +539,13 @@
         color: #dc3545; /* Red color for rated stars */
       }
     </style>
-  </div>
 
+  </div>
+  <br>
+  <hr style="top: 10px;">
+  <br>
+  <br>
+  <br>
   <br>
   <br>
   <br>
@@ -610,6 +617,7 @@
     </div>
     {% endfor %}
   </div>
+</div>
 
 <div class="container">
   <a href="/"><button type="submit" class="btn btn-primary btn-sm">HOME</button></a>

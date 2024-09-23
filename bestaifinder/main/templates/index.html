@@ -4,9 +4,11 @@
 
 {% load static %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Home - The Most Complete AI Tools Directory!{% endblock %}
 
 {% block content %}
+
+<div class="custom-background">
 
     <br>
     <div class="container">
@@ -37,7 +39,7 @@
                     <table style="width:100%; border: none; border-collapse: collapse;">
                         <tr style="border: none;">
                             <td style="border: none;">
-                                <butto id="start-record-btn" type="submit" title="Start Voice Search">
+                                <butto id="start-record-btn" title="Start Voice Search">
                                     <div style="
                                         position: relative; 
                                         width: 50px; 
@@ -117,7 +119,7 @@
                 </style>
                 
                 <hr>
-                            <h5 style="font-family: "Lucida Console", "Courier New", monospace;">SEARCH AND FILTER BY TEXT</h5>
+                <h5 style="font-family: "Lucida Console", "Courier New", monospace;">SEARCH AND FILTER BY TEXT</h5>
                 <!-- <p><i>Fill in part or whole of the form and click search.. or try <a href="{% url 'google_custom_search' %}" class="text-bold">Custom Search Engine</a></i></p> -->
                 <div class="filter-part">
                     <form id="search-form" method="GET" action="{% url 'search_results' %}">
@@ -128,13 +130,13 @@
                             
                             <div class="form-group col-md-6">
                                 <!-- Half width input fields with the same styling as the textarea -->
-                                <label for="publishDateMin">Launched Before</label>
+                                <label class="formLabel" for="publishDateMin">Launched Before</label>
                                 <input type="date" class="form-control date-input" id="publishDateMin" name="date_min">
                             </div>
                             
                             <div class="form-group col-md-6">
                                 <!-- Half width input fields with the same styling as the textarea -->
-                                <label for="category">AI Type</label>
+                                <label class="formLabel" for="category">AI Type</label>
                                 <select id="category" class="form-control select-input" name="ai_type">
                                     <option value="">Choose...</option>
                                     <option value="Video">Video</option>
@@ -453,57 +455,57 @@
         </a>
         
         <style>
-        /* Styling the container */
-        .tools-count-container {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            animation: pulse 1s ease-in-out infinite; /* Slight pulsing animation for attention */
-        }
-        
-        /* Emphasizing the number */
-        .tools-count {
-            color: #d9534f; /* Emphasizing with red color */
-            font-size: 32px;
-            font-weight: 900;
-        }
-        
-        /* Pulse animation for emphasis */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        /* Responsive design for smaller screens */
-        @media (max-width: 768px) {
+            /* Styling the container */
             .tools-count-container {
-                font-size: 18px; /* Smaller font size for container */
-                padding: 10px; /* Reduced padding */
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+                color: #333;
+                margin: 20px 0;
+                padding: 15px;
+                background-color: #f8f9fa;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                position: relative;
+                animation: pulse 1s ease-in-out infinite; /* Slight pulsing animation for attention */
             }
-        
+            
+            /* Emphasizing the number */
             .tools-count {
-                font-size: 24px; /* Smaller number size */
+                color: #d9534f; /* Emphasizing with red color */
+                font-size: 32px;
+                font-weight: 900;
             }
-        }
-        
-        @media (max-width: 480px) {
-            .tools-count-container {
-                font-size: 14px; /* Further reduced font size */
-                padding: 6px; /* Further reduced padding */
+            
+            /* Pulse animation for emphasis */
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
             }
-        
-            .tools-count {
-                font-size: 28px; /* Smaller number size */
+            
+            /* Responsive design for smaller screens */
+            @media (max-width: 768px) {
+                .tools-count-container {
+                    font-size: 18px; /* Smaller font size for container */
+                    padding: 10px; /* Reduced padding */
+                }
+            
+                .tools-count {
+                    font-size: 24px; /* Smaller number size */
+                }
             }
-        }
+            
+            @media (max-width: 480px) {
+                .tools-count-container {
+                    font-size: 14px; /* Further reduced font size */
+                    padding: 6px; /* Further reduced padding */
+                }
+            
+                .tools-count {
+                    font-size: 28px; /* Smaller number size */
+                }
+            }
         </style>
     
     
@@ -652,20 +654,15 @@
     
         </div>
     </div>
+</div>
 
-    <style>
-        .custom-background {
-            background-size: cover; 
-            background-repeat: no-repeat;
-            height: 100%;
-            width: 100%;
-            z-index: 1;
-            background-color: #E4F6F8;
-        }
-        h5 {
-            font-weight: bold;
-        }
-    </style>
+<style>
+    h5 {
+        font-weight: bold;
+    }
+</style>
+
+<div>
 
     <section class="wrapper">
         <div class="container-fostrap">
@@ -694,7 +691,7 @@
                             function showLoadingIndicator() {
                                 const loadingDiv = document.createElement('div');
                                 loadingDiv.id = 'loading-indicator';
-                                loadingDiv.innerHTML = `Loading Page...`;
+                                loadingDiv.innerHTML = 'Loading Page...';
                                 loadingDiv.style.position = 'fixed';
                                 loadingDiv.style.top = '50%';
                                 loadingDiv.style.left = '50%';
@@ -729,7 +726,7 @@
                                         img.removeAttribute('data-src'); // Cancel any lazy-loading data
                                     }
                                 });
-                            }                            
+                            } 
                         
                             function handlePaginationClick(event) {
                                 event.preventDefault();
@@ -837,8 +834,8 @@
                             });
                         });
                     </script>
-                    
                 </div>
+                
             </div>
         </div>
     </section>
@@ -853,26 +850,29 @@
                     <input class="form-control" type="number" id="page-number-input" name="page" min="1" max="{{ page_obj.paginator.num_pages }}" value="{{ request.GET.page }}" placeholder="Enter number between 1 and {{ page_obj.paginator.num_pages }}" required style="width: 300px; border: 1px solid #ced4da; border-radius: .25rem;">
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
-                    <button type="submit" class="btn btn-primary" style="height:30px; text-align: center; width:40px;" style="white-space: nowrap;">Go</button>
+                    <button type="submit" class="btn btn-primary" style="height:30px;" style="white-space: nowrap;">Go</button>
                 </div>
             </form>
         </div>
     </div>
-
+    
     <!-- Add this inline CSS inside your HTML head or style block -->
     <style>
         /* Media query to reduce input size on smaller screens */
-        @media (max-width: 768px) {
+        @media (max-width: 800px) {
             #page-number-input {
-                width: 200px; /* Reduce input width on smaller screens */
+                width: 100px; /* Reduce input width on smaller screens */
             }
         }
-
+    
         @media (max-width: 576px) {
             #page-number-input {
-                width: 150px; /* Further reduce input width on very small screens */
+                width: 100px; /* Further reduce input width on very small screens */
             }
         }  
     </style>
+
+</div>
+
         
 {% endblock %}
