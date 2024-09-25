@@ -6,6 +6,10 @@
 
 {% block content %}
 
+<div class="container">
+
+</div>
+
 <div class="container about-body">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -77,182 +81,42 @@
             <div class="col-md-3">
               <div class="list-group sticky-top side-panel-sticky" id="aboutSidebar">
                   <a href="#overview" class="list-group-item list-group-item-action">Overview</a>
-                  <a href="#techStack" class="list-group-item list-group-item-action">Tech Stack</a>
-                  <a href="#scrapingMethods" class="list-group-item list-group-item-action">Scraping Methods</a>
-                  <a href="#databasePopulation" class="list-group-item list-group-item-action">Database Population</a>
-                  <a href="#searchFunctionality" class="list-group-item list-group-item-action">Search Functionality</a>
+  
                   <a href="#disclaimer" class="list-group-item list-group-item-action">Disclaimer</a>
+                  <a href="#techStack" class="list-group-item list-group-item-action">More</a>
               </div>
             </div>
 
             <!-- Main Content -->
-            <div class="col-md-9">
-                <h1 class="mb-4">About AI Finder Guru</h1>
+            <div class="col-md-9 about-content">
+                <h1 style="text-align: center" class="mb-4">ABOUT</h1>
 
                 <section id="overview">
                     <h2>Overview</h2>
-                    <p>Welcome to AI Finder Guru! This platform serves as a comprehensive web scraper, providing access to a vast array of AI tools. With over 4000 tools and counting, we ensure you have the latest and most relevant tools at your fingertips.</p>
+                    <p>Welcome to AI Finder Guru! This platform provides you access to a vast array of AI tools. With over 5000 tools and counting, we ensure you have the latest and most relevant tools at your fingertips.</p>
                     <p>As the <a href="{% url 'about_developer' %}" target="_blank" style="color: blue; text-decoration: none;">developer</a> of AI Finder Guru, I've designed this platform to be your go-to resource for discovering and exploring the ever-expanding world of AI tools. Whether you're a developer, researcher, or AI enthusiast, you'll find valuable resources here to enhance your projects and stay ahead in the field of artificial intelligence.</p>
                 </section>
 
-                <section id="techStack">
-                    <h2>Tech Stack</h2>
-                    <ul>
-                        <li><strong>Python</strong></li>
-                        <li><strong>BeautifulSoup4</strong></li>
-                        <li><strong>Selenium</strong></li>
-                        <li><strong>Django</strong></li>
-                        <li><strong>PostgreSQL</strong></li>
-                        <li><strong>Bootstrap CSS</strong></li>
-                    </ul>
-                </section>
-
-                <section id="scrapingMethods">
-                    <h2>Scraping Methods</h2>
-                    <p>I've implemented three main scraping methods to ensure comprehensive coverage of various AI tool websites:</p>
-
-                    <h3>1. Static Page Scraping</h3>
-                    <p>For websites with static content, I use a straightforward approach with BeautifulSoup4:</p>
-                    <div class="code-block">
-                        <button class="copy-btn">Copy</button>
-                        <pre><code><span class="keyword">def</span> <span class="function">scrape_static_page</span>(url):
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, <span class="string">'html.parser'</span>)
-    <span class="comment"># Extract data from soup</span>
-    <span class="keyword">return</span> extracted_data</code></pre>
-                    </div>
-
-                    <h3>2. Infinite Scrolling Page Scraping</h3>
-                    <p>For pages with infinite scrolling, I use Selenium to simulate scrolling and load more content:</p>
-                    <div class="code-block">
-                        <button class="copy-btn">Copy</button>
-                        <pre><code><span class="keyword">def</span> <span class="function">scrape_infinite_scroll</span>(url):
-    driver = webdriver.Chrome()
-    driver.get(url)
-    <span class="keyword">while</span> True:
-        <span class="comment"># Scroll and wait for new content</span>
-        driver.execute_script(<span class="string">"window.scrollTo(0, document.body.scrollHeight);"</span>)
-        time.sleep(<span class="variable">2</span>)
-        <span class="comment"># Check if more content is available</span>
-        <span class="keyword">if</span> no_more_content:
-            <span class="keyword">break</span>
-    <span class="comment"># Extract data from driver.page_source</span>
-    driver.quit()
-    <span class="keyword">return</span> extracted_data</code></pre>
-                    </div>
-
-                    <h3>3. Pagination Scraping</h3>
-                    <p>For websites with traditional pagination, I use a loop to iterate through pages:</p>
-                    <div class="code-block">
-                        <button class="copy-btn">Copy</button>
-                        <pre><code><span class="keyword">def</span> <span class="function">scrape_paginated</span>(base_url):
-    page_number = <span class="variable">1</span>
-    all_data = []
-    <span class="keyword">while</span> True:
-        url = <span class="string">f"{base_url}/page/{page_number}/"</span>
-        page_data = scrape_static_page(url)
-        <span class="keyword">if</span> <span class="keyword">not</span> page_data:
-            <span class="keyword">break</span>
-        all_data.extend(page_data)
-        page_number += <span class="variable">1</span>
-    <span class="keyword">return</span> all_data</code></pre>
-                    </div>
-                </section>
-
-                <section id="databasePopulation">
-                    <h2>Database Population</h2>
-                    <p>To populate our PostgreSQL database, I've created a script that transfers data from an existing PostgreSQL database:</p>
-                    <div class="code-block">
-                        <button class="copy-btn">Copy</button>
-                        <pre><code><span class="keyword">import</span> os
-<span class="keyword">import</span> django
-<span class="keyword">from</span> models <span class="keyword">import</span> AITool
-
-os.environ.setdefault(<span class="string">'DJANGO_SETTINGS_MODULE'</span>, <span class="string">'bestaifinder.settings'</span>)
-django.setup()
-
-conn = sqlite3.connect(<span class="string">'path/to/posgresql/database'</span>)
-cursor = conn.cursor()
-
-cursor.execute(<span class="string">"SELECT * FROM ai_tools"</span>)
-rows = cursor.fetchall()
-
-<span class="keyword">for</span> row <span class="keyword">in</span> rows:
-    ai_image, ai_name, ai_tool_logo, ai_short_description, ai_pricing_tag, ai_tags, ai_tool_link = row
-    AITool.objects.create(
-        ai_image=ai_image,
-        ai_name=ai_name,
-        ai_tool_logo=ai_tool_logo,
-        ai_short_description=ai_short_description,
-        ai_pricing_tag=ai_pricing_tag,
-        ai_tags=ai_tags,
-        ai_tool_link=ai_tool_link
-    )
-
-conn.close()</code></pre>
-                    </div>
-                    <p>This script ensures a smooth transition from the initial SQLite database to a more robust PostgreSQL solution.</p>
-                </section>
-
-                <section id="searchFunctionality">
-                  <h2>Search Functionality</h2>
-                  <p>I've implemented an advanced search functionality using PostgreSQL's full-text search capabilities and trigram similarity using <strong>pg_trm:</strong></p>
-                  <div class="code-block">
-                      <button class="copy-btn">Copy</button>
-                      <pre><code><span class="keyword">def</span> <span class="function">search_results</span>(request):
-  cache_key = <span class="string">f"search_results_{request.GET.urlencode()}"</span>
-  tools = cache.get(cache_key)
-  
-  <span class="keyword">if</span> tools <span class="keyword">is</span> <span class="keyword">None</span>:
-      query_params = request.GET
-      search_query = query_params.get(<span class="string">'ai_name_contains'</span>, <span class="string">''</span>)
-      
-      filters = Q()
-      
-      <span class="keyword">if</span> <span class="string">'free'</span> <span class="keyword">in</span> query_params <span class="keyword">and</span> query_params[<span class="string">'free'</span>] == <span class="string">'true'</span>:
-          filters &= (
-              Q(ai_pricing_tag__icontains=<span class="string">'free'</span>) |
-              Q(ai_pricing_tag__icontains=<span class="string">'Pricing Not Specified'</span>)
-          )
-
-      <span class="keyword">if</span> search_query:
-          search_words = search_query.split()
-          search_query_obj = SearchQuery(<span class="string">' '</span>.join(search_words))
-          search_vector = (
-              SearchVector(<span class="string">'ai_name'</span>, weight=<span class="string">'A'</span>) +
-              SearchVector(<span class="string">'ai_short_description'</span>, weight=<span class="string">'B'</span>) +
-              SearchVector(<span class="string">'ai_tags'</span>, weight=<span class="string">'C'</span>)
-          )
-          tools = AITool.objects.annotate(
-              search_rank=SearchRank(search_vector, search_query_obj),
-              name_similarity=TrigramSimilarity(<span class="string">'ai_name'</span>, search_query),
-              description_similarity=TrigramSimilarity(<span class="string">'ai_short_description'</span>, search_query),
-              tags_similarity=TrigramSimilarity(<span class="string">'ai_tags'</span>, search_query)
-          ).annotate(
-              combined_rank=Greatest(
-                  F(<span class="string">'search_rank'</span>),
-                  F(<span class="string">'name_similarity'</span>) * Value(<span class="variable">0.3</span>),
-                  F(<span class="string">'description_similarity'</span>) * Value(<span class="variable">0.2</span>),
-                  F(<span class="string">'tags_similarity'</span>) * Value(<span class="variable">0.1</span>)
-              )
-          ).filter(filters).order_by(<span class="string">'-combined_rank'</span>)
-      
-      <span class="comment"># Cache the results</span>
-      cache.set(cache_key, tools, <span class="variable">60</span> * <span class="variable">15</span>)
-  
-  <span class="comment"># Pagination and context setup</span>
-  <span class="keyword">return</span> render(request, <span class="string">'search_results.html'</span>, context)</code></pre>
-                  </div>
-                  <p>This search function combines full-text search with trigram similarity.</p>
-                  <p>It also implements caching to improve performance for repeated searches.</p>
-              </section>
-
+                <br>
+                <br>
+ 
                 <section id="disclaimer">
                     <h2>Disclaimer</h2>
                     <p>While I strive to keep the database as accurate and up-to-date as possible, I cannot guarantee that all information is correct or current. Users should always verify the details on the <strong>official websites</strong> of the AI tools.</p>
                 </section>
+
+                <br>
+                <br>
+
+                <section id="techStack">
+                    <h2>More</h2>
+                    <p>This page is subject to updates ...</p>
+
+                </section>
+                
             </div>
         </div>
+    </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

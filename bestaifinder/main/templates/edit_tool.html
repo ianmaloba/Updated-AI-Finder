@@ -9,7 +9,7 @@
     <div class="container">
         <div class="form-container">
             <h2>EDIT TOOL: {{ tool.ai_name }}</h2>
-            <form method="post" enctype="multipart/form-data">
+            <form class="edit-tool-form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% for field in form %}
                     <div class="form-group">

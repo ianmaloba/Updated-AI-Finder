@@ -8,6 +8,42 @@
 {% endblock %}
 
 {% block content %}
+
+<style>
+    /* Dark Mode Styles for GitHub Icon */
+    body.dark-mode .social-link[href="https://github.com/IanMalobaMwakha"] {
+        color: #ffffff; /* Change text color to white for visibility */
+    }
+    
+    body.dark-mode .social-link[href="https://github.com/IanMalobaMwakha"] svg {
+        fill: #ffffff; /* Change SVG fill color to white */
+    }
+    
+    /* Dark Mode Styles for Twitter Icon */
+    body.dark-mode .social-link[href="https://twitter.com/malobaian"] {
+        color: #ffffff; /* Change text color to white for visibility */
+    }
+    
+    body.dark-mode .social-link[href="https://twitter.com/malobaian"] svg {
+        fill: #ffffff; /* Change SVG fill color to white */
+    }
+    
+    /* Dark Mode Styles for LinkedIn Icon */
+    body.dark-mode .social-link[href="https://www.linkedin.com/in/ianmalobamwakha/"] {
+        color: #ffffff; /* Change text color to white for visibility */
+    }
+    
+    body.dark-mode .social-link[href="https://www.linkedin.com/in/ianmalobamwakha/"] svg {
+        fill: #ffffff; /* Change SVG fill color to white */
+        background-color: white;
+    }
+    
+    /* Ensure a clear margin for spacing */
+    body.dark-mode .social-link {
+        margin-right: 15px; /* Maintain spacing */
+    }    
+</style>
+
 <div class="container" style="font-family: 'Fragment Mono', monospace; padding-top: 40px;">
     <h2 style="margin-top: 10px; text-align: center;">ABOUT THE DEVELOPER</h2>
     <div class="developer-container" style="display: flex; flex-wrap: wrap; align-items: flex-start;">
@@ -25,7 +61,7 @@
                 I'm open to opportunities and collaborating on projects.
             </p>
             <p class="developer-bio">
-                Check out my <a href="https://ianmaloba.com" target="_blank" class="social-link" style="text-decoration: none; color: #000000;"><u>Portfolio</u></a> for more about me.
+                Check out my <a href="https://ianmaloba.com" target="_blank" class="social-link" style="text-decoration: none; text-decoration: underline; color: inherit; margin: 0;">Portfolio</a> for more about me.
             </p>
             <br>
             <div class="developer-contact" style="margin-top: 20px;">

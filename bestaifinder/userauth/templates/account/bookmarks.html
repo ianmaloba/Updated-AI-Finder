@@ -35,7 +35,9 @@
             {% for bookmark in user_bookmarks %}
                 <li class="list-group-item">
                     <strong>{{ bookmark.tool.ai_name }}</strong> - 
-                    <a href="{% url 'ai_body' bookmark.tool.slug %}">View</a> | 
+                    <a href="{% url 'ai_body' bookmark.tool.slug %}">
+                        <button type="button" class="btn btn-primary" style="width:60px; height:20px; font-size: 10px; padding: 0; line-height: 1;">VIEW</button>
+                    </a> | 
                     <form method="POST" action="{% url 'remove_bookmark' bookmark.id %}" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" style="width:100px; height:20px; font-size: 10px; padding: 0; line-height: 1;" class="btn btn-danger">Remove Bookmark</button>

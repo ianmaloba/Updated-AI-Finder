@@ -204,7 +204,11 @@
           background-color: #1e1e1e !important;
         }
 
-        body.dark-mode form {
+        body.dark-mode .add-tool-form {
+          color: black !important;
+        }
+
+        body.dark-mode .edit-tool-form {
           color: black !important;
         }
 
@@ -533,6 +537,71 @@
         body.dark-mode .col-md-6.tool-image-body a:hover {
           color: #9cccff;
         }
+
+        body.dark-mode .about-content {
+          color: white;
+        }
+
+        body.dark-mode .terms-content {
+          color: white;
+        }
+
+        body.dark-mode .login {
+          color: white;
+        }
+
+        /* Dark mode for 'Go Home' SVG icon */
+        body.dark-mode .card-header a[href="/"] svg path {
+          fill: #ffffff; /* Change the icon color to white in dark mode */
+        }
+        
+        /* Dark mode for 'Go Home' text */
+        body.dark-mode .card-header a[href="/"] {
+          color: #ffffff; /* Change the text color to white in dark mode */
+        }
+        
+        /* Hover effect in dark mode for 'Go Home' */
+        body.dark-mode .card-header a[href="/"]:hover svg path,
+        body.dark-mode .card-header a[href="/"]:hover {
+          fill: #000000; /* Change icon color to black on hover */
+          color: #000000; /* Change text color to black on hover */
+        }
+        
+        /* Dark mode for 'Back to Dashboard' SVG icon */
+        body.dark-mode .card-header a[href="{% url 'home' %}"] svg path,
+        body.dark-mode .card-header a[href="{% url 'home' %}"] svg {
+          stroke: #ffffff; /* Change the stroke color of the icon to white in dark mode */
+        }
+        
+        /* Dark mode for 'Back to Dashboard' text */
+        body.dark-mode .card-header a[href="{% url 'home' %}"] {
+          color: #ffffff; /* Change the text color to white in dark mode */
+        }
+        
+        /* Hover effect in dark mode for 'Back to Dashboard' */
+        body.dark-mode .card-header a[href="{% url 'home' %}"]:hover svg path,
+        body.dark-mode .card-header a[href="{% url 'home' %}"]:hover {
+          stroke: #000000; /* Change icon stroke color to black on hover */
+          color: #000000; /* Change text color to black on hover */
+        }
+        
+        /* Dark mode styles for the SVG icon inside the ASK AI button */
+        body.dark-mode .btn-outline-primary svg path {
+          fill: none; /* Ensure no fill inside the icon */
+          stroke: #ffffff; /* Change the icon itself (the strokes/lines) to white in dark mode */
+        }
+        
+        body.dark-mode .tools-section {
+          border: 1px solid #ffffff; /* Change border color to white in dark mode */
+          background-color: #333333; /* Set a dark background color */
+          color: #ffffff; /* Change text color to white */
+          padding: 15px; /* Maintain padding */
+          border-radius: 8px; /* Maintain border radius */
+        }
+
+        body.dark-mode .terms-content {
+          background-color: #E1D9D1 ;
+        }      
 
       </style>
       
