@@ -6,85 +6,72 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container about-page-wrapper">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .about-page-wrapper {
+            font-family: Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
 
-</div>
+        /* Default state for the side panel */
+        .side-panel-sticky {
+            top: 0; /* Default top position */
+        }
 
-<div class="container about-body">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-      .about-body {
-          font-family: Verdana, sans-serif;
-          line-height: 1.6;
-          color: #333;
-      }
+        /* Style for active section in the side panel */
+        .about-sidebar .list-group-item.active,
+        .about-sidebar .list-group-item:focus,
+        .about-sidebar .list-group-item:hover {
+            font-weight: bold;
+        }
 
-      /* Default state for the side panel */
-      .side-panel-sticky {
-          top: 0; /* Default top position */
-      }
+        pre {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            font-size: 14px;
+        }
 
-      /* Style for active section in the side panel */
-      .list-group-item.active,
-      .list-group-item:focus,
-      .list-group-item:hover {
-          font-weight: bold;
-      }
+        .code-block {
+            position: relative;
+        }
 
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
 
-      /* Style for active section in the side panel */
-      .list-group-item.active,
-      .list-group-item:focus,
-      .list-group-item:hover {
-          font-weight: bold;
-      }
+        .copy-btn:hover {
+            background-color: green;
+        }
 
-      pre {
-          background-color: #f4f4f4;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          padding: 15px;
-          font-size: 14px;
-      }
-
-      .code-block {
-          position: relative;
-      }
-
-      .copy-btn {
-          position: absolute;
-          top: 5px;
-          right: 5px;
-          background-color: #007bff;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          padding: 5px 10px;
-          font-size: 12px;
-          cursor: pointer;
-      }
-
-      .copy-btn:hover {
-          background-color: green;
-      }
-
-      .keyword { color: #007bff; }
-      .string { color: #28a745; }
-      .comment { color: #6c757d; }
-      .function { color: #dc3545; }
-      .variable { color: #6f42c1; }
-  </style>
+        .keyword { color: #007bff; }
+        .string { color: #28a745; }
+        .comment { color: #6c757d; }
+        .function { color: #dc3545; }
+        .variable { color: #6f42c1; }
+    </style>
 
     <div class="container-fluid py-4">
         <div class="row">
             <!-- Side Panel -->
             <div class="col-md-3">
-              <div class="list-group sticky-top side-panel-sticky" id="aboutSidebar">
-                  <a href="#overview" class="list-group-item list-group-item-action">Overview</a>
-  
-                  <a href="#disclaimer" class="list-group-item list-group-item-action">Disclaimer</a>
-                  <a href="#techStack" class="list-group-item list-group-item-action">More</a>
-              </div>
+                <div class="list-group sticky-top side-panel-sticky about-sidebar" id="aboutSidebar">
+                    <a href="#overview" class="list-group-item list-group-item-action">Overview</a>
+                    <a href="#disclaimer" class="list-group-item list-group-item-action">Disclaimer</a>
+                    <a href="#techStack" class="list-group-item list-group-item-action">More</a>
+                </div>
             </div>
 
             <!-- Main Content -->
@@ -93,37 +80,34 @@
 
                 <section id="overview">
                     <h2>Overview</h2>
-                    <p>Welcome to AI Finder Guru! This platform provides you access to a vast array of AI tools. With over 5000 tools and counting, we ensure you have the latest and most relevant tools at your fingertips.</p>
+                    <p>Welcome to AI Finder Guru! This platform provides you access to a vast array of AI tools. With over  {{ all_ai_tools_count }} AI tools and counting, we ensure you have the latest and most relevant tools at your fingertips.</p>
                     <p>As the <a href="{% url 'about_developer' %}" target="_blank" style="color: blue; text-decoration: none;">developer</a> of AI Finder Guru, I've designed this platform to be your go-to resource for discovering and exploring the ever-expanding world of AI tools. Whether you're a developer, researcher, or AI enthusiast, you'll find valuable resources here to enhance your projects and stay ahead in the field of artificial intelligence.</p>
+                    <p>For more information and common questions, please check the <a href="/#ai-finder-guru-faq" style="color: blu; text-decoration: none;">FAQ section</a>.</p>
                 </section>
 
-                <br>
-                <br>
- 
+                <br><br>
+
                 <section id="disclaimer">
                     <h2>Disclaimer</h2>
                     <p>While I strive to keep the database as accurate and up-to-date as possible, I cannot guarantee that all information is correct or current. Users should always verify the details on the <strong>official websites</strong> of the AI tools.</p>
                 </section>
 
-                <br>
-                <br>
+                <br><br>
 
                 <section id="techStack">
                     <h2>More</h2>
                     <p>This page is subject to updates ...</p>
-
                 </section>
                 
             </div>
         </div>
-    </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const sidebarLinks = document.querySelectorAll('#aboutSidebar .list-group-item');
-            const sections = document.querySelectorAll('section');
+            const sections = document.querySelectorAll('.about-content section');
 
             window.addEventListener('scroll', function() {
                 let current = '';
@@ -144,29 +128,28 @@
         });
 
         document.querySelectorAll('.copy-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-              const code = btn.nextElementSibling.textContent;
-              navigator.clipboard.writeText(code);
-              btn.textContent = 'Copied!';
-              setTimeout(() => {
-                  btn.textContent = 'Copy';
-              }, 2000);
-          });
-      });
-
-      document.addEventListener("DOMContentLoaded", function() {
-        const sidePanel = document.querySelector('.side-panel-sticky');
-        const navbarHeight = document.querySelector('.navbar').offsetHeight;
-
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > navbarHeight) {
-                sidePanel.style.top = navbarHeight + 'px';
-            } else {
-                sidePanel.style.top = (navbarHeight - window.scrollY) + 'px';
-            }
+            btn.addEventListener('click', () => {
+                const code = btn.nextElementSibling.textContent;
+                navigator.clipboard.writeText(code);
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = 'Copy';
+                }, 2000);
+            });
         });
-    });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const sidePanel = document.querySelector('.side-panel-sticky');
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > navbarHeight) {
+                    sidePanel.style.top = navbarHeight + 'px';
+                } else {
+                    sidePanel.style.top = (navbarHeight - window.scrollY) + 'px';
+                }
+            });
+        });
     </script>
-  </div>
 </div>
 {% endblock %}
